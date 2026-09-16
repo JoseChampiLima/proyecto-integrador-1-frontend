@@ -1,0 +1,367 @@
+<!-- Main Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark-custom">
+  <div class="container py-2">
+    <a class="navbar-brand-custom d-flex align-items-center" routerLink="/">
+      <img src="assets/icons/logo.svg" alt="Lawn Tennis Logo" class="brand-logo me-2" />
+      <span class="brand-text">LAWN TENNIS</span>
+    </a>
+    
+    <button class="navbar-toggler-custom d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="toggler-icon"></span>
+      <span class="toggler-icon"></span>
+      <span class="toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse d-flex justify-content-between align-items-center" id="mainNav">
+      <ul class="navbar-nav-custom mx-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link-custom active" routerLink="/">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link-custom" routerLink="/sedes">Sedes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link-custom" routerLink="/espacios">Espacios</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link-custom" routerLink="/nosotros">Nosotros</a>
+        </li>
+      </ul>
+      
+      <div class="nav-actions">
+        <a routerLink="/login" class="btn-login-outline">Iniciar Sesión</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero / Landing Section -->
+<header class="hero-wrapper">
+  <!-- Background Image with green theme overlay -->
+  <div class="hero-bg-overlay"></div>
+  
+  <div class="container hero-container">
+    <div class="row align-items-center justify-content-between">
+      
+      <!-- Hero Left: Text Content -->
+      <div class="col-lg-6 hero-text-section mb-5 mb-lg-0">
+        <span class="hero-badge">Portal Oficial de Reservas</span>
+        <h1 class="hero-title">
+          Encuentra y Reserva tu Espacio Deportivo Ideal
+        </h1>
+        <p class="hero-subtitle">
+          Disfruta de las mejores canchas de tenis de arcilla roja, campos de fútbol de grass sintético, piscinas temperadas y más. Todo gestionado de forma rápida y en tiempo real.
+        </p>
+        <div class="hero-stats-row">
+          <div class="stat-item">
+            <span class="stat-number">3</span>
+            <span class="stat-label">Sedes en Lima</span>
+          </div>
+          <div class="stat-item-divider"></div>
+          <div class="stat-item">
+            <span class="stat-number">15+</span>
+            <span class="stat-label">Espacios Deportivos</span>
+          </div>
+          <div class="stat-item-divider"></div>
+          <div class="stat-item">
+            <span class="stat-number">24/7</span>
+            <span class="stat-label">Reservas Online</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Hero Right: Glassmorphic Search Panel -->
+      <div class="col-lg-5 hero-search-section">
+        <div class="glass-search-card">
+          <h3 class="search-card-title">Reserva en Minutos</h3>
+          <p class="search-card-subtitle">Selecciona la sede y deporte de tu preferencia</p>
+          
+          <form (submit)="onSearch(); $event.preventDefault()">
+            <!-- Sede Dropdown -->
+            <div class="search-form-group mb-3">
+              <label for="sedeSelect" class="search-label">Sede Deportiva</label>
+              <div class="select-wrapper">
+                <select id="sedeSelect" [ngModel]="selectedSedeId()" (ngModelChange)="selectedSedeId.set($event)" name="sedeId" class="search-select">
+                  <option value="">Todas las sedes</option>
+                  @for (sede of sedes(); track sede.idSede) {
+                    <option [value]="sede.idSede">{{ sede.nombre }}</option>
+                  }
+                </select>
+              </div>
+            </div>
+            
+            <!-- Sport / Space Type Dropdown -->
+            <div class="search-form-group mb-4">
+              <label for="tipoSelect" class="search-label">Tipo de Espacio / Deporte</label>
+              <div class="select-wrapper">
+                <select id="tipoSelect" [ngModel]="selectedTipo()" (ngModelChange)="selectedTipo.set($event)" name="tipo" class="search-select">
+                  <option value="">Todos los deportes</option>
+                  <option value="Tenis Arcilla">Tenis de Arcilla</option>
+                  <option value="Tenis Cemento">Tenis Rápido (Cemento)</option>
+                  <option value="Fútbol Sintético">Fútbol Sintético</option>
+                  <option value="Paleta Frontón">Paleta Frontón</option>
+                  <option value="Natación">Piscina Temperada</option>
+                </select>
+              </div>
+            </div>
+            
+            <!-- Submit Button -->
+            <button type="submit" class="btn-search-sports">
+              <span>Buscar Disponibilidad</span>
+              <svg class="search-arrow" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"/>
+                <polyline points="12,5 19,12 12,19"/>
+              </svg>
+            </button>
+          </form>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</header>
+
+<!-- How It Works Section -->
+<!-- <section class="section-how-works py-5">
+  <div class="container py-4 text-center">
+    <span class="section-badge">Proceso Simple</span>
+    <h2 class="section-title">¿Cómo reservar?</h2>
+    <div class="section-divider"></div>
+    
+    <div class="row mt-5">
+      <div class="col-md-4 mb-4 mb-md-0">
+        <div class="step-card">
+          <div class="step-icon-wrapper">
+            <span class="step-number">01</span>
+            <div class="step-icon-circle">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
+            </div>
+          </div>
+          <h4 class="step-title">1. Elige Sede y Espacio</h4>
+          <p class="step-desc">Explora nuestras canchas, piscinas y campos según la sede y tarifa que más te acomoden.</p>
+        </div>
+      </div>
+      
+      <div class="col-md-4 mb-4 mb-md-0">
+        <div class="step-card">
+          <div class="step-icon-wrapper">
+            <span class="step-number">02</span>
+            <div class="step-icon-circle">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/>
+                <line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
+            </div>
+          </div>
+          <h4 class="step-title">2. Selecciona Horario</h4>
+          <p class="step-desc">Verifica la disponibilidad en tiempo real para la fecha de tu preferencia y escoge el horario libre.</p>
+        </div>
+      </div>
+      
+      <div class="col-md-4">
+        <div class="step-card">
+          <div class="step-icon-wrapper">
+            <span class="step-number">03</span>
+            <div class="step-icon-circle">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                <line x1="1" y1="10" x2="23" y2="10"/>
+              </svg>
+            </div>
+          </div>
+          <h4 class="step-title">3. Paga y Asegura</h4>
+          <p class="step-desc">Registra tu método de pago de manera segura. Recibirás una confirmación inmediata por correo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<!-- Featured Spaces Grid -->
+<!-- <section class="section-featured py-5 bg-light-green">
+  <div class="container py-4">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-5 text-center text-md-start">
+      <div>
+        <span class="section-badge">Instalaciones Top</span>
+        <h2 class="section-title mb-0">Espacios Recomendados</h2>
+      </div>
+      <a routerLink="/espacios" class="btn-view-all mt-3 mt-md-0">
+        <span>Ver Todos los Espacios</span>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="arrow-small">
+          <line x1="5" y1="12" x2="19" y2="12"/>
+          <polyline points="12,5 19,12 12,19"/>
+        </svg>
+      </a>
+    </div>
+    
+    <div class="row">
+      @for (espacio of featuredEspacios(); track espacio.idEspacio) {
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="space-card">
+            <div class="space-card-graphic" [ngClass]="{
+              'tennis-clay-graphic': espacio.foto === 'tennis-clay' || espacio.foto === 'tennis-clay-night',
+              'tennis-hard-graphic': espacio.foto === 'tennis-hard',
+              'soccer-graphic': espacio.foto === 'soccer-7' || espacio.foto === 'soccer-11',
+              'swimming-graphic': espacio.foto === 'swimming',
+              'fronton-graphic': espacio.foto === 'fronton'
+            }">
+              <div class="graphic-court-lines"></div>
+            </div>
+            
+            <div class="space-card-body">
+              <h3 class="space-title">{{ espacio.nombre }}</h3>
+              <p class="space-desc">{{ espacio.descripcion }}</p>
+              
+              <div class="space-details">
+                <div class="detail-item">
+                  <span class="detail-icon">👥</span>
+                  <span class="detail-text">Cap. {{ espacio.capacidad }} personas</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-icon">🏷️</span>
+                  <span class="detail-text">S/ {{ espacio.precioHora | number:'1.2-2' }} / hora</span>
+                </div>
+              </div>
+              
+              <div class="space-card-footer mt-4">
+                <a [routerLink]="['/espacios', espacio.idEspacio]" class="btn-book-now">Reservar Ahora</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section> -->
+
+<!-- Testimonials Section -->
+<!-- <section class="section-testimonials py-5">
+  <div class="container py-4 text-center">
+    <span class="section-badge">Opiniones de Socios</span>
+    <h2 class="section-title">Testimonios</h2>
+    <div class="section-divider"></div>
+    
+    <div class="row mt-5">
+      <div class="col-md-4 mb-4 mb-md-0">
+        <div class="testimonial-card">
+          <div class="quote-mark">“</div>
+          <p class="testimonial-text">Las canchas de arcilla de la sede Jesús María siempre están en impecables condiciones. Reservar por esta plataforma me toma menos de un minuto.</p>
+          <div class="testimonial-user">
+            <div class="user-avatar text-white bg-gold">AR</div>
+            <div class="user-info text-start">
+              <h5 class="user-name">Alejandro Ruiz</h5>
+              <span class="user-role">Socio Categoría A</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-4 mb-4 mb-md-0">
+        <div class="testimonial-card">
+          <div class="quote-mark">“</div>
+          <p class="testimonial-text">La piscina de Chorrillos está a la temperatura perfecta para mis entrenamientos matutinos. Me encanta ver la disponibilidad en tiempo real por días.</p>
+          <div class="testimonial-user">
+            <div class="user-avatar text-white bg-green">MC</div>
+            <div class="user-info text-start">
+              <h5 class="user-name">María Contreras</h5>
+              <span class="user-role">Deportista Libre</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-4">
+        <div class="testimonial-card">
+          <div class="quote-mark">“</div>
+          <p class="testimonial-text">El campo de fútbol 7 en Jesús María tiene un grass de excelente calidad. Los chicos del trabajo siempre reservamos los jueves por la noche.</p>
+          <div class="testimonial-user">
+            <div class="user-avatar text-white bg-navy">JS</div>
+            <div class="user-info text-start">
+              <h5 class="user-name">Juan Silva</h5>
+              <span class="user-role">Delegado Corporativo</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<!-- Footer Section -->
+<footer class="sports-footer text-white">
+  <div class="container" style="padding-top: 1.5rem">
+    <div class="row">
+      <!-- Footer Col 1: About -->
+      <div class="col-lg-4 mb-4 mb-lg-0">
+        <div class="footer-brand d-flex align-items-center mb-3">
+          <img src="assets/icons/logo.svg" alt="Lawn Tennis Logo" class="footer-logo me-2" />
+          <h4 class="footer-brand-title mb-0">LAWN TENNIS</h4>
+        </div>
+        <p class="footer-about-text">
+          Fundado en 1884, el Club Lawn Tennis de la Exposición es la cuna de los mejores deportistas de tenis del Perú. Ofrecemos canchas y espacios deportivos de primer nivel en nuestras tres sedes oficiales.
+        </p>
+        <div class="social-links-row mt-3">
+          <a href="#" class="social-link-btn">f</a>
+          <a href="#" class="social-link-btn">ig</a>
+          <a href="#" class="social-link-btn">yt</a>
+        </div>
+      </div>
+      
+      <!-- Footer Col 2: Quick Links -->
+      <div class="col-lg-2 col-md-4 mb-4 mb-md-0 offset-lg-1">
+        <h5 class="footer-section-title">Explorar</h5>
+        <ul class="footer-links-list list-unstyled mt-3">
+          <li><a routerLink="/">Inicio</a></li>
+          <li><a routerLink="/sedes">Nuestras Sedes</a></li>
+          <li><a routerLink="/espacios">Canchas y Campos</a></li>
+          <li><a routerLink="/nosotros">Quiénes Somos</a></li>
+          <li><a routerLink="/login">Ingreso Socios</a></li>
+        </ul>
+      </div>
+      
+      <!-- Footer Col 3: Contact Details -->
+      <div class="col-lg-3 col-md-4 mb-4 mb-md-0">
+        <h5 class="footer-section-title">Sede Principal</h5>
+        <ul class="footer-contact-list list-unstyled mt-3">
+          <li class="d-flex align-items-start mb-2">
+            <span class="contact-icon me-2">📍</span>
+            <span>Av. Salaverry 1230, Jesús María, Lima, Perú</span>
+          </li>
+          <li class="d-flex align-items-start mb-2">
+            <span class="contact-icon me-2">📞</span>
+            <span>(01) 424-6090</span>
+          </li>
+          <li class="d-flex align-items-start">
+            <span class="contact-icon me-2">✉️</span>
+            <span>contacto&#64;lawtennis.pe</span>
+          </li>
+        </ul>
+      </div>
+      
+      <!-- Footer Col 4: Platform Academic Disclaimer -->
+      <div class="col-lg-2 col-md-4">
+        <h5 class="footer-section-title">Proyecto</h5>
+        <p class="footer-academic-text mt-3">
+          Diseño e implementación de una plataforma web para la gestión de reservas de espacios deportivos en el Centro Deportivo Law Tennis, Lima, 2026.
+        </p>
+      </div>
+    </div>
+    
+    <div class="footer-divider-row pt-3 border-top border-secondary">
+      <div class="row align-items-center">
+        <div class="col-md-6 text-center text-md-start">
+          <p class="footer-copy-text mb-0">&copy; 2026 Centro Deportivo Lawn Tennis. Todos los derechos reservados.</p>
+        </div>
+        <div class="col-md-6 text-center text-md-end mt-2 mt-md-0">
+          <a href="#" class="footer-policy-link me-3">Términos de Servicio</a>
+          <a href="#" class="footer-policy-link">Políticas de Privacidad</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

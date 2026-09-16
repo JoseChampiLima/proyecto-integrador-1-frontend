@@ -1,0 +1,407 @@
+/* Fullscreen background page wrapper */
+.login-wrapper {
+  background-image: url('/assets/images/fondo.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 24px 16px;
+  box-sizing: border-box;
+}
+
+/* Background overlay with deep sports green colors */
+.bg-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+/* Container to center card and keep items on top of overlay */
+.login-container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 530px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Responsive, premium glassmorphic login card */
+.login-card {
+  background: rgba(255, 255, 255, 0.94);
+  border: 1.5px solid rgba(255, 255, 255, 0.7);
+  border-radius: 24px;
+  width: 100%;
+  padding: 40px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
+}
+
+.login-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 30px 60px -10px rgba(0, 0, 0, 0.4);
+}
+
+/* Header customization */
+.card-header-custom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Stylized Sports Shield / Logo */
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.logo-container:hover {
+  transform: rotate(5deg) scale(1.05);
+}
+
+.sport-logo {
+  width: 80px;
+  height: 80px;
+}
+
+/* Club Title styling */
+.club-title {
+  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+  color: #0d5c3a;
+  font-size: 1.45rem;
+  font-weight: 850;
+  letter-spacing: 0.7px;
+  margin: 10px 0 0 0;
+  text-transform: uppercase;
+}
+
+/* Gold/Green accent divider */
+.divider-gold {
+  background: linear-gradient(90deg, rgba(212, 175, 55, 0.1) 0%, #d4af37 50%, rgba(212, 175, 55, 0.1) 100%);
+  height: 3px;
+  margin: 12px 0 16px 0;
+  width: 75%;
+  border-radius: 2px;
+}
+
+/* Academic title section inside a nice badge */
+.academic-badge-container {
+  background: rgba(13, 92, 58, 0.06);
+  border-left: 4px solid #d4af37;
+  border-right: 1px solid rgba(13, 92, 58, 0.1);
+  border-top: 1px solid rgba(13, 92, 58, 0.1);
+  border-bottom: 1px solid rgba(13, 92, 58, 0.1);
+  padding: 12px 16px;
+  border-radius: 4px 16px 16px 4px;
+  text-align: left;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.academic-title {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.85rem;
+  color: #144e33;
+  line-height: 1.45;
+  margin: 0;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.academic-subtitle {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.82rem;
+  color: #1c5236;
+  line-height: 1.45;
+  margin: 8px auto 0 auto;
+  font-style: italic;
+  font-weight: 500;
+  max-width: 90%;
+}
+
+/* Form Styles */
+.form-group {
+  position: relative;
+  text-align: left;
+}
+
+.form-label-custom {
+  display: block;
+  font-family: 'Inter', -apple-system, sans-serif;
+  color: #0c4d2e;
+  font-weight: 600;
+  font-size: 0.88rem;
+  margin-bottom: 8px;
+}
+
+/* Input layout with icon on left */
+.input-icon-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 14px;
+  color: #0d5c3a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.form-control-custom {
+  width: 100%;
+  height: 50px;
+  padding: 10px 16px 10px 46px;
+  border-radius: 12px;
+  border: 1.5px solid rgba(13, 92, 58, 0.2);
+  background-color: rgba(255, 255, 255, 0.85);
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.95rem;
+  color: #1c2d25;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.form-control-custom:focus {
+  border-color: #0f6b42;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(15, 107, 66, 0.12), 0 4px 10px rgba(0, 0, 0, 0.05);
+  outline: none;
+}
+
+.form-control-custom::placeholder {
+  color: #9cb1a6;
+}
+
+/* Custom error borders */
+.form-control-custom.is-invalid-custom {
+  border-color: #e53e3e;
+  background-color: rgba(254, 245, 245, 0.9);
+}
+
+.form-control-custom.is-invalid-custom:focus {
+  box-shadow: 0 0 0 4px rgba(229, 62, 62, 0.12);
+  border-color: #e53e3e;
+}
+
+/* Password Toggle Eye Button */
+.btn-toggle-password {
+  position: absolute;
+  right: 14px;
+  background: none;
+  border: none;
+  color: #6d8e7b;
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.btn-toggle-password:hover {
+  color: #0d5c3a;
+}
+
+/* Error feedback below fields */
+.validation-message {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.78rem;
+  color: #e53e3e;
+  margin-top: 5px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Checkbox and links container */
+.form-check-custom {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.custom-checkbox {
+  width: 17px;
+  height: 17px;
+  border-radius: 4px;
+  accent-color: #0d5c3a;
+  cursor: pointer;
+}
+
+.checkbox-label {
+  font-family: 'Inter', -apple-system, sans-serif;
+  color: #4a5d53;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+}
+
+.forgot-password-link {
+  font-family: 'Inter', -apple-system, sans-serif;
+  color: #0d5c3a;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.forgot-password-link:hover {
+  color: #c5a028;
+  text-decoration: underline;
+}
+
+/* Sports Button CSS */
+.btn-submit-sports {
+  background: linear-gradient(135deg, #0d5c3a 0%, #063c23 100%);
+  color: #ffffff;
+  border: 1px solid #d4af37;
+  border-radius: 12px;
+  height: 52px;
+  width: 100%;
+  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 4px 12px rgba(13, 92, 58, 0.25);
+  box-sizing: border-box;
+}
+
+.btn-submit-sports:hover:not(:disabled) {
+  background: linear-gradient(135deg, #0f6b42 0%, #09472a 100%);
+  box-shadow: 0 8px 20px rgba(13, 92, 58, 0.4);
+  transform: translateY(-2px);
+  border-color: #e5c158;
+}
+
+.btn-submit-sports:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: 0 2px 6px rgba(13, 92, 58, 0.3);
+}
+
+.btn-submit-sports:disabled {
+  background: #ccd6d1;
+  border-color: #b0beb7;
+  color: #7b8e84;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.arrow-icon {
+  transition: transform 0.2s ease;
+}
+
+.btn-submit-sports:hover:not(:disabled) .arrow-icon {
+  transform: translateX(4px);
+}
+
+/* Danger alert custom style */
+.alert-danger-custom {
+  background-color: rgba(229, 62, 62, 0.08);
+  border: 1px solid rgba(229, 62, 62, 0.2);
+  color: #c53030;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.alert-icon {
+  flex-shrink: 0;
+}
+
+/* Footer elements */
+.card-footer-custom {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.copyright {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.78rem;
+  color: #657d70;
+  font-weight: 600;
+  margin: 0;
+}
+
+.copyright-sub {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.72rem;
+  color: #9cb1a6;
+  margin: 0;
+}
+
+/* Angular Spinner Border Overrides */
+.spinner-border {
+  border-width: 0.18em;
+}
+
+/* Responsive adjustment rules */
+@media (max-width: 576px) {
+  .login-card {
+    padding: 28px 20px;
+    border-radius: 20px;
+  }
+
+  .club-title {
+    font-size: 1.25rem;
+  }
+
+  .academic-title {
+    font-size: 0.78rem;
+    line-height: 1.4;
+  }
+
+  .academic-badge-container {
+    padding: 10px 12px;
+  }
+
+  .form-control-custom {
+    height: 48px;
+    font-size: 0.9rem;
+  }
+
+  .btn-submit-sports {
+    height: 48px;
+    font-size: 1rem;
+  }
+}

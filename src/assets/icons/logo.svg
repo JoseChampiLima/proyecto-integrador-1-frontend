@@ -1,0 +1,20 @@
+<svg class="sport-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Shield Background -->
+            <path d="M50 5 L90 25 V60 C90 78 73 92 50 95 C27 92 10 78 10 60 V25 L50 5 Z" fill="url(#shieldGrad)"
+              stroke="#d4af37" stroke-width="2" />
+            <!-- Tennis Court Net Lines -->
+            <path d="M15 45 H85 M50 25 V75 M30 45 V65 M70 45 V65" stroke="rgba(255,255,255,0.2)" stroke-width="2"
+              stroke-dasharray="2 2" />
+            <!-- Stylized Tennis Ball / Globe -->
+            <circle cx="50" cy="50" r="18" fill="#d4af37" />
+            <path d="M36.5 41 C40.5 45 40.5 55 36.5 59 M63.5 41 C59.5 45 59.5 55 63.5 59" stroke="#0d5c3a"
+              stroke-width="2" stroke-linecap="round" />
+            <path d="M50 32 V68" stroke="#0d5c3a" stroke-dasharray="1 1" />
+            <!-- Gradients -->
+            <defs>
+              <linearGradient id="shieldGrad" x1="50" y1="5" x2="50" y2="95" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#0f6b42" />
+                <stop offset="100%" stop-color="#073a24" />
+              </linearGradient>
+            </defs>
+          </svg>

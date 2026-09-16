@@ -1,0 +1,121 @@
+<div class="login-wrapper">
+  <!-- Decorative background elements -->
+  <div class="bg-overlay"></div>
+
+  <div class="login-container">
+    <div class="login-card">
+      <!-- Card Header -->
+      <div class="card-header-custom text-center">
+        <!-- Stylized Sports Logo -->
+        <div class="logo-container mb-3">
+          <img src="assets/icons/logo.svg" alt="Logo Lawn Tennis" class="sport-logo" />
+        </div>
+
+        <h2 class="club-title">CENTRO DEPORTIVO LAWN TENNIS</h2>
+
+      </div>
+
+      <!-- Card Body -->
+      <div class="card-body-custom mt-4">
+        <!-- Error Alert -->
+        @if (errorMessage()) {
+        <div class="alert alert-danger-custom d-flex align-items-center" role="alert">
+          <img src="assets/icons/warning.svg" alt="Warning Icon" class="alert-icon me-2" />
+          <div>{{ errorMessage() }}</div>
+        </div>
+        }
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
+
+          <!-- Email Input -->
+          <div class="form-group mb-4">
+            <label class="form-label-custom" for="email">Correo Electrónico</label>
+            <div class="input-icon-wrapper">
+              <span class="input-icon">
+                <!-- Envelope Icon -->
+                <img src="assets/icons/mail.svg" alt="Mail Icon" class="alert-icon me-2" />
+              </span>
+              <input type="email" id="email" formControlName="email" class="form-control-custom"
+                [class.is-invalid-custom]="loginForm.get('email')?.touched && loginForm.get('email')?.invalid"
+                placeholder="ejemplo@lawtennis.pe" required />
+            </div>
+
+            <!-- Email validation warnings -->
+            @if (loginForm.get('email')?.touched && loginForm.get('email')?.invalid) {
+            <div class="validation-message">
+              @if (loginForm.get('email')?.hasError('required')) {
+              <span>El correo electrónico es requerido.</span>
+              } @else if (loginForm.get('email')?.hasError('email')) {
+              <span>Por favor, ingrese un correo válido.</span>
+              }
+            </div>
+            }
+          </div>
+
+          <!-- Password Input -->
+          <div class="form-group mb-4">
+            <div class="d-flex justify-content-between align-items-center">
+              <label class="form-label-custom" for="password">Contraseña</label>
+            </div>
+            <div class="input-icon-wrapper">
+              <span class="input-icon">
+                <!-- Lock Icon -->
+                <img src="assets/icons/contrasenia.svg" alt="Password Icon" class="alert-icon me-2" />
+              </span>
+              <input [type]="showPassword() ? 'text' : 'password'" id="password" formControlName="password"
+                class="form-control-custom pe-5"
+                [class.is-invalid-custom]="loginForm.get('password')?.touched && loginForm.get('password')?.invalid"
+                placeholder="••••••••" required />
+              <button type="button" class="btn-toggle-password" (click)="togglePasswordVisibility()"
+                [attr.aria-label]="showPassword() ? 'Ocultar contraseña' : 'Mostrar contraseña'">
+                @if (showPassword()) {
+                <!-- Eye Off Icon -->
+                <img src="assets/icons/ocultar.svg" alt="Password Icon" class="alert-icon me-2" />
+                } @else {
+                <!-- Eye Icon -->
+                <img src="assets/icons/ver.svg" alt="Password Icon" class="alert-icon me-2" />
+                }
+              </button>
+            </div>
+
+            <!-- Password validation warnings -->
+            @if (loginForm.get('password')?.touched && loginForm.get('password')?.invalid) {
+            <div class="validation-message">
+              @if (loginForm.get('password')?.hasError('required')) {
+              <span>La contraseña es requerida.</span>
+              } @else if (loginForm.get('password')?.hasError('minlength')) {
+              <span>Debe tener al menos 6 caracteres.</span>
+              }
+            </div>
+            }
+          </div>
+
+          <!-- Remember me & Forgot Password -->
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="form-check-custom">
+              <input type="checkbox" id="rememberMe" class="custom-checkbox">
+              <label for="rememberMe" class="checkbox-label">Recordarme</label>
+            </div>
+            <a href="javascript:void(0)" class="forgot-password-link">¿Olvidó su contraseña?</a>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn-submit-sports" [disabled]="loginForm.invalid || isLoading()">
+            @if (isLoading()) {
+            <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            Autenticando...
+            } @else {
+            <span>Ingresar</span>
+            }
+          </button>
+        </form>
+      </div>
+
+      <!-- Card Footer -->
+      <div class="card-footer-custom text-center mt-4">
+        <p class="copyright">Lawn Tennis © 2026</p>
+        <p class="copyright-sub">Todos los derechos reservados</p>
+      </div>
+    </div>
+  </div>
+</div>
