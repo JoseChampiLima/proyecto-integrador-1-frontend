@@ -423,3 +423,308 @@
   color: #c5a028;
   text-decoration: underline;
 }
+
+/* ==================================================
+   MODAL RECUPERACIÓN DE CONTRASEÑA
+================================================== */
+
+.modal-overlay {
+  position: fixed !important;
+
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 20px;
+
+  background-color: rgba(0, 0, 0, 0.6);
+
+  z-index: 999999 !important;
+}
+
+
+/* ==================================================
+   VENTANA
+================================================== */
+
+.recovery-modal {
+  position: relative;
+
+  width: 100%;
+  max-width: 440px;
+
+  padding: 35px 32px 30px;
+
+  background: #ffffff;
+
+  border-radius: 18px;
+
+  box-shadow:
+    0 25px 70px rgba(0, 0, 0, 0.35);
+
+  z-index: 1000000;
+
+  animation: recoveryModalIn 0.2s ease-out;
+}
+
+
+@keyframes recoveryModalIn {
+
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+
+}
+
+
+/* ==================================================
+   BOTÓN CERRAR
+================================================== */
+
+.modal-close {
+  position: absolute;
+
+  top: 13px;
+  right: 17px;
+
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 50%;
+
+  background: transparent;
+
+  color: #667085;
+
+  font-size: 27px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+
+.modal-close:hover {
+  color: #006b3c;
+  background: #f2f4f7;
+}
+
+
+/* ==================================================
+   ENCABEZADO
+================================================== */
+
+.recovery-header {
+  text-align: center;
+
+  margin-bottom: 25px;
+}
+
+
+.recovery-logo {
+  width: 58px;
+  height: auto;
+
+  margin-bottom: 12px;
+}
+
+
+.recovery-header h3 {
+  margin: 0 0 10px;
+
+  color: #006b3c;
+
+  font-size: 22px;
+  font-weight: 700;
+}
+
+
+.recovery-header p {
+  margin: 0;
+
+  color: #667085;
+
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+
+/* ==================================================
+   FORMULARIO
+================================================== */
+
+.recovery-form {
+  margin-top: 20px;
+}
+
+
+/* ==================================================
+   MENSAJE DE ERROR
+================================================== */
+
+.recovery-error {
+  margin-top: 12px;
+
+  padding: 10px 12px;
+
+  border-radius: 7px;
+
+  background: #fef3f2;
+
+  color: #b42318;
+
+  font-size: 13px;
+}
+
+
+/* ==================================================
+   MENSAJE EXITOSO
+================================================== */
+
+.recovery-success {
+  margin-top: 12px;
+
+  padding: 10px 12px;
+
+  border-radius: 7px;
+
+  background: #ecfdf3;
+
+  color: #067647;
+
+  font-size: 13px;
+}
+
+
+/* ==================================================
+   BOTONES
+================================================== */
+
+.recovery-actions {
+  display: flex;
+
+  gap: 12px;
+
+  margin-top: 25px;
+}
+
+
+.btn-recovery-cancel,
+.btn-recovery-submit {
+
+  flex: 1;
+
+  min-height: 43px;
+
+  padding: 10px 16px;
+
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+
+/* CANCELAR */
+
+.btn-recovery-cancel {
+
+  border: 1px solid #d0d5dd;
+
+  background: #ffffff;
+
+  color: #475467;
+}
+
+
+.btn-recovery-cancel:hover {
+
+  background: #f9fafb;
+
+  border-color: #98a2b3;
+}
+
+
+/* ENVIAR */
+
+.btn-recovery-submit {
+
+  border: 1px solid #006b3c;
+
+  background: #006b3c;
+
+  color: white;
+}
+
+
+.btn-recovery-submit:hover:not(:disabled) {
+
+  background: #005630;
+
+  border-color: #005630;
+}
+
+
+.btn-recovery-submit:disabled {
+
+  opacity: 0.6;
+
+  cursor: not-allowed;
+}
+
+
+/* ==================================================
+   RESPONSIVE
+================================================== */
+
+@media (max-width: 576px) {
+
+  .recovery-modal {
+
+    max-width: 95%;
+
+    padding: 32px 22px 25px;
+  }
+
+
+  .recovery-actions {
+
+    flex-direction: column-reverse;
+  }
+
+}
+
+.modal-overlay {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999999 !important;
+}

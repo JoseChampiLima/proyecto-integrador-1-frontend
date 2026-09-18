@@ -117,7 +117,9 @@
               <input type="checkbox" id="rememberMe" class="custom-checkbox" />
               <label for="rememberMe" class="checkbox-label">Recordarme</label>
             </div>
-            <a href="javascript:void(0)" class="forgot-password-link">¿Olvidó su contraseña?</a>
+            <a href="javascript:void(0)"
+            class="forgot-password-link"
+            (click)="abrirRecuperacion()">¿Olvidó su contraseña?</a>
           </div>
 
           <!-- Submit Button -->
@@ -154,3 +156,116 @@
     </div>
   </div>
 </div>
+<!-- MODAL RECUPERAR CONTRASEÑA -->
+@if (mostrarRecuperacion()) {
+
+  <div
+    class="modal-overlay"
+    (click)="cerrarRecuperacion()"
+  >
+
+    <div
+      class="recovery-modal"
+      (click)="$event.stopPropagation()"
+    >
+
+      <button
+        type="button"
+        class="modal-close"
+        (click)="cerrarRecuperacion()"
+      >
+        ×
+      </button>
+
+      <div class="recovery-header">
+
+        <img
+          src="assets/icons/logo.svg"
+          alt="Lawn Tennis"
+          class="recovery-logo"
+        />
+
+        <h3>Recuperar contraseña</h3>
+
+        <p>
+          Ingresa el correo electrónico registrado en tu cuenta
+          para recuperar tu contraseña.
+        </p>
+
+      </div>
+
+      <div class="recovery-form">
+
+        <label
+          for="recoveryEmail"
+          class="form-label-custom"
+        >
+          Correo Electrónico
+        </label>
+
+        <div class="input-icon-wrapper">
+
+          <span class="input-icon">
+            <img
+              src="assets/icons/mail.svg"
+              alt="Correo"
+              class="alert-icon me-2"
+            />
+          </span>
+
+          <input
+            type="email"
+            id="recoveryEmail"
+            class="form-control-custom"
+            placeholder="ejemplo@lawtennis.pe"
+            [value]="correoRecuperacion()"
+            (input)="actualizarCorreoRecuperacion($event)"
+          />
+
+        </div>
+
+        @if (errorRecuperacion()) {
+          <div class="recovery-error">
+            {{ errorRecuperacion() }}
+          </div>
+        }
+
+        @if (mensajeRecuperacion()) {
+          <div class="recovery-success">
+            {{ mensajeRecuperacion() }}
+          </div>
+        }
+
+      </div>
+
+      <div class="recovery-actions">
+
+        <button
+          type="button"
+          class="btn-recovery-cancel"
+          (click)="cerrarRecuperacion()"
+        >
+          Cancelar
+        </button>
+
+        <button
+          type="button"
+          class="btn-recovery-submit"
+          [disabled]="enviandoRecuperacion()"
+          (click)="enviarRecuperacion()"
+        >
+
+          @if (enviandoRecuperacion()) {
+            <span>Enviando...</span>
+          } @else {
+            <span>Enviar correo</span>
+          }
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+}

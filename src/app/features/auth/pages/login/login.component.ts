@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../../core/auth/auth.service';
 import { LoginRequest } from '../../../../core/interfaces/login-request.interface';
+import { ForgotRequest } from '../../../../core/interfaces/forgot-request.interface';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,11 @@ export class LoginComponent {
   showPassword = signal(false);
   isLoading = signal(false);
   errorMessage = signal<string | null>(null);
-
+  mostrarRecuperacion = signal(false);
+  correoRecuperacion = signal('');
+  errorRecuperacion = signal('');
+  mensajeRecuperacion = signal('');
+  enviandoRecuperacion = signal(false);
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -31,6 +36,38 @@ export class LoginComponent {
   togglePasswordVisibility() {
     this.showPassword.update(val => !val);
   }
+
+  abrirRecuperacion(): void {
+
+    this.errorRecuperacion.set('');
+    this.mensajeRecuperacion.set('');
+  
+    // Si el usuario ya escribió su correo en el login,
+    // lo colocamos automáticamente en el modal.
+    const correoLogin =
+      this.loginForm.get('email')?.value || '';
+  
+    this.correoRecuperacion.set(correoLogin);
+  
+    this.mostrarRecuperacion.set(true);
+  }
+
+  cerrarRecuperacion(): void {
+
+    this.mostrarRecuperacion.set(false);
+  
+    this.errorRecuperacion.set('');
+    this.mensajeRecuperacion.set('');
+  }
+
+  actualizarCorreoRecuperacion(event: Event): void {
+
+    const input = event.target as HTMLInputElement;
+  
+    this.correoRecuperacion.set(input.value);
+  }
+
+  
 
   onSubmit() {
     if (this.loginForm.invalid) {
@@ -64,4 +101,81 @@ export class LoginComponent {
       });
     }, 1500);
   }
+  enviarRecuperacion(): void {
+
+    const correo = this.correoRecuperacion().trim();
+  
+    this.errorRecuperacion.set('');
+    this.mensajeRecuperacion.set('');
+  
+    // Validar vacío
+    if (!correo) {
+      this.errorRecuperacion.set(
+        'Ingrese su correo electrónico.'
+      );
+      return;
+    }
+  
+    // Validar formato
+    const formatoCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  
+    if (!formatoCorreo.test(correo)) {
+      this.errorRecuperacion.set(
+        'Ingrese un correo electrónico válido.'
+      );
+      return;
+    }
+  
+    // Preparar request
+    const request: ForgotRequest = {
+      correo: correo
+    };
+  
+    this.enviandoRecuperacion.set(true);
+  
+    // Consumir API
+    this.servicio.forgot(request).subscribe({
+  
+      next: (response) => {
+  
+        this.enviandoRecuperacion.set(false);
+  
+        this.mensajeRecuperacion.set(
+          response.mensaje
+        );
+  
+        console.log(
+          'Recuperación enviada:',
+          response
+        );
+      },
+  
+      error: (error) => {
+  
+        this.enviandoRecuperacion.set(false);
+  
+        console.error(
+          'Error al recuperar contraseña:',
+          error
+        );
+  
+        if (error.status === 404) {
+  
+          this.errorRecuperacion.set(
+            'No existe un usuario registrado con ese correo.'
+          );
+  
+        } else {
+  
+          this.errorRecuperacion.set(
+            'No se pudo enviar el correo. Intente nuevamente.'
+          );
+  
+        }
+      }
+  
+    });
+  }
+
+
 }
