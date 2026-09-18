@@ -5,14 +5,25 @@
       <img src="assets/icons/logo.svg" alt="Lawn Tennis Logo" class="brand-logo me-2" />
       <span class="brand-text">LAWN TENNIS</span>
     </a>
-    
-    <button class="navbar-toggler-custom d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+
+    <button
+      class="navbar-toggler-custom d-lg-none"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#mainNav"
+      aria-controls="mainNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
       <span class="toggler-icon"></span>
       <span class="toggler-icon"></span>
       <span class="toggler-icon"></span>
     </button>
-    
-    <div class="collapse navbar-collapse d-flex justify-content-between align-items-center" id="mainNav">
+
+    <div
+      class="collapse navbar-collapse d-flex justify-content-between align-items-center"
+      id="mainNav"
+    >
       <ul class="navbar-nav-custom mx-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link-custom active" routerLink="/">Inicio</a>
@@ -27,8 +38,9 @@
           <a class="nav-link-custom" routerLink="/nosotros">Nosotros</a>
         </li>
       </ul>
-      
+
       <div class="nav-actions">
+        <a routerLink="/crear-usuario" class="btn-login-outline">Registrarse</a>
         <a routerLink="/login" class="btn-login-outline">Iniciar Sesión</a>
       </div>
     </div>
@@ -39,18 +51,16 @@
 <header class="hero-wrapper">
   <!-- Background Image with green theme overlay -->
   <div class="hero-bg-overlay"></div>
-  
+
   <div class="container hero-container">
     <div class="row align-items-center justify-content-between">
-      
       <!-- Hero Left: Text Content -->
       <div class="col-lg-6 hero-text-section mb-5 mb-lg-0">
         <span class="hero-badge">Portal Oficial de Reservas</span>
-        <h1 class="hero-title">
-          Encuentra y Reserva tu Espacio Deportivo Ideal
-        </h1>
+        <h1 class="hero-title">Encuentra y Reserva tu Espacio Deportivo Ideal</h1>
         <p class="hero-subtitle">
-          Disfruta de las mejores canchas de tenis de arcilla roja, campos de fútbol de grass sintético, piscinas temperadas y más. Todo gestionado de forma rápida y en tiempo real.
+          Disfruta de las mejores canchas de tenis de arcilla roja, campos de fútbol de grass
+          sintético, piscinas temperadas y más. Todo gestionado de forma rápida y en tiempo real.
         </p>
         <div class="hero-stats-row">
           <div class="stat-item">
@@ -69,19 +79,25 @@
           </div>
         </div>
       </div>
-      
+
       <!-- Hero Right: Glassmorphic Search Panel -->
       <div class="col-lg-5 hero-search-section">
         <div class="glass-search-card">
           <h3 class="search-card-title">Reserva en Minutos</h3>
           <p class="search-card-subtitle">Selecciona la sede y deporte de tu preferencia</p>
-          
+
           <form (submit)="onSearch(); $event.preventDefault()">
             <!-- Sede Dropdown -->
             <div class="search-form-group mb-3">
               <label for="sedeSelect" class="search-label">Sede Deportiva</label>
               <div class="select-wrapper">
-                <select id="sedeSelect" [ngModel]="selectedSedeId()" (ngModelChange)="selectedSedeId.set($event)" name="sedeId" class="search-select">
+                <select
+                  id="sedeSelect"
+                  [ngModel]="selectedSedeId()"
+                  (ngModelChange)="selectedSedeId.set($event)"
+                  name="sedeId"
+                  class="search-select"
+                >
                   <option value="">Todas las sedes</option>
                   @for (sede of sedes(); track sede.idSede) {
                     <option [value]="sede.idSede">{{ sede.nombre }}</option>
@@ -89,12 +105,18 @@
                 </select>
               </div>
             </div>
-            
+
             <!-- Sport / Space Type Dropdown -->
             <div class="search-form-group mb-4">
               <label for="tipoSelect" class="search-label">Tipo de Espacio / Deporte</label>
               <div class="select-wrapper">
-                <select id="tipoSelect" [ngModel]="selectedTipo()" (ngModelChange)="selectedTipo.set($event)" name="tipo" class="search-select">
+                <select
+                  id="tipoSelect"
+                  [ngModel]="selectedTipo()"
+                  (ngModelChange)="selectedTipo.set($event)"
+                  name="tipo"
+                  class="search-select"
+                >
                   <option value="">Todos los deportes</option>
                   <option value="Tenis Arcilla">Tenis de Arcilla</option>
                   <option value="Tenis Cemento">Tenis Rápido (Cemento)</option>
@@ -104,19 +126,28 @@
                 </select>
               </div>
             </div>
-            
+
             <!-- Submit Button -->
             <button type="submit" class="btn-search-sports">
               <span>Buscar Disponibilidad</span>
-              <svg class="search-arrow" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12"/>
-                <polyline points="12,5 19,12 12,19"/>
+              <svg
+                class="search-arrow"
+                viewBox="0 0 24 24"
+                width="20"
+                height="20"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12,5 19,12 12,19" />
               </svg>
             </button>
           </form>
         </div>
       </div>
-      
     </div>
   </div>
 </header>
@@ -303,7 +334,9 @@
           <h4 class="footer-brand-title mb-0">LAWN TENNIS</h4>
         </div>
         <p class="footer-about-text">
-          Fundado en 1884, el Club Lawn Tennis de la Exposición es la cuna de los mejores deportistas de tenis del Perú. Ofrecemos canchas y espacios deportivos de primer nivel en nuestras tres sedes oficiales.
+          Fundado en 1884, el Club Lawn Tennis de la Exposición es la cuna de los mejores
+          deportistas de tenis del Perú. Ofrecemos canchas y espacios deportivos de primer nivel en
+          nuestras tres sedes oficiales.
         </p>
         <div class="social-links-row mt-3">
           <a href="#" class="social-link-btn">f</a>
@@ -311,7 +344,7 @@
           <a href="#" class="social-link-btn">yt</a>
         </div>
       </div>
-      
+
       <!-- Footer Col 2: Quick Links -->
       <div class="col-lg-2 col-md-4 mb-4 mb-md-0 offset-lg-1">
         <h5 class="footer-section-title">Explorar</h5>
@@ -323,7 +356,7 @@
           <li><a routerLink="/login">Ingreso Socios</a></li>
         </ul>
       </div>
-      
+
       <!-- Footer Col 3: Contact Details -->
       <div class="col-lg-3 col-md-4 mb-4 mb-md-0">
         <h5 class="footer-section-title">Sede Principal</h5>
@@ -342,20 +375,23 @@
           </li>
         </ul>
       </div>
-      
+
       <!-- Footer Col 4: Platform Academic Disclaimer -->
       <div class="col-lg-2 col-md-4">
         <h5 class="footer-section-title">Proyecto</h5>
         <p class="footer-academic-text mt-3">
-          Diseño e implementación de una plataforma web para la gestión de reservas de espacios deportivos en el Centro Deportivo Law Tennis, Lima, 2026.
+          Diseño e implementación de una plataforma web para la gestión de reservas de espacios
+          deportivos en el Centro Deportivo Law Tennis, Lima, 2026.
         </p>
       </div>
     </div>
-    
+
     <div class="footer-divider-row pt-3 border-top border-secondary">
       <div class="row align-items-center">
         <div class="col-md-6 text-center text-md-start">
-          <p class="footer-copy-text mb-0">&copy; 2026 Centro Deportivo Lawn Tennis. Todos los derechos reservados.</p>
+          <p class="footer-copy-text mb-0">
+            &copy; 2026 Centro Deportivo Lawn Tennis. Todos los derechos reservados.
+          </p>
         </div>
         <div class="col-md-6 text-center text-md-end mt-2 mt-md-0">
           <a href="#" class="footer-policy-link me-3">Términos de Servicio</a>

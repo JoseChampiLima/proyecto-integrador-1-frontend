@@ -1,0 +1,167 @@
+<div class="login-wrapper">
+  <div class="bg-overlay"></div>
+
+  <div class="login-container">
+    <div class="login-card">
+      <!-- Card Header -->
+      <div class="card-header-custom text-center">
+        <div class="logo-container mb-3">
+          <img src="assets/icons/logo.svg" alt="Logo Lawn Tennis" class="sport-logo" />
+        </div>
+        <h2 class="club-title">CREAR NUEVO USUARIO</h2>
+      </div>
+
+      <!-- Card Body -->
+      <div class="card-body-custom mt-4">
+        <!-- Error Alert -->
+        @if (errorMessage()) {
+        <div class="alert alert-danger-custom d-flex align-items-center" role="alert">
+          <img src="assets/icons/warning.svg" alt="Warning Icon" class="alert-icon me-2" />
+          <div>{{ errorMessage() }}</div>
+        </div>
+        }
+
+        <!-- Success Alert -->
+        @if (successMessage()) {
+        <div class="alert alert-success-custom d-flex align-items-center" role="alert">
+          <div>{{ successMessage() }}</div>
+        </div>
+        }
+
+        <form [formGroup]="usuarioForm" (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
+
+          <!-- Nombres -->
+          <div class="form-group mb-4">
+            <label class="form-label-custom" for="nombres">Nombres</label>
+            <div class="input-icon-wrapper">
+              <input type="text" id="nombres" formControlName="nombres" class="form-control-custom"
+                [class.is-invalid-custom]="usuarioForm.get('nombres')?.touched && usuarioForm.get('nombres')?.invalid"
+                placeholder="Andrea" required />
+            </div>
+            @if (usuarioForm.get('nombres')?.touched && usuarioForm.get('nombres')?.invalid) {
+            <div class="validation-message">
+              <span>Los nombres son requeridos (mínimo 2 caracteres).</span>
+            </div>
+            }
+          </div>
+
+          <!-- Apellidos -->
+          <div class="form-group mb-4">
+            <label class="form-label-custom" for="apellidos">Apellidos</label>
+            <div class="input-icon-wrapper">
+              <input type="text" id="apellidos" formControlName="apellidos" class="form-control-custom"
+                [class.is-invalid-custom]="usuarioForm.get('apellidos')?.touched && usuarioForm.get('apellidos')?.invalid"
+                placeholder="Lopez Garcia" required />
+            </div>
+            @if (usuarioForm.get('apellidos')?.touched && usuarioForm.get('apellidos')?.invalid) {
+            <div class="validation-message">
+              <span>Los apellidos son requeridos (mínimo 2 caracteres).</span>
+            </div>
+            }
+          </div>
+
+          <!-- DNI -->
+          <div class="form-group mb-4">
+            <label class="form-label-custom" for="dni">DNI</label>
+            <div class="input-icon-wrapper">
+              <input type="text" id="dni" formControlName="dni" class="form-control-custom" maxlength="8"
+                [class.is-invalid-custom]="usuarioForm.get('dni')?.touched && usuarioForm.get('dni')?.invalid"
+                placeholder="71589633" required />
+            </div>
+            @if (usuarioForm.get('dni')?.touched && usuarioForm.get('dni')?.invalid) {
+            <div class="validation-message">
+              <span>Ingrese un DNI válido de 8 dígitos.</span>
+            </div>
+            }
+          </div>
+
+          <!-- Teléfono -->
+          <div class="form-group mb-4">
+            <label class="form-label-custom" for="telefono">Teléfono</label>
+            <div class="input-icon-wrapper">
+              <input type="text" id="telefono" formControlName="telefono" class="form-control-custom" maxlength="9"
+                [class.is-invalid-custom]="usuarioForm.get('telefono')?.touched && usuarioForm.get('telefono')?.invalid"
+                placeholder="965874123" required />
+            </div>
+            @if (usuarioForm.get('telefono')?.touched && usuarioForm.get('telefono')?.invalid) {
+            <div class="validation-message">
+              <span>Ingrese un teléfono válido de 9 dígitos.</span>
+            </div>
+            }
+          </div>
+
+          <!-- Correo -->
+          <div class="form-group mb-4">
+            <label class="form-label-custom" for="correo">Correo Electrónico</label>
+            <div class="input-icon-wrapper">
+              <span class="input-icon">
+                <img src="assets/icons/mail.svg" alt="Mail Icon" class="alert-icon me-2" />
+              </span>
+              <input type="email" id="correo" formControlName="correo" class="form-control-custom"
+                [class.is-invalid-custom]="usuarioForm.get('correo')?.touched && usuarioForm.get('correo')?.invalid"
+                placeholder="ejemplo@lawtennis.pe" required />
+            </div>
+            @if (usuarioForm.get('correo')?.touched && usuarioForm.get('correo')?.invalid) {
+            <div class="validation-message">
+              @if (usuarioForm.get('correo')?.hasError('required')) {
+              <span>El correo electrónico es requerido.</span>
+              } @else if (usuarioForm.get('correo')?.hasError('email')) {
+              <span>Por favor, ingrese un correo válido.</span>
+              }
+            </div>
+            }
+          </div>
+
+          <!-- Contraseña -->
+          <div class="form-group mb-4">
+            <label class="form-label-custom" for="clave">Contraseña</label>
+            <div class="input-icon-wrapper">
+              <span class="input-icon">
+                <img src="assets/icons/contrasenia.svg" alt="Password Icon" class="alert-icon me-2" />
+              </span>
+              <input [type]="showPassword() ? 'text' : 'password'" id="clave" formControlName="clave"
+                class="form-control-custom pe-5"
+                [class.is-invalid-custom]="usuarioForm.get('clave')?.touched && usuarioForm.get('clave')?.invalid"
+                placeholder="••••••••" required />
+              <button type="button" class="btn-toggle-password" (click)="togglePasswordVisibility()"
+                [attr.aria-label]="showPassword() ? 'Ocultar contraseña' : 'Mostrar contraseña'">
+                @if (showPassword()) {
+                <img src="assets/icons/ocultar.svg" alt="Password Icon" class="alert-icon me-2" />
+                } @else {
+                <img src="assets/icons/ver.svg" alt="Password Icon" class="alert-icon me-2" />
+                }
+              </button>
+            </div>
+            @if (usuarioForm.get('clave')?.touched && usuarioForm.get('clave')?.invalid) {
+            <div class="validation-message">
+              @if (usuarioForm.get('clave')?.hasError('required')) {
+              <span>La contraseña es requerida.</span>
+              } @else if (usuarioForm.get('clave')?.hasError('minlength')) {
+              <span>Debe tener al menos 6 caracteres.</span>
+              }
+            </div>
+            }
+          </div>
+
+          <!-- Nota: el rol se asigna automáticamente (idRol: 2) y no se muestra en el formulario -->
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn-submit-sports" [disabled]="usuarioForm.invalid || isLoading()">
+            @if (isLoading()) {
+            <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            Registrando...
+            } @else {
+            <span>Crear Usuario</span>
+            }
+          </button>
+        </form>
+      </div>
+
+      <!-- Card Footer -->
+      <div class="card-footer-custom text-center mt-4">
+        <p class="copyright">Lawn Tennis © 2026</p>
+        <p class="copyright-sub">Todos los derechos reservados</p>
+      </div>
+    </div>
+  </div>
+</div>

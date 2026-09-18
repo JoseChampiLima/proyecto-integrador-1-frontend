@@ -1018,16 +1018,12 @@
   }
   
   .nav-actions {
-    display: flex;
-    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
     width: 100%;
     margin-top: 12px;
   }
-  
-  .btn-login-outline {
-    width: 80%;
-    text-align: center;
-  }
+
 }
 
 @media (max-width: 576px) {
@@ -1050,4 +1046,28 @@
   .stat-number {
     font-size: 1.8rem;
   }
+}
+
+.nav-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.btn-register-outline {
+  border: 1.5px solid #d4af37;
+  color: #d4af37;
+  background: transparent;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-register-outline:hover {
+  background: #d4af37;
+  color: #041a0f;
 }

@@ -10,7 +10,7 @@ import { NgClass, DecimalPipe } from '@angular/common';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterModule, FormsModule, NgClass, DecimalPipe],
+  imports: [RouterModule, FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
