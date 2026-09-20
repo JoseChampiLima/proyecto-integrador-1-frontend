@@ -1,0 +1,227 @@
+/* RUTA src\app\shared\components\app-header\app-header.component.css */
+
+.navbar-dark-custom {
+  background: #082c1a;
+  padding: 12px 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.navbar-brand-custom {
+  text-decoration: none;
+}
+
+.brand-logo {
+  width: 36px;
+  height: 36px;
+}
+
+.brand-text {
+  color: #ffffff;
+  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: 0.5px;
+}
+
+.navbar-nav-custom {
+  display: flex;
+  list-style: none;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link-custom {
+  color: #cfe3d8;
+  text-decoration: none;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 600;
+  font-size: 0.92rem;
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.nav-link-custom:hover,
+.nav-link-custom.active-link {
+  color: #ffffff;
+  background: rgba(212, 175, 55, 0.15);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-login-outline,
+.btn-register-outline {
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-login-outline {
+  border: 1.5px solid #ffffff;
+  color: #ffffff;
+  background: transparent;
+}
+
+.btn-login-outline:hover {
+  background: #ffffff;
+  color: #082c1a;
+}
+
+.btn-register-outline {
+  border: 1.5px solid #d4af37;
+  color: #d4af37;
+  background: transparent;
+}
+
+.btn-register-outline:hover {
+  background: #d4af37;
+  color: #041a0f;
+}
+
+/* Menú de usuario logueado */
+.user-menu-wrapper {
+  position: relative;
+}
+
+.user-menu-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.user-menu-trigger:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.user-email {
+  color: #ffffff;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-role-badge {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #082c1a;
+  background: #cfe3d8;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.user-role-badge.role-admin {
+  background: #d4af37;
+  color: #041a0f;
+}
+
+.user-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  min-width: 160px;
+  z-index: 10;
+}
+
+.dropdown-item-custom {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 12px 16px;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #c53030;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.dropdown-item-custom:hover {
+  background: rgba(229, 62, 62, 0.08);
+}
+
+.dropdown-item-edit {
+  color: #0d5c3a; /* verde, en vez del rojo de logout */
+}
+
+.dropdown-item-edit:hover {
+  background: rgba(13, 92, 58, 0.08);
+}
+
+/* Responsive: mismo patrón que ya tenías en el navbar del index */
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    background: #082c1a;
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .navbar-nav-custom {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 4px;
+  }
+
+  .nav-link-custom {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .nav-actions {
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    margin-top: 12px;
+    gap: 10px;
+  }
+
+  .btn-login-outline,
+  .btn-register-outline,
+  .user-menu-wrapper {
+    width: 80%;
+    text-align: center;
+  }
+
+  .user-menu-trigger {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .user-dropdown {
+    position: static;
+    margin-top: 8px;
+    width: 100%;
+    box-shadow: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}

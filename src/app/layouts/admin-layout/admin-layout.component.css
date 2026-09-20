@@ -1,0 +1,98 @@
+/* RUTA src\app\layouts\admin-layout\admin-layout.component.ts */
+
+.admin-shell {
+  display: flex;
+  min-height: calc(100vh - 64px); /* resta la altura aprox. del header */
+}
+
+.admin-sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  background: #0d2e1e;
+  padding: 20px 12px;
+}
+
+.admin-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.admin-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #cfe3d8;
+  text-decoration: none;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 10px 14px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.admin-nav-link:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+}
+
+.admin-nav-link.active-item {
+  background: #d4af37;
+  color: #041a0f;
+}
+
+.nav-icon {
+  font-size: 1.05rem;
+}
+
+.admin-content {
+  flex: 1;
+  padding: 28px;
+  background: #f4f7f5;
+  overflow-x: auto;
+}
+
+.sidebar-toggle-mobile {
+  display: none;
+  width: 100%;
+  background: #0d2e1e;
+  color: #ffffff;
+  border: none;
+  padding: 12px 20px;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-align: left;
+}
+
+/* Responsive: sidebar se convierte en drawer off-canvas */
+@media (max-width: 991.98px) {
+  .sidebar-toggle-mobile {
+    display: block;
+  }
+
+  .admin-shell {
+    position: relative;
+  }
+
+  .admin-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 20;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .admin-sidebar.sidebar-open {
+    transform: translateX(0);
+  }
+
+  .admin-content {
+    padding: 20px 16px;
+  }
+}

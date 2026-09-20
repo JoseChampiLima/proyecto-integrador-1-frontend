@@ -1,0 +1,36 @@
+<!-- RUTA src\app\layouts\admin-layout\admin-layout.component.html -->
+<button type="button" class="sidebar-toggle-mobile d-lg-none" (click)="toggleSidebar()">
+  ☰ Menú de gestión
+</button>
+
+<div class="admin-shell">
+  <aside class="admin-sidebar" [class.sidebar-open]="sidebarOpen()">
+    <nav class="admin-nav">
+      <a routerLink="/admin" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active-item" class="admin-nav-link">
+        <span class="nav-icon">📊</span> Dashboard
+      </a>
+      <a routerLink="/admin/usuarios" routerLinkActive="active-item" class="admin-nav-link">
+        <span class="nav-icon">👥</span> Usuarios
+      </a>
+      <a routerLink="/admin/sedes" routerLinkActive="active-item" class="admin-nav-link">
+        <span class="nav-icon">🏟️</span> Sedes
+      </a>
+      <a routerLink="/admin/espacios" routerLinkActive="active-item" class="admin-nav-link">
+        <span class="nav-icon">🎾</span> Espacios
+      </a>
+      <a routerLink="/admin/horarios" routerLinkActive="active-item" class="admin-nav-link">
+        <span class="nav-icon">🕒</span> Horarios
+      </a>
+      <a routerLink="/admin/reservas" routerLinkActive="active-item" class="admin-nav-link">
+        <span class="nav-icon">📅</span> Reservas
+      </a>
+      <a routerLink="/admin/pagos" routerLinkActive="active-item" class="admin-nav-link">
+        <span class="nav-icon">💳</span> Pagos
+      </a>
+    </nav>
+  </aside>
+
+  <main class="admin-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

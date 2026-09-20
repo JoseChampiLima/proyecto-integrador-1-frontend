@@ -5,7 +5,6 @@ import { EspacioDeportivoService } from '../../../../core/services/espacio-depor
 import { Sede } from '../../../../core/models/sede.model';
 import { EspacioDeportivo } from '../../../../core/models/espacio-deportivo.model';
 import { FormsModule } from '@angular/forms';
-import { NgClass, DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-home',

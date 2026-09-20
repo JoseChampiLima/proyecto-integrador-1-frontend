@@ -114,12 +114,18 @@
           <!-- Remember me & Forgot Password -->
           <div class="d-flex justify-content-between align-items-center mb-4">
             <div class="form-check-custom">
-              <input type="checkbox" id="rememberMe" class="custom-checkbox" />
+              <input
+                type="checkbox"
+                id="rememberMe"
+                class="custom-checkbox"
+                [checked]="recordarme()"
+                (change)="toggleRecordarme()"
+              />
               <label for="rememberMe" class="checkbox-label">Recordarme</label>
             </div>
-            <a href="javascript:void(0)"
-            class="forgot-password-link"
-            (click)="abrirRecuperacion()">¿Olvidó su contraseña?</a>
+            <a href="javascript:void(0)" class="forgot-password-link" (click)="abrirRecuperacion()"
+              >¿Olvidó su contraseña?</a
+            >
           </div>
 
           <!-- Submit Button -->
@@ -158,59 +164,24 @@
 </div>
 <!-- MODAL RECUPERAR CONTRASEÑA -->
 @if (mostrarRecuperacion()) {
-
-  <div
-    class="modal-overlay"
-    (click)="cerrarRecuperacion()"
-  >
-
-    <div
-      class="recovery-modal"
-      (click)="$event.stopPropagation()"
-    >
-
-      <button
-        type="button"
-        class="modal-close"
-        (click)="cerrarRecuperacion()"
-      >
-        ×
-      </button>
+  <div class="modal-overlay" (click)="cerrarRecuperacion()">
+    <div class="recovery-modal" (click)="$event.stopPropagation()">
+      <button type="button" class="modal-close" (click)="cerrarRecuperacion()">×</button>
 
       <div class="recovery-header">
-
-        <img
-          src="assets/icons/logo.svg"
-          alt="Lawn Tennis"
-          class="recovery-logo"
-        />
+        <img src="assets/icons/logo.svg" alt="Lawn Tennis" class="recovery-logo" />
 
         <h3>Recuperar contraseña</h3>
 
-        <p>
-          Ingresa el correo electrónico registrado en tu cuenta
-          para recuperar tu contraseña.
-        </p>
-
+        <p>Ingresa el correo electrónico registrado en tu cuenta para recuperar tu contraseña.</p>
       </div>
 
       <div class="recovery-form">
-
-        <label
-          for="recoveryEmail"
-          class="form-label-custom"
-        >
-          Correo Electrónico
-        </label>
+        <label for="recoveryEmail" class="form-label-custom"> Correo Electrónico </label>
 
         <div class="input-icon-wrapper">
-
           <span class="input-icon">
-            <img
-              src="assets/icons/mail.svg"
-              alt="Correo"
-              class="alert-icon me-2"
-            />
+            <img src="assets/icons/mail.svg" alt="Correo" class="alert-icon me-2" />
           </span>
 
           <input
@@ -221,7 +192,6 @@
             [value]="correoRecuperacion()"
             (input)="actualizarCorreoRecuperacion($event)"
           />
-
         </div>
 
         @if (errorRecuperacion()) {
@@ -235,16 +205,10 @@
             {{ mensajeRecuperacion() }}
           </div>
         }
-
       </div>
 
       <div class="recovery-actions">
-
-        <button
-          type="button"
-          class="btn-recovery-cancel"
-          (click)="cerrarRecuperacion()"
-        >
+        <button type="button" class="btn-recovery-cancel" (click)="cerrarRecuperacion()">
           Cancelar
         </button>
 
@@ -254,18 +218,13 @@
           [disabled]="enviandoRecuperacion()"
           (click)="enviarRecuperacion()"
         >
-
           @if (enviandoRecuperacion()) {
             <span>Enviando...</span>
           } @else {
             <span>Enviar correo</span>
           }
-
         </button>
-
       </div>
-
     </div>
-
   </div>
 }

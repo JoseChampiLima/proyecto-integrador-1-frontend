@@ -1,0 +1,103 @@
+<!-- RUTA src\app\shared\components\app-header\app-header.component.ts -->
+
+<nav class="navbar navbar-expand-lg navbar-dark-custom">
+  <div class="container py-2">
+    <a
+      class="navbar-brand-custom d-flex align-items-center"
+      [routerLink]="auth.isAdmin() ? '/admin' : auth.isCliente() ? '/inicio' : '/'"
+    >
+      <img src="assets/icons/logo.svg" alt="Lawn Tennis Logo" class="brand-logo me-2" />
+      <span class="brand-text">LAWN TENNIS</span>
+    </a>
+
+    <button
+      class="navbar-toggler-custom d-lg-none"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#mainNav"
+      aria-controls="mainNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="toggler-icon"></span>
+      <span class="toggler-icon"></span>
+      <span class="toggler-icon"></span>
+    </button>
+
+    <div
+      class="collapse navbar-collapse d-flex justify-content-between align-items-center"
+      id="mainNav"
+    >
+      <ul class="navbar-nav-custom mx-auto mb-2 mb-lg-0">
+        <!-- Visitante sin sesión -->
+        @if (!auth.isAuthenticated()) {
+          <li class="nav-item"><a class="nav-link-custom" routerLink="/">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link-custom" routerLink="/sedes">Sedes</a></li>
+          <li class="nav-item"><a class="nav-link-custom" routerLink="/espacios">Espacios</a></li>
+          <li class="nav-item"><a class="nav-link-custom" routerLink="/nosotros">Nosotros</a></li>
+        }
+
+        <!-- Rol CLIENTE -->
+        @if (auth.isCliente()) {
+          <li class="nav-item">
+            <a
+              class="nav-link-custom"
+              routerLink="/inicio"
+              [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="active-link"
+              >Inicio</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link-custom"
+              routerLink="/inicio/mis-reservas"
+              routerLinkActive="active-link"
+              >Mis Reservas</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link-custom" routerLink="/inicio/espacios" routerLinkActive="active-link"
+              >Espacios</a
+            >
+          </li>
+        }
+
+        <!-- Rol ADMIN: sin links aquí, la navegación vive en el sidebar de /admin -->
+      </ul>
+
+      <div class="nav-actions">
+        <!-- Sin sesión: registro + login -->
+        @if (!auth.isAuthenticated()) {
+          <a routerLink="/crear-usuario" class="btn-register-outline">Registrarse</a>
+          <a routerLink="/login" class="btn-login-outline">Iniciar Sesión</a>
+        } @else {
+          <!-- Con sesión: menú de usuario -->
+          <div class="user-menu-wrapper">
+            <button type="button" class="user-menu-trigger" (click)="toggleUserMenu()">
+              <span class="user-email">{{ auth.correo() }}</span>
+              <span class="user-role-badge" [class.role-admin]="auth.isAdmin()">{{
+                auth.rol()
+              }}</span>
+            </button>
+
+            @if (userMenuOpen()) {
+              <div class="user-dropdown">
+                <button
+                  type="button"
+                  class="dropdown-item-custom dropdown-item-edit"
+                  (click)="onEditarPerfil()"
+                >
+                  Editar Perfil
+                </button>
+                <button type="button" class="dropdown-item-custom" (click)="onLogout()">
+                  Cerrar Sesión
+                </button>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</nav>
