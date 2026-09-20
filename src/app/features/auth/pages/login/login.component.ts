@@ -97,7 +97,7 @@ export class LoginComponent {
           }
         },
         error: (error) => {
-          // Handle login error
+          this.isLoading.set(false);
           console.error('Login failed:', error);
           this.errorMessage.set('Credenciales inválidas.');
         },

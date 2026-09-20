@@ -1,0 +1,100 @@
+<!-- RUTA src\app\features\admin\pages\usuarios\usuarios-list\usuarios-list.component.ts -->
+
+<div class="mantenimiento-header">
+  <div>
+    <h2 class="mantenimiento-title">Usuarios</h2>
+    <p class="mantenimiento-subtitle">Gestiona las cuentas de administradores y clientes.</p>
+  </div>
+  <button type="button" class="btn-primary-custom" (click)="irACrear()">
+    + Nuevo Usuario
+  </button>
+</div>
+
+<div class="filtro-wrapper">
+  <input
+    type="text"
+    class="filtro-input"
+    placeholder="Buscar por nombre, apellido, DNI o correo..."
+    [value]="filtro()"
+    (input)="filtro.set($any($event.target).value)"
+  />
+</div>
+
+@if (errorMessage()) {
+  <div class="alert-error">{{ errorMessage() }}</div>
+}
+
+@if (isLoading()) {
+  <p class="estado-carga">Cargando usuarios...</p>
+} @else {
+  <div class="tabla-wrapper">
+    <table class="tabla-mantenimiento">
+      <thead>
+        <tr>
+          <th>Nombres</th>
+          <th>Apellidos</th>
+          <th>DNI</th>
+          <th>Correo</th>
+          <th>Teléfono</th>
+          <th>Rol</th>
+          <th>Estado</th>
+          <th class="col-acciones">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (usuario of usuariosFiltrados(); track usuario.idUsuario) {
+          <tr>
+            <td>{{ usuario.nombres }}</td>
+            <td>{{ usuario.apellidos }}</td>
+            <td>{{ usuario.dni }}</td>
+            <td>{{ usuario.correo }}</td>
+            <td>{{ usuario.telefono }}</td>
+            <td>
+              <span class="badge-rol" [class.badge-admin]="usuario.rol.idRol === 1">
+                {{ usuario.rol.nombre ?? ('Rol ' + usuario.rol.idRol) }}
+              </span>
+            </td>
+            <td>
+              <span class="badge-estado" [class.badge-inactivo]="!usuario.estado">
+                {{ usuario.estado ? 'Activo' : 'Inactivo' }}
+              </span>
+            </td>
+            <td class="col-acciones">
+              <button type="button" class="btn-icono btn-editar" (click)="irAEditar(usuario)" title="Editar">
+                ✏️
+              </button>
+              <button type="button" class="btn-icono btn-eliminar" (click)="pedirConfirmacionEliminar(usuario)" title="Eliminar">
+                🗑️
+              </button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="8" class="sin-resultados">No se encontraron usuarios.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}
+
+<!-- Modal de confirmación de borrado -->
+@if (usuarioAEliminar(); as usuario) {
+  <div class="modal-overlay" (click)="cancelarEliminar()">
+    <div class="modal-confirm" (click)="$event.stopPropagation()">
+      <h3>¿Eliminar usuario?</h3>
+      <p>
+        Esta acción eliminará a <strong>{{ usuario.nombres }} {{ usuario.apellidos }}</strong>
+        ({{ usuario.correo }}). No se puede deshacer.
+      </p>
+      <div class="modal-actions">
+        <button type="button" class="btn-secundario" (click)="cancelarEliminar()" [disabled]="eliminando()">
+          Cancelar
+        </button>
+        <button type="button" class="btn-peligro" (click)="confirmarEliminar()" [disabled]="eliminando()">
+          {{ eliminando() ? 'Eliminando...' : 'Sí, eliminar' }}
+        </button>
+      </div>
+    </div>
+  </div>
+}

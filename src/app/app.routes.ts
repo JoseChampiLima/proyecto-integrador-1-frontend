@@ -39,8 +39,20 @@ export const routes: Routes = [
       {
         path: '',
         loadComponent: () => import('./features/admin/pages/dashboard/dashboard.component').then(m => m.DashboardComponent)
+      },
+      {
+        path: 'usuarios',
+        loadComponent: () => import('./features/admin/pages/usuarios/usuarios-list/usuarios-list.component').then(m => m.UsuariosListComponent)
+      },
+      {
+        path: 'usuarios/nuevo',
+        loadComponent: () => import('./features/admin/pages/usuarios/usuario-form/usuario-form.component').then(m => m.UsuarioFormComponent)
+      },
+      {
+        path: 'usuarios/:id/editar',
+        loadComponent: () => import('./features/admin/pages/usuarios/usuario-form/usuario-form.component').then(m => m.UsuarioFormComponent)
       }
-      // TODO: 'usuarios', 'sedes', 'espacios', 'reservas', 'horarios', 'pagos'
+      // TODO: 'sedes', 'espacios', 'reservas', 'horarios', 'pagos'
     ]
   },
 

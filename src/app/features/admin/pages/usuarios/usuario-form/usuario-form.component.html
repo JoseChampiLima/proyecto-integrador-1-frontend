@@ -1,0 +1,87 @@
+<!-- RUTA src\app\features\admin\pages\usuarios\usuario-form\usuario-form.component.ts -->
+
+<div class="form-page">
+  <div class="mantenimiento-header">
+    <h2 class="mantenimiento-title">{{ modoEdicion() ? 'Editar Usuario' : 'Nuevo Usuario' }}</h2>
+  </div>
+
+  @if (errorMessage()) {
+    <div class="alert-error">{{ errorMessage() }}</div>
+  }
+
+  @if (isLoading()) {
+    <p class="estado-carga">Cargando usuario...</p>
+  } @else {
+    <form [formGroup]="usuarioForm" (ngSubmit)="onSubmit()" class="form-card">
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label" for="nombres">Nombres</label>
+          <input id="nombres" type="text" formControlName="nombres" class="form-input"
+            [class.is-invalid]="usuarioForm.get('nombres')?.touched && usuarioForm.get('nombres')?.invalid" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="apellidos">Apellidos</label>
+          <input id="apellidos" type="text" formControlName="apellidos" class="form-input"
+            [class.is-invalid]="usuarioForm.get('apellidos')?.touched && usuarioForm.get('apellidos')?.invalid" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="dni">DNI</label>
+          <input id="dni" type="text" formControlName="dni" maxlength="8" class="form-input"
+            [class.is-invalid]="usuarioForm.get('dni')?.touched && usuarioForm.get('dni')?.invalid" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="telefono">Teléfono</label>
+          <input id="telefono" type="text" formControlName="telefono" maxlength="9" class="form-input"
+            [class.is-invalid]="usuarioForm.get('telefono')?.touched && usuarioForm.get('telefono')?.invalid" />
+        </div>
+
+        <div class="form-group form-group-wide">
+          <label class="form-label" for="correo">Correo Electrónico</label>
+          <input id="correo" type="email" formControlName="correo" class="form-input"
+            [class.is-invalid]="usuarioForm.get('correo')?.touched && usuarioForm.get('correo')?.invalid" />
+        </div>
+
+        <div class="form-group" *ngIf="!modoEdicion()">
+          <label class="form-label" for="clave">
+            Contraseña {{ modoEdicion() ? '(dejar vacío para no cambiar)' : '' }}
+          </label>
+          <input id="clave" type="password" formControlName="clave" class="form-input"
+            [class.is-invalid]="usuarioForm.get('clave')?.touched && usuarioForm.get('clave')?.invalid" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="idRol">Rol</label>
+          <select id="idRol" formControlName="idRol" class="form-input"
+            [class.is-invalid]="usuarioForm.get('idRol')?.touched && usuarioForm.get('idRol')?.invalid">
+            <option [ngValue]="null" disabled>Seleccione un rol</option>
+            @for (rol of roles(); track rol.idRol) {
+              <option [ngValue]="rol.idRol">{{ rol.nombre ?? ('Rol ' + rol.idRol) }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="form-group form-group-checkbox">
+          <label class="form-label" for="estado">Estado</label>
+          <label class="switch-wrapper">
+            <input id="estado" type="checkbox" formControlName="estado" />
+            <span class="switch-track"><span class="switch-thumb"></span></span>
+            <span class="switch-text">{{ usuarioForm.get('estado')?.value ? 'Activo' : 'Inactivo' }}</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-secundario" (click)="cancelar()" [disabled]="isSaving()">
+          Cancelar
+        </button>
+        <button type="submit" class="btn-primary-custom" [disabled]="usuarioForm.invalid || isSaving()">
+          {{ isSaving() ? 'Guardando...' : (modoEdicion() ? 'Guardar Cambios' : 'Crear Usuario') }}
+        </button>
+      </div>
+    </form>
+  }
+</div>
