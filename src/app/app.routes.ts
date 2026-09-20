@@ -1,6 +1,10 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
 import { roleGuard } from './core/guards/role.guard';
+import { EspaciosListComponent } from './features/admin/pages/espacios/espacios-list/espacios-list.component';
+import { EspacioFormComponent } from './features/admin/pages/espacios/espacio-form/espacio-form.component';
+import { SedesListComponent } from './features/admin/pages/sedes/sedes-list/sedes-list.component';
+import { SedeFormComponent } from './features/admin/pages/sedes/sede-form/sede-form.component';
 
 export const routes: Routes = [
   {
@@ -51,7 +55,14 @@ export const routes: Routes = [
       {
         path: 'usuarios/:id/editar',
         loadComponent: () => import('./features/admin/pages/usuarios/usuario-form/usuario-form.component').then(m => m.UsuarioFormComponent)
-      }
+      },
+      { path: 'sedes', component: SedesListComponent },
+      { path: 'sedes/nuevo', component: SedeFormComponent },
+      { path: 'sedes/:id/editar', component: SedeFormComponent },
+      
+      { path: 'espacios', component: EspaciosListComponent },
+      { path: 'espacios/nuevo', component: EspacioFormComponent },
+      { path: 'espacios/:id/editar', component: EspacioFormComponent },
       // TODO: 'sedes', 'espacios', 'reservas', 'horarios', 'pagos'
     ]
   },

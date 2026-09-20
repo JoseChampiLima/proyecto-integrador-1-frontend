@@ -1,0 +1,94 @@
+<!-- RUTA src\app\features\admin\pages\sedes\sedes-list\sedes-list.component.ts -->
+
+<div class="mantenimiento-header">
+  <div>
+    <h2 class="mantenimiento-title">Sedes</h2>
+    <p class="mantenimiento-subtitle">Gestiona las sedes de los espacios deportivos.</p>
+  </div>
+  <button type="button" class="btn-primary-custom" (click)="irACrear()">
+    + Nueva Sede
+  </button>
+</div>
+
+<div class="filtro-wrapper">
+  <input
+    type="text"
+    class="filtro-input"
+    placeholder="Buscar por nombre..."
+    [value]="filtro()"
+    (input)="filtro.set($any($event.target).value)"
+  />
+</div>
+
+@if (errorMessage()) {
+  <div class="alert-error">{{ errorMessage() }}</div>
+}
+
+@if (isLoading()) {
+  <p class="estado-carga">Cargando sedes...</p>
+} @else {
+  <div class="tabla-wrapper">
+    <table class="tabla-mantenimiento">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Dirección</th>
+          <th>Distrito</th>
+          <th>Telefono</th>
+          <th>Estado</th>
+          <th class="col-acciones">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (sede of sedesFiltradas(); track sede.idSede) {
+          <tr>
+            <td>{{ sede.nombre }}</td>
+            <td>{{ sede.descripcion }}</td>
+            <td>{{ sede.direccion }}</td>
+            <td>{{ sede.distrito }}</td>
+            <td>{{ sede.telefono }}</td>
+            <td>
+              <span class="badge-estado" [class.badge-inactivo]="!sede.estado">
+                {{ sede.estado ? 'Activo' : 'Inactivo' }}
+              </span>
+            </td>
+            <td class="col-acciones">
+              <button type="button" class="btn-icono btn-editar" (click)="irAEditar(sede)" title="Editar">
+                ✏️
+              </button>
+              <button type="button" class="btn-icono btn-eliminar" (click)="pedirConfirmacionEliminar(sede)" title="Eliminar">
+                🗑️
+              </button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="8" class="sin-resultados">No se encontraron sedes.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}
+
+<!-- Modal de confirmación de borrado -->
+@if (sedeAEliminar(); as sede) {
+  <div class="modal-overlay" (click)="cancelarEliminar()">
+    <div class="modal-confirm" (click)="$event.stopPropagation()">
+      <h3>¿Eliminar sede?</h3>
+      <p>
+        Esta acción eliminará a <strong>{{ sede.nombre }}</strong>
+        ({{ sede.descripcion }}). No se puede deshacer.
+      </p>
+      <div class="modal-actions">
+        <button type="button" class="btn-secundario" (click)="cancelarEliminar()" [disabled]="eliminando()">
+          Cancelar
+        </button>
+        <button type="button" class="btn-peligro" (click)="confirmarEliminar()" [disabled]="eliminando()">
+          {{ eliminando() ? 'Eliminando...' : 'Sí, eliminar' }}
+        </button>
+      </div>
+    </div>
+  </div>
+}

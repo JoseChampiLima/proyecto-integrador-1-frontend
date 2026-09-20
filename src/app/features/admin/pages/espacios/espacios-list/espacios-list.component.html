@@ -1,0 +1,116 @@
+<!-- RUTA src\app\features\admin\pages\espacios\espacios-list\espacios-list.component.ts -->
+
+<div class="mantenimiento-header">
+  <div>
+    <h2 class="mantenimiento-title">Espacios Deportivos</h2>
+    <p class="mantenimiento-subtitle">Gestiona las canchas y espacios disponibles para reserva.</p>
+  </div>
+  <button type="button" class="btn-primary-custom" (click)="irACrear()">
+    + Nuevo Espacio
+  </button>
+</div>
+
+<div class="filtros-wrapper">
+  <input
+    type="text"
+    class="filtro-input"
+    placeholder="Buscar por nombre o descripción..."
+    [value]="filtro()"
+    (input)="filtro.set($any($event.target).value)"
+  />
+
+  <select class="filtro-select" [value]="filtroSede()" (change)="filtroSede.set($any($event.target).value)">
+    <option value="">Todas las sedes</option>
+    @for (sede of sedes(); track sede.idSede) {
+      <option [value]="sede.idSede">{{ sede.nombre }}</option>
+    }
+  </select>
+
+  <select class="filtro-select" [value]="filtroTipo()" (change)="filtroTipo.set($any($event.target).value)">
+    <option value="">Todos los tipos</option>
+    @for (tipo of tipos(); track tipo.idTipoEspacio) {
+      <option [value]="tipo.idTipoEspacio">{{ tipo.nombre }}</option>
+    }
+  </select>
+</div>
+
+@if (errorMessage()) {
+  <div class="alert-error">{{ errorMessage() }}</div>
+}
+
+@if (isLoading()) {
+  <p class="estado-carga">Cargando espacios...</p>
+} @else {
+  <div class="tabla-wrapper">
+    <table class="tabla-mantenimiento">
+      <thead>
+        <tr>
+          <th class="col-foto">Foto</th>
+          <th>Nombre</th>
+          <th>Sede</th>
+          <th>Tipo</th>
+          <th>Capacidad</th>
+          <th>Precio/Hora</th>
+          <th>Estado</th>
+          <th class="col-acciones">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (espacio of espaciosFiltrados(); track espacio.idEspacio) {
+          <tr>
+            <td class="col-foto">
+              @if (espacio.foto) {
+                <img [src]="urlFoto(espacio.foto)" alt="Foto de {{ espacio.nombre }}" class="miniatura-foto" />
+              } @else {
+                <span class="sin-foto">Sin foto</span>
+              }
+            </td>
+            <td>{{ espacio.nombre }}</td>
+            <td>{{ espacio.sede?.nombre ?? '—' }}</td>
+            <td>{{ espacio.tipoEspacio?.nombre ?? '—' }}</td>
+            <td>{{ espacio.capacidad }}</td>
+            <td>S/ {{ espacio.precioHora | number:'1.2-2' }}</td>
+            <td>
+              <span class="badge-estado" [class.badge-inactivo]="espacio.estado === 'INACTIVO'">
+                {{ espacio.estado === 'INACTIVO' ? 'Inactivo' : 'Activo' }}
+              </span>
+            </td>
+            <td class="col-acciones">
+              <button type="button" class="btn-icono btn-editar" (click)="irAEditar(espacio)" title="Editar">
+                ✏️
+              </button>
+              <button type="button" class="btn-icono btn-eliminar" (click)="pedirConfirmacionEliminar(espacio)" title="Eliminar">
+                🗑️
+              </button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="8" class="sin-resultados">No se encontraron espacios.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}
+
+<!-- Modal de confirmación de borrado -->
+@if (espacioAEliminar(); as espacio) {
+  <div class="modal-overlay" (click)="cancelarEliminar()">
+    <div class="modal-confirm" (click)="$event.stopPropagation()">
+      <h3>¿Eliminar espacio?</h3>
+      <p>
+        Esta acción eliminará el espacio <strong>{{ espacio.nombre }}</strong>.
+        No se puede deshacer.
+      </p>
+      <div class="modal-actions">
+        <button type="button" class="btn-secundario" (click)="cancelarEliminar()" [disabled]="eliminando()">
+          Cancelar
+        </button>
+        <button type="button" class="btn-peligro" (click)="confirmarEliminar()" [disabled]="eliminando()">
+          {{ eliminando() ? 'Eliminando...' : 'Sí, eliminar' }}
+        </button>
+      </div>
+    </div>
+  </div>
+}

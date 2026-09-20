@@ -1,7 +1,10 @@
+import { Sede } from "./sede.model";
+import { TipoEspacio } from "./tipo-espacio.model";
+
 export interface EspacioDeportivo {
   idEspacio?: number;
-  idSede: number;
-  idTipoEspacio: number;
+  sede: Sede;
+  tipoEspacio: TipoEspacio;
   foto?: string;
   nombre: string;
   descripcion: string;

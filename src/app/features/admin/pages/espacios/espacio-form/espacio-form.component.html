@@ -1,0 +1,111 @@
+<!-- RUTA src\app\features\admin\pages\espacios\espacio-form\espacio-form.component.ts -->
+
+<div class="form-page">
+  <div class="mantenimiento-header">
+    <h2 class="mantenimiento-title">{{ modoEdicion() ? 'Editar Espacio' : 'Nuevo Espacio' }}</h2>
+  </div>
+
+  @if (errorMessage()) {
+    <div class="alert-error">{{ errorMessage() }}</div>
+  }
+
+  @if (isLoading()) {
+    <p class="estado-carga">Cargando espacio...</p>
+  } @else {
+    <form [formGroup]="espacioForm" (ngSubmit)="onSubmit()" class="form-card">
+
+      <div class="foto-wrapper">
+        <div class="foto-preview">
+          @if (previsualizacion()) {
+            <img [src]="previsualizacion()" alt="Foto del espacio" />
+          } @else {
+            <span class="foto-placeholder">Sin foto</span>
+          }
+        </div>
+
+        <div class="foto-acciones">
+          <label class="btn-secundario btn-file">
+            Elegir foto
+            <input type="file" accept="image/*" (change)="onArchivoSeleccionado($event)" hidden />
+          </label>
+
+          @if (previsualizacion() && modoEdicion() && !archivoSeleccionado()) {
+            <button type="button" class="btn-peligro-outline" (click)="eliminarFoto()" [disabled]="subiendoFoto()">
+              Quitar foto
+            </button>
+          }
+
+          @if (subiendoFoto()) {
+            <span class="foto-subiendo">Subiendo foto...</span>
+          }
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group form-group-wide">
+          <label class="form-label" for="nombre">Nombre</label>
+          <input id="nombre" type="text" formControlName="nombre" class="form-input"
+            [class.is-invalid]="espacioForm.get('nombre')?.touched && espacioForm.get('nombre')?.invalid" />
+        </div>
+
+        <div class="form-group form-group-wide">
+          <label class="form-label" for="descripcion">Descripción</label>
+          <textarea id="descripcion" formControlName="descripcion" class="form-input form-textarea" rows="3"
+            [class.is-invalid]="espacioForm.get('descripcion')?.touched && espacioForm.get('descripcion')?.invalid"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="idSede">Sede</label>
+          <select id="idSede" formControlName="idSede" class="form-input"
+            [class.is-invalid]="espacioForm.get('idSede')?.touched && espacioForm.get('idSede')?.invalid">
+            <option [ngValue]="null" disabled>Seleccione una sede</option>
+            @for (sede of sedes(); track sede.idSede) {
+              <option [ngValue]="sede.idSede">{{ sede.nombre }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="idTipoEspacio">Tipo de espacio</label>
+          <select id="idTipoEspacio" formControlName="idTipoEspacio" class="form-input"
+            [class.is-invalid]="espacioForm.get('idTipoEspacio')?.touched && espacioForm.get('idTipoEspacio')?.invalid">
+            <option [ngValue]="null" disabled>Seleccione un tipo</option>
+            @for (tipo of tipos(); track tipo.idTipoEspacio) {
+              <option [ngValue]="tipo.idTipoEspacio">{{ tipo.nombre }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="capacidad">Capacidad</label>
+          <input id="capacidad" type="number" min="1" formControlName="capacidad" class="form-input"
+            [class.is-invalid]="espacioForm.get('capacidad')?.touched && espacioForm.get('capacidad')?.invalid" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="precioHora">Precio por hora (S/)</label>
+          <input id="precioHora" type="number" min="0" step="0.10" formControlName="precioHora" class="form-input"
+            [class.is-invalid]="espacioForm.get('precioHora')?.touched && espacioForm.get('precioHora')?.invalid" />
+        </div>
+
+        <div class="form-group form-group-checkbox">
+          <label class="form-label" for="estado">Estado</label>
+          <label class="switch-wrapper">
+            <input id="estado" type="checkbox" formControlName="estadoActivo" />
+            <span class="switch-track"><span class="switch-thumb"></span></span>
+            <span class="switch-text">{{ espacioForm.get('estadoActivo')?.value ? 'Activo' : 'Inactivo' }}</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-secundario" (click)="cancelar()" [disabled]="isSaving()">
+          Cancelar
+        </button>
+        <button type="submit" class="btn-primary-custom" [disabled]="espacioForm.invalid || isSaving()">
+          {{ isSaving() ? 'Guardando...' : (modoEdicion() ? 'Guardar Cambios' : 'Crear Espacio') }}
+        </button>
+      </div>
+    </form>
+  }
+</div>
