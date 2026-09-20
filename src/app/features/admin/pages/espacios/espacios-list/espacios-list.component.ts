@@ -91,8 +91,20 @@ export class EspaciosListComponent implements OnInit {
   }
 
   urlFoto(foto: string): string {
-    return `${this.urlServidor}${foto}`;
+  if (!foto) {
+    return '';
   }
+
+  // Si ya contiene la ruta /uploads/espacios/
+  if (foto.startsWith('/uploads/espacios/')) {
+    const nombreArchivo = foto.substring('/uploads/espacios/'.length);
+
+    return `${this.urlServidor}/uploads/espacios/${encodeURIComponent(nombreArchivo)}`;
+  }
+
+  // Si solo viene el nombre del archivo
+  return `${this.urlServidor}/uploads/espacios/${encodeURIComponent(foto)}`;
+}
 
   irACrear(): void {
     this.router.navigate(['/admin/espacios/nuevo']);
