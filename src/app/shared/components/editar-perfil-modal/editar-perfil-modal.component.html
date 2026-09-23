@@ -1,0 +1,100 @@
+<!-- RUTA src\app\shared\components\editar-perfil-modal\editar-perfil-modal.component.ts -->
+
+<div class="modal-overlay">
+  <div class="modal-perfil">
+    <div class="modal-perfil-header">
+      <h3>Editar Perfil</h3>
+      <button type="button" class="btn-cerrar" (click)="cerrar()" aria-label="Cerrar">✕</button>
+    </div>
+
+    @if (errorMessage()) {
+      <div class="alert-error">{{ errorMessage() }}</div>
+    }
+
+    @if (successMessage()) {
+      <div class="alert-success">{{ successMessage() }}</div>
+    }
+
+    @if (isLoading()) {
+      <p class="estado-carga">Cargando tus datos...</p>
+    } @else {
+      <form [formGroup]="perfilForm" (ngSubmit)="onSubmit()">
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label" for="dni">DNI</label>
+            <input id="dni" type="text" class="form-input" [value]="dni()" disabled />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="correo">Correo Electrónico</label>
+            <input id="correo" type="email" class="form-input" [value]="correo()" disabled />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="nombres">Nombres</label>
+            <input id="nombres" type="text" formControlName="nombres" class="form-input"
+              [class.is-invalid]="perfilForm.get('nombres')?.touched && perfilForm.get('nombres')?.invalid" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="apellidos">Apellidos</label>
+            <input id="apellidos" type="text" formControlName="apellidos" class="form-input"
+              [class.is-invalid]="perfilForm.get('apellidos')?.touched && perfilForm.get('apellidos')?.invalid" />
+          </div>
+
+          <div class="form-group form-group-wide">
+            <label class="form-label" for="telefono">Teléfono</label>
+            <input id="telefono" type="text" formControlName="telefono" maxlength="9" class="form-input" appSoloNumeros
+              [class.is-invalid]="perfilForm.get('telefono')?.touched && perfilForm.get('telefono')?.invalid" />
+          </div>
+        </div>
+
+        <p class="hint-readonly">El DNI y el correo no se pueden modificar desde aquí.</p>
+
+        <div class="clave-toggle">
+          <label class="switch-wrapper">
+            <input type="checkbox" formControlName="cambiarClave" />
+            <span class="switch-track"><span class="switch-thumb"></span></span>
+            <span class="switch-text">Cambiar contraseña</span>
+          </label>
+        </div>
+
+        @if (perfilForm.get('cambiarClave')?.value) {
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="claveActual">Contraseña actual</label>
+              <input id="claveActual" type="password" formControlName="claveActual" class="form-input"
+                [class.is-invalid]="perfilForm.get('claveActual')?.touched && perfilForm.get('claveActual')?.invalid" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="nuevaClave">Nueva contraseña</label>
+              <input id="nuevaClave" type="password" formControlName="nuevaClave" class="form-input"
+                [class.is-invalid]="perfilForm.get('nuevaClave')?.touched && perfilForm.get('nuevaClave')?.invalid" />
+            </div>
+
+            <div class="form-group form-group-wide">
+              <label class="form-label" for="confirmarClave">Confirmar nueva contraseña</label>
+              <input id="confirmarClave" type="password" formControlName="confirmarClave" class="form-input"
+                [class.is-invalid]="perfilForm.get('confirmarClave')?.touched && perfilForm.errors?.['claveNoCoincide']" />
+            </div>
+          </div>
+
+          @if (perfilForm.get('confirmarClave')?.touched && perfilForm.errors?.['claveNoCoincide']) {
+            <p class="hint-error">Las contraseñas no coinciden.</p>
+          }
+        }
+
+        <div class="form-actions">
+          <button type="button" class="btn-secundario" (click)="cerrar()" [disabled]="isSaving()">
+            Cancelar
+          </button>
+          <button type="submit" class="btn-primary-custom" [disabled]="perfilForm.invalid || isSaving()">
+            {{ isSaving() ? 'Guardando...' : 'Guardar Cambios' }}
+          </button>
+        </div>
+      </form>
+    }
+  </div>
+</div>

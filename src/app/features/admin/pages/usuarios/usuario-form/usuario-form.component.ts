@@ -8,11 +8,12 @@ import { RolService } from '../../../../../core/services/rol.service';
 import { Usuario } from '../../../../../core/models/usuario.model';
 import { Rol } from "../../../../../core/models/rol.model";
 import { NgIf } from '@angular/common';
+import { SoloNumerosDirective } from '../../../../../shared/directives/solo-numeros.directive';
 
 @Component({
   selector: 'app-usuario-form',
   standalone: true,
-  imports: [ReactiveFormsModule, NgIf],
+  imports: [ReactiveFormsModule, NgIf, SoloNumerosDirective],
   templateUrl: './usuario-form.component.html',
   styleUrl: './usuario-form.component.css'
 })

@@ -9,11 +9,12 @@ import { Usuario } from '../../../../../core/models/usuario.model';
 import { Rol } from "../../../../../core/models/rol.model";
 import { SedeService } from '../../../../../core/services/sede.service';
 import { Sede } from '../../../../../core/models/sede.model';
+import { SoloNumerosDirective } from '../../../../../shared/directives/solo-numeros.directive';
 
 @Component({
   selector: 'app-sede-form',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, SoloNumerosDirective],
   templateUrl: './sede-form.component.html',
   styleUrl: './sede-form.component.css'
 })

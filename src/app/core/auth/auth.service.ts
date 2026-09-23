@@ -79,6 +79,16 @@ export class AuthService {
     this.correoSignal.set(null);
   }
 
+  /** Actualiza el correo de la sesión activa (localStorage o sessionStorage, el que esté en uso) y el signal, sin tocar el token. */
+  actualizarCorreoSesion(nuevoCorreo: string): void {
+    for (const storage of [localStorage, sessionStorage]) {
+      if (storage.getItem(TOKEN_KEY)) {
+        storage.setItem(CORREO_KEY, nuevoCorreo);
+      }
+    }
+    this.correoSignal.set(nuevoCorreo);
+  }
+
   /** Header Authorization listo para el interceptor, ej: "Bearer eyJhbGciOi..." */
   getAuthHeader(): string | null {
     const token = this.tokenSignal();

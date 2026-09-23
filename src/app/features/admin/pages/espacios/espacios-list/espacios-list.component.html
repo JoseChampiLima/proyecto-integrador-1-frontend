@@ -66,8 +66,8 @@
               }
             </td>
             <td>{{ espacio.nombre }}</td>
-            <td>{{ espacio.sede?.nombre ?? '—' }}</td>
-            <td>{{ espacio.tipoEspacio?.nombre ?? '—' }}</td>
+            <td>{{ espacio.sede.nombre }}</td>
+            <td>{{ espacio.tipoEspacio.nombre }}</td>
             <td>{{ espacio.capacidad }}</td>
             <td>S/ {{ espacio.precioHora | number:'1.2-2' }}</td>
             <td>

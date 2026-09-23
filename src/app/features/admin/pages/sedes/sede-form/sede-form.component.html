@@ -41,7 +41,7 @@
 
         <div class="form-group">
           <label class="form-label" for="telefono">Teléfono</label>
-          <input id="telefono" type="text" formControlName="telefono" maxlength="9" class="form-input"
+          <input id="telefono" type="text" formControlName="telefono" maxlength="9" class="form-input" appSoloNumeros
             [class.is-invalid]="sedeForm.get('telefono')?.touched && sedeForm.get('telefono')?.invalid" />
         </div>
 
