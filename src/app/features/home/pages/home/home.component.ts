@@ -16,7 +16,7 @@ import { FormsModule } from '@angular/forms';
 export class HomeComponent implements OnInit {
   sedes = signal<Sede[]>([]);
   featuredEspacios = signal<EspacioDeportivo[]>([]);
-
+  espacios = signal<EspacioDeportivo[]>([]);
   // Search parameters (signals)
   selectedSedeId = signal<string>('');
   selectedTipo = signal<string>('');
@@ -36,13 +36,21 @@ export class HomeComponent implements OnInit {
 
     // Load available spaces and show the top 3 featured ones
     this.espacioService.listar().subscribe({
-      next: (data) => {
-        const available = data.filter(e => e.estado === 'DISPONIBLE').slice(0, 3);
-        // If not enough available, just take any 3
-        this.featuredEspacios.set(available.length > 0 ? available : data.slice(0, 3));
-      },
-      error: (err) => console.error('Error loading spaces', err)
-    });
+  next: (data) => {
+
+    // Guardar los espacios que vienen del API
+    this.espacios.set(data);
+
+    const available = data
+      .filter(e => e.estado === 'DISPONIBLE')
+      .slice(0, 3);
+
+    this.featuredEspacios.set(
+      available.length > 0 ? available : data.slice(0, 3)
+    );
+  },
+  error: (err) => console.error('Error loading spaces', err)
+});
   }
 
   onSearch() {

@@ -69,11 +69,12 @@
                   class="search-select"
                 >
                   <option value="">Todos los deportes</option>
-                  <option value="Tenis Arcilla">Tenis de Arcilla</option>
-                  <option value="Tenis Cemento">Tenis Rápido (Cemento)</option>
-                  <option value="Fútbol Sintético">Fútbol Sintético</option>
-                  <option value="Paleta Frontón">Paleta Frontón</option>
-                  <option value="Natación">Piscina Temperada</option>
+
+                  @for (espacio of espacios(); track espacio.idEspacio) {
+                    <option [value]="espacio.nombre">
+                      {{ espacio.nombre }}
+                    </option>
+                  }
                 </select>
               </div>
             </div>
