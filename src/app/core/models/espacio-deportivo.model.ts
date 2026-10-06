@@ -10,5 +10,5 @@ export interface EspacioDeportivo {
   descripcion: string;
   capacidad: number;
   precioHora: number;
-  estado?: string;
+  estado: string;
 }

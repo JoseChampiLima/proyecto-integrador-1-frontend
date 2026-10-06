@@ -1,0 +1,33 @@
+<!-- RUTA src\app\features\espacios\pages\espacios-list\espacios-list.component.ts -->
+
+<section class="sedes-page">
+  <div class="sedes-header">
+    <h2 class="sedes-title">Sedes Deportivas</h2>
+    <p class="sedes-subtitle">Elige una sede y encuentra el espacio ideal para tu próxima reserva.</p>
+  </div>
+
+  @if (errorMessage()) {
+    <div class="alert-error">{{ errorMessage() }}</div>
+  }
+
+  @if (isLoading()) {
+    <p class="estado-carga">Cargando sedes...</p>
+  } @else {
+    <div class="sedes-grid">
+      @for (sede of sedes(); track sede.idSede) {
+        <article class="sede-card">
+          <div class="sede-card-body">
+            <h3 class="sede-nombre">{{ sede.nombre }}</h3>
+            <p class="sede-direccion">📍 {{ sede.direccion }} - {{ sede.distrito }}</p>
+            <p class="sede-telefono">📞 {{ sede.telefono }}</p>
+            <!-- <div class="sede-footer">
+              {{ sede.descripcion }}
+            </div> -->
+          </div>
+        </article>
+      } @empty {
+        <p class="sin-resultados">No hay sedes disponibles.</p>
+      }
+    </div>
+  }
+</section>

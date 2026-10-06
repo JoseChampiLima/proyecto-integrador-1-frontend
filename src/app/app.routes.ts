@@ -19,6 +19,14 @@ export const routes: Routes = [
     path: 'crear-usuario',
     loadComponent: () => import('./features/usuarios/pages/crear-usuario/crear-usuario.component').then(m => m.CrearUsuarioComponent)
   },
+  {
+    path: 'sedes',
+    loadComponent: () => import('./features/sedes/pages/sedes-list/sedes-list.component').then(m => m.SedesListComponent)
+  },
+  {
+    path: 'espacios',
+    loadComponent: () => import('./features/espacios/pages/espacios-list/espacios-list.component').then(m => m.EspaciosListComponent)
+  },
 
   // --- Zona CLIENTE ---
   {

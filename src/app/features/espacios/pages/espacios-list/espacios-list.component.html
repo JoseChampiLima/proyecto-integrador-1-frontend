@@ -1,0 +1,57 @@
+<!-- RUTA src\app\features\espacios\pages\espacios-list\espacios-list.component.ts -->
+
+<section class="espacios-page">
+  <div class="espacios-header">
+    <h2 class="espacios-title">Espacios Deportivos</h2>
+    <p class="espacios-subtitle">Elige una sede y encuentra el espacio ideal para tu próxima reserva.</p>
+  </div>
+
+  <div class="filtro-sedes">
+    <button type="button" class="chip-sede" [class.chip-activo]="sedeSeleccionada() === null"
+      (click)="filtrarPorSede(null)">
+      Todas las sedes
+    </button>
+    @for (sede of sedes(); track sede.idSede) {
+      <button type="button" class="chip-sede" [class.chip-activo]="sedeSeleccionada() === sede.idSede"
+        (click)="filtrarPorSede(sede.idSede)">
+        {{ sede.nombre }}
+      </button>
+    }
+  </div>
+
+  @if (errorMessage()) {
+    <div class="alert-error">{{ errorMessage() }}</div>
+  }
+
+  @if (isLoading()) {
+    <p class="estado-carga">Cargando espacios...</p>
+  } @else {
+    <div class="espacios-grid">
+      @for (espacio of espacios(); track espacio.idEspacio) {
+        <article class="espacio-card">
+          <div class="espacio-card-imagen">
+            <img [src]="getFotoUrl(espacio.foto)" [alt]="espacio.nombre" loading="lazy" />
+            <span class="badge-disponibilidad" [class.badge-no-disponible]="!esDisponible(espacio.estado)">
+              {{ espacio.estado }}
+            </span>
+          </div>
+
+          <div class="espacio-card-body">
+            <span class="espacio-tipo">{{ espacio.tipoEspacio?.nombre }}</span>
+            <h3 class="espacio-nombre">{{ espacio.nombre }}</h3>
+            <p class="espacio-sede">📍 {{ espacio.sede?.nombre }}</p>
+
+            <div class="espacio-footer">
+              <span class="espacio-precio">S/ {{ espacio.precioHora }} <small>/ hora</small></span>
+              <button type="button" class="btn-reservar" [disabled]="!esDisponible(espacio.estado)">
+                Reservar
+              </button>
+            </div>
+          </div>
+        </article>
+      } @empty {
+        <p class="sin-resultados">No hay espacios disponibles para esta sede.</p>
+      }
+    </div>
+  }
+</section>
