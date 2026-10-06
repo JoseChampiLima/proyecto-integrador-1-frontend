@@ -5,6 +5,7 @@ import { EspaciosListComponent } from './features/admin/pages/espacios/espacios-
 import { EspacioFormComponent } from './features/admin/pages/espacios/espacio-form/espacio-form.component';
 import { SedesListComponent } from './features/admin/pages/sedes/sedes-list/sedes-list.component';
 import { SedeFormComponent } from './features/admin/pages/sedes/sede-form/sede-form.component';
+import { HorariosListComponent } from './features/horarios/pages/horarios-list/horarios-list.component';
 
 export const routes: Routes = [
   {
@@ -71,6 +72,8 @@ export const routes: Routes = [
       { path: 'espacios', component: EspaciosListComponent },
       { path: 'espacios/nuevo', component: EspacioFormComponent },
       { path: 'espacios/:id/editar', component: EspacioFormComponent },
+
+      { path: 'horarios', component: HorariosListComponent },
       // TODO: 'sedes', 'espacios', 'reservas', 'horarios', 'pagos'
     ]
   },
