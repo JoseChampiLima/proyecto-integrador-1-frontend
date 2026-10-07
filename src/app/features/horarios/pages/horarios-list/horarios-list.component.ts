@@ -3,7 +3,7 @@ import { Horario } from '../../../../core/models/horario.mode';
 import { EspacioDeportivo } from '../../../../core/models/espacio-deportivo.model';
 import { HorarioService } from '../../../../core/services/horario.service';
 import { EspacioDeportivoService } from '../../../../core/services/espacio-deportivo.service';
-
+import { Router } from '@angular/router';
 
 
 
@@ -25,7 +25,8 @@ export class HorariosListComponent {
 
   constructor(
     private horarioService: HorarioService,
-    private espacioService: EspacioDeportivoService
+    private espacioService: EspacioDeportivoService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -201,9 +202,9 @@ formatearHora(hora: string): string {
 // ==========================================
 
 nuevoHorario(): void {
-
-  console.log('Nuevo horario');
-
+  this.router.navigate([
+    '/admin/horarios/nuevo'
+  ]);
 }
 
 
@@ -213,10 +214,15 @@ nuevoHorario(): void {
 
 editarHorario(horario: Horario): void {
 
-  console.log(
-    'Editar horario:',
-    horario
-  );
+  if (!horario.idHorario) {
+    return;
+  }
+
+  this.router.navigate([
+    '/admin/horarios',
+    horario.idHorario,
+    'editar'
+  ]);
 
 }
 

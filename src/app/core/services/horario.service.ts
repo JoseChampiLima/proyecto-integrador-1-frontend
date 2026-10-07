@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Horario } from '../models/horario.mode';
+import { HorarioRequest } from '../interfaces/horario-request.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -28,13 +29,23 @@ export class HorarioService {
     return this.http.get<Horario[]>(`${this.apiUrl}/espacio/${idEspacio}/dia/${dia}`);
   }
 
-  guardar(horario: Horario): Observable<Horario> {
-    return this.http.post<Horario>(this.apiUrl, horario);
-  }
+  guardar(request: HorarioRequest): Observable<Horario> {
+  return this.http.post<Horario>(
+    this.apiUrl,
+    request
+  );
+}
 
-  actualizar(id: number, horario: Horario): Observable<Horario> {
-    return this.http.put<Horario>(`${this.apiUrl}/${id}`, horario);
-  }
+actualizar(
+  id: number,
+  request: HorarioRequest
+): Observable<Horario> {
+
+  return this.http.put<Horario>(
+    `${this.apiUrl}/${id}`,
+    request
+  );
+}
 
   eliminar(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);

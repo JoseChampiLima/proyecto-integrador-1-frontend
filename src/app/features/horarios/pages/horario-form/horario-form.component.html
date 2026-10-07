@@ -1,0 +1,261 @@
+<div class="form-page">
+
+  <div class="mantenimiento-header">
+
+    <div>
+      <h2 class="mantenimiento-title">
+        {{ modoEdicion() ? 'Editar Horario' : 'Nuevo Horario' }}
+      </h2>
+
+      <p class="mantenimiento-subtitle">
+        {{
+          modoEdicion()
+            ? 'Modifica la configuración del horario.'
+            : 'Registra un nuevo horario para un espacio deportivo.'
+        }}
+      </p>
+    </div>
+
+  </div>
+
+
+  @if (errorMessage()) {
+
+    <div class="alert-error">
+      {{ errorMessage() }}
+    </div>
+
+  }
+
+
+  @if (isLoading()) {
+
+    <p class="estado-carga">
+      Cargando horario...
+    </p>
+
+  } @else {
+
+    <form
+      [formGroup]="horarioForm"
+      (ngSubmit)="onSubmit()"
+      class="form-card">
+
+
+      <div class="form-grid">
+
+
+        <!-- ESPACIO -->
+
+        <div class="form-group">
+
+          <label
+            class="form-label"
+            for="idEspacio">
+
+            Espacio deportivo
+
+          </label>
+
+          <select
+            id="idEspacio"
+            formControlName="idEspacio"
+            class="form-input"
+            [class.is-invalid]="
+              horarioForm.get('idEspacio')?.touched &&
+              horarioForm.get('idEspacio')?.invalid
+            ">
+
+            <option value="">
+              Seleccione un espacio
+            </option>
+
+            @for (
+              espacio of espacios();
+              track espacio.idEspacio
+            ) {
+
+              <option
+                [value]="espacio.idEspacio">
+
+                {{ espacio.nombre }}
+
+              </option>
+
+            }
+
+          </select>
+
+          @if (
+            horarioForm.get('idEspacio')?.touched &&
+            horarioForm.get('idEspacio')?.invalid
+          ) {
+
+            <span class="error-text">
+              Seleccione un espacio deportivo.
+            </span>
+
+          }
+
+        </div>
+
+
+        <!-- DÍA -->
+
+        <div class="form-group">
+
+          <label
+            class="form-label"
+            for="diaSemana">
+
+            Día de la semana
+
+          </label>
+
+          <select
+            id="diaSemana"
+            formControlName="diaSemana"
+            class="form-input">
+
+            <option value="">
+              Seleccione un día
+            </option>
+
+            @for (
+              dia of diasSemana;
+              track dia.value
+            ) {
+
+              <option [value]="dia.value">
+                {{ dia.label }}
+              </option>
+
+            }
+
+          </select>
+
+        </div>
+
+
+        <!-- HORA INICIO -->
+
+        <div class="form-group">
+
+          <label
+            class="form-label"
+            for="horaInicio">
+
+            Hora inicio
+
+          </label>
+
+          <input
+            id="horaInicio"
+            type="time"
+            formControlName="horaInicio"
+            class="form-input"
+          />
+
+        </div>
+
+
+        <!-- HORA FIN -->
+
+        <div class="form-group">
+
+          <label
+            class="form-label"
+            for="horaFin">
+
+            Hora fin
+
+          </label>
+
+          <input
+            id="horaFin"
+            type="time"
+            formControlName="horaFin"
+            class="form-input"
+          />
+
+        </div>
+
+
+        <!-- ESTADO -->
+
+        <div class="form-group">
+
+          <label class="form-label">
+            Estado
+          </label>
+
+          <label class="switch-wrapper">
+
+            <input
+              type="checkbox"
+              formControlName="estado"
+            />
+
+            <span class="switch-track">
+              <span class="switch-thumb"></span>
+            </span>
+
+            <span class="switch-text">
+
+              {{
+                horarioForm.get('estado')?.value
+                  ? 'Activo'
+                  : 'Inactivo'
+              }}
+
+            </span>
+
+          </label>
+
+        </div>
+
+      </div>
+
+
+      <!-- BOTONES -->
+
+      <div class="form-actions">
+
+        <button
+          type="button"
+          class="btn-secundario"
+          (click)="cancelar()"
+          [disabled]="isSaving()">
+
+          Cancelar
+
+        </button>
+
+
+        <button
+          type="submit"
+          class="btn-primary-custom"
+          [disabled]="
+            horarioForm.invalid ||
+            isSaving()
+          ">
+
+          {{
+            isSaving()
+              ? 'Guardando...'
+              : (
+                  modoEdicion()
+                    ? 'Guardar Cambios'
+                    : 'Crear Horario'
+                )
+          }}
+
+        </button>
+
+      </div>
+
+    </form>
+
+  }
+
+</div>
