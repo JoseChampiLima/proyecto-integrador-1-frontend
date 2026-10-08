@@ -116,7 +116,7 @@ export const routes: Routes = [
 
       { 
         path: 'metodos-pago',
-        loadComponent: () => import('./features/admin/pages/metodo-pago/metodo-pago-list/metodo-pago-list.component').then(m => m.MetodoPagoListComponent)
+        loadComponent: () => import('./features/admin/pages/metodo-pago/metodos-pago-list/metodos-pago-list.component').then(m => m.MetodosPagoListComponent)
       },
       {
         path: 'metodos-pago/nuevo',

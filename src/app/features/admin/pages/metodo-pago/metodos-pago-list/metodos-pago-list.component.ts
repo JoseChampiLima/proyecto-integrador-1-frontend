@@ -9,10 +9,10 @@ import { MetodoPagoService } from '../../../../../core/services/metodo-pago.serv
   selector: 'app-metodo-pago-list',
   standalone: true,
   imports: [],
-  templateUrl: './metodo-pago-list.component.html',
-  styleUrl: './metodo-pago-list.component.css'
+  templateUrl: './metodos-pago-list.component.html',
+  styleUrl: './metodos-pago-list.component.css'
 })
-export class MetodoPagoListComponent implements OnInit {
+export class MetodosPagoListComponent implements OnInit {
   metodos = signal<MetodoPago[]>([]);
   filtro = signal('');
   isLoading = signal(true);
