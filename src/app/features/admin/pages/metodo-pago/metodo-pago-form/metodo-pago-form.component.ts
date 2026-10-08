@@ -3,14 +3,13 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SoloNumerosDirective } from '../../../../../shared/directives/solo-numeros.directive';
 import { MetodoPagoService } from '../../../../../core/services/metodo-pago.service';
 import { MetodoPago } from '../../../../../core/models/metodo-pago.model';
 
 @Component({
   selector: 'app-metodo-pago-form',
   standalone: true,
-  imports: [ReactiveFormsModule, SoloNumerosDirective],
+  imports: [ReactiveFormsModule],
   templateUrl: './metodo-pago-form.component.html',
   styleUrl: './metodo-pago-form.component.css'
 })

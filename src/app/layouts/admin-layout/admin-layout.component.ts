@@ -8,7 +8,7 @@ import { NgClass, NgFor, NgIf } from '@angular/common';
 @Component({
   selector: 'app-admin-layout',
   standalone: true,
-  imports: [RouterOutlet, RouterModule, NgFor, NgIf, NgClass],
+  imports: [RouterOutlet, RouterModule, NgFor, NgIf],
   templateUrl: './admin-layout.component.html',
   styleUrl: './admin-layout.component.css'
 })
@@ -28,7 +28,7 @@ export class AdminLayoutComponent {
       icon: '⚙️',
       isOpen: false,
       children: [
-        { label: 'Estado de reservas', routerLink: '/admin/configuracion/estado' },
+        { label: 'Estado de reservas', routerLink: '/admin/estados-reserva' },
         { label: 'Métodos de pago', routerLink: '/admin/metodos-pago' }
       ]
     }

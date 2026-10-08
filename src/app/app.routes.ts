@@ -102,6 +102,19 @@ export const routes: Routes = [
       },
 
       { 
+        path: 'estados-reserva',
+        loadComponent: () => import('./features/admin/pages/estados-reserva/estados-reserva-list/estados-reserva-list.component').then(m => m.EstadosReservaListComponent)
+      },
+      {
+        path: 'estados-reserva/nuevo',
+        loadComponent: () => import('./features/admin/pages/estados-reserva/estado-reserva-form/estado-reserva-form.component').then(m => m.EstadoReservaFormComponent)
+      },
+      {
+        path: 'estados-reserva/:id/editar',
+        loadComponent: () => import('./features/admin/pages/estados-reserva/estado-reserva-form/estado-reserva-form.component').then(m => m.EstadoReservaFormComponent)
+      },
+
+      { 
         path: 'metodos-pago',
         loadComponent: () => import('./features/admin/pages/metodo-pago/metodo-pago-list/metodo-pago-list.component').then(m => m.MetodoPagoListComponent)
       },

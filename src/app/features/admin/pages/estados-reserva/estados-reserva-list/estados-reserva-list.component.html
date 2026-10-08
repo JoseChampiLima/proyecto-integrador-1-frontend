@@ -1,0 +1,88 @@
+<!-- RUTA src\app\features\admin\pages\metodo-pago\metodo-pago-list\metodo-pago-list.component.ts -->
+
+<div class="mantenimiento-header">
+  <div>
+    <h2 class="mantenimiento-title">Estados de Reserva</h2>
+    <p class="mantenimiento-subtitle">Gestiona los estados de reserva disponibles.</p>
+  </div>
+  <button type="button" class="btn-primary-custom" (click)="irACrear()">
+    + Nuevo Estado de Reserva
+  </button>
+</div>
+
+<div class="filtro-wrapper">
+  <input
+    type="text"
+    class="filtro-input"
+    placeholder="Buscar por nombre..."
+    [value]="filtro()"
+    (input)="filtro.set($any($event.target).value)"
+  />
+</div>
+
+@if (errorMessage()) {
+  <div class="alert-error">{{ errorMessage() }}</div>
+}
+
+@if (isLoading()) {
+  <p class="estado-carga">Cargando estados de reserva...</p>
+} @else {
+  <div class="tabla-wrapper">
+    <table class="tabla-mantenimiento">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Estado</th>
+          <th class="col-acciones">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (estado of estadosFiltrados(); track estado.idEstadoReserva) {
+          <tr>
+            <td>{{ estado.nombre }}</td>
+            <td>{{ estado.descripcion }}</td>
+            <td>
+              <span class="badge-estado" [class.badge-inactivo]="!estado.estado">
+                {{ estado.estado ? 'Activo' : 'Inactivo' }}
+              </span>
+            </td>
+            <td class="col-acciones">
+              <button type="button" class="btn-icono btn-editar" (click)="irAEditar(estado)" title="Editar">
+                ✏️
+              </button>
+              <button type="button" class="btn-icono btn-eliminar" (click)="pedirConfirmacionEliminar(estado)" title="Eliminar">
+                🗑️
+              </button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="8" class="sin-resultados">No se encontraron estados de reserva.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}
+
+<!-- Modal de confirmación de borrado -->
+@if (estadoAEliminar(); as estado) {
+  <div class="modal-overlay" (click)="cancelarEliminar()">
+    <div class="modal-confirm" (click)="$event.stopPropagation()">
+      <h3>¿Eliminar estado de reserva?</h3>
+      <p>
+        Esta acción eliminará a <strong>{{ estado.nombre }}</strong>.
+        No se puede deshacer.
+      </p>
+      <div class="modal-actions">
+        <button type="button" class="btn-secundario" (click)="cancelarEliminar()" [disabled]="eliminando()">
+          Cancelar
+        </button>
+        <button type="button" class="btn-peligro" (click)="confirmarEliminar()" [disabled]="eliminando()">
+          {{ eliminando() ? 'Eliminando...' : 'Sí, eliminar' }}
+        </button>
+      </div>
+    </div>
+  </div>
+}
