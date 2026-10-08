@@ -3,9 +3,6 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UsuarioService } from '../../../../../core/services/usuario.service';
-import { RolService } from '../../../../../core/services/rol.service';
-import { Usuario } from '../../../../../core/models/usuario.model';
 import { Rol } from "../../../../../core/models/rol.model";
 import { SedeService } from '../../../../../core/services/sede.service';
 import { Sede } from '../../../../../core/models/sede.model';
@@ -32,8 +29,7 @@ export class SedeFormComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private sedeService: SedeService,
-    private rolService: RolService
+    private sedeService: SedeService
   ) {
     this.sedeForm = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(2)]],
@@ -46,11 +42,6 @@ export class SedeFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.rolService.listar().subscribe({
-      next: (roles) => this.roles.set(roles),
-      error: (err) => console.error('Error al cargar roles:', err)
-    });
-
     const idParam = this.route.snapshot.paramMap.get('id');
     if (idParam) {
       this.modoEdicion.set(true);

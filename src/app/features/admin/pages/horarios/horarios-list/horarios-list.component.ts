@@ -1,11 +1,9 @@
 import { Component, OnInit, signal, computed } from '@angular/core';
-import { Horario } from '../../../../core/models/horario.mode';
-import { EspacioDeportivo } from '../../../../core/models/espacio-deportivo.model';
-import { HorarioService } from '../../../../core/services/horario.service';
-import { EspacioDeportivoService } from '../../../../core/services/espacio-deportivo.service';
 import { Router } from '@angular/router';
-
-
+import { Horario } from '../../../../../core/models/horario.model';
+import { EspacioDeportivo } from '../../../../../core/models/espacio-deportivo.model';
+import { HorarioService } from '../../../../../core/services/horario.service';
+import { EspacioDeportivoService } from '../../../../../core/services/espacio-deportivo.service';
 
 @Component({
   selector: 'app-horarios-list',

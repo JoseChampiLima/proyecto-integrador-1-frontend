@@ -1,12 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
 import { roleGuard } from './core/guards/role.guard';
-import { EspaciosListComponent } from './features/admin/pages/espacios/espacios-list/espacios-list.component';
-import { EspacioFormComponent } from './features/admin/pages/espacios/espacio-form/espacio-form.component';
-import { SedesListComponent } from './features/admin/pages/sedes/sedes-list/sedes-list.component';
-import { SedeFormComponent } from './features/admin/pages/sedes/sede-form/sede-form.component';
-import { HorariosListComponent } from './features/horarios/pages/horarios-list/horarios-list.component';
-import { HorarioFormComponent } from './features/horarios/pages/horario-form/horario-form.component';
 
 export const routes: Routes = [
   {
@@ -54,6 +48,7 @@ export const routes: Routes = [
         path: '',
         loadComponent: () => import('./features/admin/pages/dashboard/dashboard.component').then(m => m.DashboardComponent)
       },
+
       {
         path: 'usuarios',
         loadComponent: () => import('./features/admin/pages/usuarios/usuarios-list/usuarios-list.component').then(m => m.UsuariosListComponent)
@@ -66,18 +61,58 @@ export const routes: Routes = [
         path: 'usuarios/:id/editar',
         loadComponent: () => import('./features/admin/pages/usuarios/usuario-form/usuario-form.component').then(m => m.UsuarioFormComponent)
       },
-      { path: 'sedes', component: SedesListComponent },
-      { path: 'sedes/nuevo', component: SedeFormComponent },
-      { path: 'sedes/:id/editar', component: SedeFormComponent },
-      
-      { path: 'espacios', component: EspaciosListComponent },
-      { path: 'espacios/nuevo', component: EspacioFormComponent },
-      { path: 'espacios/:id/editar', component: EspacioFormComponent },
 
-      { path: 'horarios', component: HorariosListComponent },
-      { path: 'horarios/nuevo', component: HorarioFormComponent },
-      { path: 'horarios/:id/editar', component: HorarioFormComponent },
-      // TODO: 'sedes', 'espacios', 'reservas', 'horarios', 'pagos'
+      { 
+        path: 'sedes',
+        loadComponent: () => import('./features/admin/pages/sedes/sedes-list/sedes-list.component').then(m => m.SedesListComponent)
+      },
+      {
+        path: 'sedes/nuevo',
+        loadComponent: () => import('./features/admin/pages/sedes/sede-form/sede-form.component').then(m => m.SedeFormComponent)
+      },
+      {
+        path: 'sedes/:id/editar',
+        loadComponent: () => import('./features/admin/pages/sedes/sede-form/sede-form.component').then(m => m.SedeFormComponent)
+      },
+
+      { 
+        path: 'espacios',
+        loadComponent: () => import('./features/admin/pages/espacios/espacios-list/espacios-list.component').then(m => m.EspaciosListComponent)
+      },
+      {
+        path: 'espacios/nuevo',
+        loadComponent: () => import('./features/admin/pages/espacios/espacio-form/espacio-form.component').then(m => m.EspacioFormComponent)
+      },
+      {
+        path: 'espacios/:id/editar',
+        loadComponent: () => import('./features/admin/pages/espacios/espacio-form/espacio-form.component').then(m => m.EspacioFormComponent)
+      },
+
+      { 
+        path: 'horarios',
+        loadComponent: () => import('./features/admin/pages/horarios/horarios-list/horarios-list.component').then(m => m.HorariosListComponent)
+      },
+      {
+        path: 'horarios/nuevo',
+        loadComponent: () => import('./features/admin/pages/horarios/horario-form/horario-form.component').then(m => m.HorarioFormComponent)
+      },
+      {
+        path: 'horarios/:id/editar',
+        loadComponent: () => import('./features/admin/pages/horarios/horario-form/horario-form.component').then(m => m.HorarioFormComponent)
+      },
+
+      { 
+        path: 'metodos-pago',
+        loadComponent: () => import('./features/admin/pages/metodo-pago/metodo-pago-list/metodo-pago-list.component').then(m => m.MetodoPagoListComponent)
+      },
+      {
+        path: 'metodos-pago/nuevo',
+        loadComponent: () => import('./features/admin/pages/metodo-pago/metodo-pago-form/metodo-pago-form.component').then(m => m.MetodoPagoFormComponent)
+      },
+      {
+        path: 'metodos-pago/:id/editar',
+        loadComponent: () => import('./features/admin/pages/metodo-pago/metodo-pago-form/metodo-pago-form.component').then(m => m.MetodoPagoFormComponent)
+      }
     ]
   },
 

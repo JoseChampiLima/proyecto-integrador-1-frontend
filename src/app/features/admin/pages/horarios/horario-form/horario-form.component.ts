@@ -7,11 +7,10 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { HorarioService } from '../../../../core/services/horario.service';
-import { EspacioDeportivoService } from '../../../../core/services/espacio-deportivo.service';
-
-import { EspacioDeportivo } from '../../../../core/models/espacio-deportivo.model';
-import { HorarioRequest } from '../../../../core/interfaces/horario-request.interface';
+import { HorarioService } from '../../../../../core/services/horario.service';
+import { EspacioDeportivoService } from '../../../../../core/services/espacio-deportivo.service';
+import { EspacioDeportivo } from '../../../../../core/models/espacio-deportivo.model';
+import { HorarioRequest } from '../../../../../core/interfaces/horario-request.interface';
 
 @Component({
   selector: 'app-horario-form',

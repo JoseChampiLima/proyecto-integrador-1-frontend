@@ -96,3 +96,57 @@
     padding: 20px 16px;
   }
 }
+
+/* --- Submenús desplegables --- */
+.admin-nav-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-nav-toggle {
+  cursor: pointer;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  color: #cfe3d8;
+}
+
+.admin-nav-toggle:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+}
+
+.toggle-icon {
+  font-size: 0.7rem;
+  transition: transform 0.2s ease;
+}
+
+.toggle-icon.rotated {
+  transform: rotate(180deg);
+}
+
+.admin-submenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.admin-submenu.submenu-open {
+  max-height: 200px;
+}
+
+.admin-submenu-link {
+  padding-left: 42px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.admin-nav-toggle.active-parent {
+  background: rgba(212, 175, 55, 0.15);
+  color: #d4af37;
+}

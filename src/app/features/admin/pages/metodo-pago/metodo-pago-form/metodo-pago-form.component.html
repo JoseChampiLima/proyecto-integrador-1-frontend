@@ -1,0 +1,44 @@
+<!-- RUTA src\app\features\admin\pages\metodo-pago\metodo-pago-form\metodo-pago-form.component.ts -->
+
+<div class="form-page">
+  <div class="mantenimiento-header">
+    <h2 class="mantenimiento-title">{{ modoEdicion() ? 'Editar Método de Pago' : 'Nuevo Método de Pago' }}</h2>
+  </div>
+
+  @if (errorMessage()) {
+    <div class="alert-error">{{ errorMessage() }}</div>
+  }
+
+  @if (isLoading()) {
+    <p class="estado-carga">Cargando método de pago...</p>
+  } @else {
+    <form [formGroup]="metodoForm" (ngSubmit)="onSubmit()" class="form-card">
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label" for="nombre">Nombre</label>
+          <input id="nombre" type="text" formControlName="nombre" class="form-input"
+            [class.is-invalid]="metodoForm.get('nombre')?.touched && metodoForm.get('nombre')?.invalid" />
+        </div>
+
+        <div class="form-group form-group-checkbox">
+          <label class="form-label" for="estado">Estado</label>
+          <label class="switch-wrapper">
+            <input id="estado" type="checkbox" formControlName="estado" />
+            <span class="switch-track"><span class="switch-thumb"></span></span>
+            <span class="switch-text">{{ metodoForm.get('estado')?.value ? 'Activo' : 'Inactivo' }}</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-secundario" (click)="cancelar()" [disabled]="isSaving()">
+          Cancelar
+        </button>
+        <button type="submit" class="btn-primary-custom" [disabled]="metodoForm.invalid || isSaving()">
+          {{ isSaving() ? 'Guardando...' : (modoEdicion() ? 'Guardar Cambios' : 'Crear Método de Pago') }}
+        </button>
+      </div>
+    </form>
+  }
+</div>

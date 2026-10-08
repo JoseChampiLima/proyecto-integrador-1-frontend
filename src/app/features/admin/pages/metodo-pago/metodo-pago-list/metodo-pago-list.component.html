@@ -1,0 +1,86 @@
+<!-- RUTA src\app\features\admin\pages\metodo-pago\metodo-pago-list\metodo-pago-list.component.ts -->
+
+<div class="mantenimiento-header">
+  <div>
+    <h2 class="mantenimiento-title">Métodos de Pago</h2>
+    <p class="mantenimiento-subtitle">Gestiona los métodos de pago disponibles.</p>
+  </div>
+  <button type="button" class="btn-primary-custom" (click)="irACrear()">
+    + Nuevo Método de Pago
+  </button>
+</div>
+
+<div class="filtro-wrapper">
+  <input
+    type="text"
+    class="filtro-input"
+    placeholder="Buscar por nombre..."
+    [value]="filtro()"
+    (input)="filtro.set($any($event.target).value)"
+  />
+</div>
+
+@if (errorMessage()) {
+  <div class="alert-error">{{ errorMessage() }}</div>
+}
+
+@if (isLoading()) {
+  <p class="estado-carga">Cargando métodos de pago...</p>
+} @else {
+  <div class="tabla-wrapper">
+    <table class="tabla-mantenimiento">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Estado</th>
+          <th class="col-acciones">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (metodo of metodosFiltrados(); track metodo.idMetodoPago) {
+          <tr>
+            <td>{{ metodo.nombre }}</td>
+            <td>
+              <span class="badge-estado" [class.badge-inactivo]="!metodo.estado">
+                {{ metodo.estado ? 'Activo' : 'Inactivo' }}
+              </span>
+            </td>
+            <td class="col-acciones">
+              <button type="button" class="btn-icono btn-editar" (click)="irAEditar(metodo)" title="Editar">
+                ✏️
+              </button>
+              <button type="button" class="btn-icono btn-eliminar" (click)="pedirConfirmacionEliminar(metodo)" title="Eliminar">
+                🗑️
+              </button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="8" class="sin-resultados">No se encontraron métodos de pago.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}
+
+<!-- Modal de confirmación de borrado -->
+@if (metodoAEliminar(); as metodo) {
+  <div class="modal-overlay" (click)="cancelarEliminar()">
+    <div class="modal-confirm" (click)="$event.stopPropagation()">
+      <h3>¿Eliminar método de pago?</h3>
+      <p>
+        Esta acción eliminará a <strong>{{ metodo.nombre }}</strong>.
+        No se puede deshacer.
+      </p>
+      <div class="modal-actions">
+        <button type="button" class="btn-secundario" (click)="cancelarEliminar()" [disabled]="eliminando()">
+          Cancelar
+        </button>
+        <button type="button" class="btn-peligro" (click)="confirmarEliminar()" [disabled]="eliminando()">
+          {{ eliminando() ? 'Eliminando...' : 'Sí, eliminar' }}
+        </button>
+      </div>
+    </div>
+  </div>
+}
