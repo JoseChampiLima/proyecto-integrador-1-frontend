@@ -1,0 +1,144 @@
+<!-- RUTA src\app\features\admin\pages\dashboard\dashboard.component.ts -->
+
+<div class="dash-header">
+  <div>
+    <h2 class="dash-title">Dashboard</h2>
+    <p class="dash-subtitle">Resumen de la actividad del club en el rango seleccionado.</p>
+  </div>
+
+  <div class="dash-filtros">
+    <div class="presets">
+      @for (p of presets; track p.id) {
+        <button type="button" class="preset-btn" [class.preset-activo]="presetActivo() === p.id"
+          (click)="aplicarPreset(p.id)">
+          {{ p.label }}
+        </button>
+      }
+    </div>
+
+    <div class="rango-fechas">
+      <label class="fecha-field">
+        <span>Desde</span>
+        <input type="date" [value]="fechaDesde()" [max]="fechaHasta()"
+          (change)="onFechaCambiada('desde', $any($event.target).value)" />
+      </label>
+      <label class="fecha-field">
+        <span>Hasta</span>
+        <input type="date" [value]="fechaHasta()" [min]="fechaDesde()"
+          (change)="onFechaCambiada('hasta', $any($event.target).value)" />
+      </label>
+    </div>
+  </div>
+</div>
+
+@if (errorMessage()) {
+  <div class="alert-error">{{ errorMessage() }}</div>
+}
+
+@if (isLoading() && !data()) {
+  <p class="estado-carga">Cargando métricas...</p>
+} @else if (data(); as d) {
+
+  <div class="dash-contenido" [class.recargando]="isLoading()">
+
+    <!-- KPIs -->
+    <section class="kpi-grid">
+      <article class="kpi-card">
+        <div class="kpi-icono kpi-verde">📅</div>
+        <div>
+          <p class="kpi-label">Total Reservas</p>
+          <p class="kpi-valor">{{ d.totalReservas | number }}</p>
+        </div>
+      </article>
+
+      <article class="kpi-card">
+        <div class="kpi-icono kpi-dorado">💰</div>
+        <div>
+          <p class="kpi-label">Ingresos</p>
+          <p class="kpi-valor">{{ d.totalIngresos | currency:'PEN':'S/ ':'1.2-2' }}</p>
+        </div>
+      </article>
+
+      <article class="kpi-card">
+        <div class="kpi-icono kpi-azul">👥</div>
+        <div>
+          <p class="kpi-label">Clientes</p>
+          <p class="kpi-valor">{{ d.totalClientes | number }}</p>
+        </div>
+      </article>
+
+      <article class="kpi-card">
+        <div class="kpi-icono kpi-menta">🎾</div>
+        <div>
+          <p class="kpi-label">Espacios</p>
+          <p class="kpi-valor">{{ d.totalEspacios | number }}</p>
+        </div>
+      </article>
+    </section>
+
+    <!-- Gráficos -->
+    <section class="charts-grid">
+
+      <article class="chart-card">
+        <h3 class="chart-title">Reservas por estado</h3>
+
+        @if (estadoSegmentos().length) {
+          <div class="donut-layout">
+            <div class="donut-wrapper">
+              <svg viewBox="0 0 42 42" class="donut" role="img" aria-label="Reservas por estado">
+                <circle cx="21" cy="21" r="15.9155" fill="none" stroke="#eef2f0" stroke-width="5"></circle>
+                @for (seg of estadoSegmentos(); track seg.estado) {
+                  <circle cx="21" cy="21" r="15.9155" fill="none" stroke-width="5"
+                    [attr.stroke]="seg.color"
+                    [attr.stroke-dasharray]="seg.pct + ' ' + (100 - seg.pct)"
+                    [attr.stroke-dashoffset]="seg.offset"></circle>
+                }
+              </svg>
+              <div class="donut-centro">
+                <span class="donut-total">{{ totalEstados() | number }}</span>
+                <span class="donut-label">reservas</span>
+              </div>
+            </div>
+
+            <ul class="leyenda">
+              @for (seg of estadoSegmentos(); track seg.estado) {
+                <li>
+                  <span class="leyenda-punto" [style.background]="seg.color"></span>
+                  <span class="leyenda-nombre">{{ seg.estado }}</span>
+                  <span class="leyenda-valor">{{ seg.cantidad | number }} · {{ seg.pct | number:'1.0-0' }}%</span>
+                </li>
+              }
+            </ul>
+          </div>
+        } @else {
+          <p class="chart-vacio">Sin reservas en este rango.</p>
+        }
+      </article>
+
+      <article class="chart-card">
+        <h3 class="chart-title">Reservas por espacio</h3>
+
+        @if (espaciosRanking().length) {
+          <ul class="barras">
+            @for (item of espaciosRanking(); track item.espacio; let i = $index) {
+              <li class="barra-item">
+                <div class="barra-info">
+                  <span class="barra-nombre">
+                    <span class="barra-pos">{{ i + 1 }}</span>{{ item.espacio }}
+                  </span>
+                  <span class="barra-valor">{{ item.cantidad | number }}</span>
+                </div>
+                <div class="barra-pista">
+                  <div class="barra-relleno" [style.width.%]="item.ancho"></div>
+                </div>
+              </li>
+            }
+          </ul>
+        } @else {
+          <p class="chart-vacio">Sin reservas en este rango.</p>
+        }
+      </article>
+
+    </section>
+  </div>
+}
