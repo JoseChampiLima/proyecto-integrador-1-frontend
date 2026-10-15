@@ -1,0 +1,88 @@
+<!-- RUTA src\app\features\admin\pages\mantenimientos\mantenimiento-form\mantenimiento-form.component.ts -->
+
+<div class="form-page">
+  <div class="mantenimiento-header">
+    <h2 class="mantenimiento-title">{{ modoEdicion() ? 'Editar Mantenimiento' : 'Nuevo Mantenimiento' }}</h2>
+  </div>
+
+  @if (errorMessage()) {
+    <div class="alert-error">{{ errorMessage() }}</div>
+  }
+
+  @if (isLoading()) {
+    <p class="estado-carga">Cargando mantenimiento...</p>
+  } @else {
+    <form [formGroup]="mantenimientoForm" (ngSubmit)="onSubmit()" class="form-card">
+
+      <div class="form-grid">
+        <div class="form-group form-group-wide">
+          <label class="form-label" for="idEspacio">Espacio</label>
+          <select id="idEspacio" formControlName="idEspacio" class="form-input"
+            [class.is-invalid]="mantenimientoForm.get('idEspacio')?.touched && mantenimientoForm.get('idEspacio')?.invalid">
+            <option [ngValue]="null" disabled>Seleccione un espacio</option>
+            @for (espacio of espacios(); track espacio.idEspacio) {
+              <option [ngValue]="espacio.idEspacio">
+                {{ espacio.nombre }}{{ espacio.sede ? ' · ' + espacio.sede.nombre : '' }}
+              </option>
+            }
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="fechaInicio">Fecha de inicio</label>
+          <input id="fechaInicio" type="date" formControlName="fechaInicio" class="form-input"
+            [class.is-invalid]="mantenimientoForm.get('fechaInicio')?.touched && mantenimientoForm.get('fechaInicio')?.invalid" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="fechaFin">Fecha de fin</label>
+          <input id="fechaFin" type="date" formControlName="fechaFin" class="form-input"
+            [class.is-invalid]="mantenimientoForm.get('fechaFin')?.touched && (mantenimientoForm.get('fechaFin')?.invalid || mantenimientoForm.errors?.['rangoFechas'])" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="horaInicio">Hora de inicio</label>
+          <input id="horaInicio" type="time" formControlName="horaInicio" class="form-input"
+            [class.is-invalid]="mantenimientoForm.get('horaInicio')?.touched && mantenimientoForm.get('horaInicio')?.invalid" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="horaFin">Hora de fin</label>
+          <input id="horaFin" type="time" formControlName="horaFin" class="form-input"
+            [class.is-invalid]="mantenimientoForm.get('horaFin')?.touched && (mantenimientoForm.get('horaFin')?.invalid || mantenimientoForm.errors?.['rangoHoras'])" />
+        </div>
+
+        @if (mantenimientoForm.errors?.['rangoFechas']) {
+          <p class="hint-error form-group-wide">La fecha de fin no puede ser anterior a la fecha de inicio.</p>
+        }
+        @if (mantenimientoForm.errors?.['rangoHoras']) {
+          <p class="hint-error form-group-wide">Si el mantenimiento es de un solo día, la hora de fin debe ser posterior a la de inicio.</p>
+        }
+
+        <div class="form-group form-group-wide">
+          <label class="form-label" for="motivo">Motivo</label>
+          <textarea id="motivo" formControlName="motivo" class="form-input form-textarea" rows="3" maxlength="250"
+            [class.is-invalid]="mantenimientoForm.get('motivo')?.touched && mantenimientoForm.get('motivo')?.invalid"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="estado">Estado</label>
+          <select id="estado" formControlName="estado" class="form-input">
+            @for (estado of estados; track estado) {
+              <option [ngValue]="estado">{{ etiquetaEstado(estado) }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-secundario" (click)="cancelar()" [disabled]="isSaving()">
+          Cancelar
+        </button>
+        <button type="submit" class="btn-primary-custom" [disabled]="mantenimientoForm.invalid || isSaving()">
+          {{ isSaving() ? 'Guardando...' : (modoEdicion() ? 'Guardar Cambios' : 'Crear Mantenimiento') }}
+        </button>
+      </div>
+    </form>
+  }
+</div>

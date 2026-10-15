@@ -1,0 +1,110 @@
+<!-- RUTA src\app\features\admin\pages\mantenimientos\mantenimientos-list\mantenimientos-list.component.ts -->
+
+<div class="mantenimiento-header">
+  <div>
+    <h2 class="mantenimiento-title">Mantenimientos</h2>
+    <p class="mantenimiento-subtitle">Programa los cierres de espacios por mantenimiento.</p>
+  </div>
+  <button type="button" class="btn-primary-custom" (click)="irACrear()">
+    + Nuevo Mantenimiento
+  </button>
+</div>
+
+<div class="filtros-wrapper">
+  <input
+    type="text"
+    class="filtro-input"
+    placeholder="Buscar por espacio o motivo..."
+    [value]="filtro()"
+    (input)="filtro.set($any($event.target).value)"
+  />
+
+  <select class="filtro-select" [value]="filtroEspacio()" (change)="filtroEspacio.set($any($event.target).value)">
+    <option value="">Todos los espacios</option>
+    @for (espacio of espacios(); track espacio.idEspacio) {
+      <option [value]="espacio.idEspacio">{{ espacio.nombre }}</option>
+    }
+  </select>
+
+  <select class="filtro-select" [value]="filtroEstado()" (change)="filtroEstado.set($any($event.target).value)">
+    <option value="">Todos los estados</option>
+    @for (estado of estados; track estado) {
+      <option [value]="estado">{{ etiquetaEstado(estado) }}</option>
+    }
+  </select>
+</div>
+
+@if (errorMessage()) {
+  <div class="alert-error">{{ errorMessage() }}</div>
+}
+
+@if (isLoading()) {
+  <p class="estado-carga">Cargando mantenimientos...</p>
+} @else {
+  <div class="tabla-wrapper">
+    <table class="tabla-mantenimiento tabla-mantenimientos">
+      <thead>
+        <tr>
+          <th>Espacio</th>
+          <th>Periodo</th>
+          <th>Horario</th>
+          <th>Motivo</th>
+          <th>Estado</th>
+          <th class="col-acciones">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (m of mantenimientosFiltrados(); track m.idMantenimiento) {
+          <tr>
+            <td>
+              {{ m.espacio.nombre }}
+              <small class="texto-secundario">{{ m.espacio.sede.nombre }}</small>
+            </td>
+            <td>{{ m.fechaInicio | date: 'dd/MM/yyyy' }} – {{ m.fechaFin | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ hora(m.horaInicio) }} – {{ hora(m.horaFin) }}</td>
+            <td>{{ m.motivo || '—' }}</td>
+            <td>
+              <span class="badge-estado" [class]="claseEstado(m.estado)">
+                {{ etiquetaEstado(m.estado) }}
+              </span>
+            </td>
+            <td class="col-acciones">
+              <button type="button" class="btn-icono btn-editar" (click)="irAEditar(m)" title="Editar">
+                ✏️
+              </button>
+              <button type="button" class="btn-icono btn-eliminar" (click)="pedirConfirmacionEliminar(m)" title="Eliminar">
+                🗑️
+              </button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="6" class="sin-resultados">No se encontraron mantenimientos.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}
+
+<!-- Modal de confirmación de borrado -->
+@if (mantenimientoAEliminar(); as m) {
+  <div class="modal-overlay" (click)="cancelarEliminar()">
+    <div class="modal-confirm" (click)="$event.stopPropagation()">
+      <h3>¿Eliminar mantenimiento?</h3>
+      <p>
+        Se eliminará el mantenimiento de <strong>{{ m.espacio.nombre }}</strong>
+        ({{ m.fechaInicio | date: 'dd/MM/yyyy' }} – {{ m.fechaFin | date: 'dd/MM/yyyy' }}).
+        No se puede deshacer.
+      </p>
+      <div class="modal-actions">
+        <button type="button" class="btn-secundario" (click)="cancelarEliminar()" [disabled]="eliminando()">
+          Cancelar
+        </button>
+        <button type="button" class="btn-peligro" (click)="confirmarEliminar()" [disabled]="eliminando()">
+          {{ eliminando() ? 'Eliminando...' : 'Sí, eliminar' }}
+        </button>
+      </div>
+    </div>
+  </div>
+}
