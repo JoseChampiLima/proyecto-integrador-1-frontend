@@ -23,6 +23,7 @@ export class AdminLayoutComponent {
     { label: 'Horarios', icon: '🕒', routerLink: '/admin/horarios' },
     { label: 'Reservas', icon: '📅', routerLink: '/admin/reservas' },
     { label: 'Pagos', icon: '💳', routerLink: '/admin/pagos' },
+    { label: 'Tipos de Espacio', icon: '🏢', routerLink: '/admin/tipos-espacio' },
     {
       label: 'Configuración',
       icon: '⚙️',

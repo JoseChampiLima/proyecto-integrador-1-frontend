@@ -125,6 +125,19 @@ export const routes: Routes = [
       {
         path: 'metodos-pago/:id/editar',
         loadComponent: () => import('./features/admin/pages/metodo-pago/metodo-pago-form/metodo-pago-form.component').then(m => m.MetodoPagoFormComponent)
+      },
+
+      { 
+        path: 'tipos-espacio',
+        loadComponent: () => import('./features/admin/pages/tipos-espacio/tipos-espacio-list/tipos-espacio-list.component').then(m => m.TiposEspacioListComponent)
+      },
+      {
+        path: 'tipos-espacio/nuevo',
+        loadComponent: () => import('./features/admin/pages/tipos-espacio/tipo-espacio-form/tipo-espacio-form.component').then(m => m.TipoEspacioFormComponent)
+      },
+      {
+        path: 'tipos-espacio/:id/editar',
+        loadComponent: () => import('./features/admin/pages/tipos-espacio/tipo-espacio-form/tipo-espacio-form.component').then(m => m.TipoEspacioFormComponent)
       }
     ]
   },
