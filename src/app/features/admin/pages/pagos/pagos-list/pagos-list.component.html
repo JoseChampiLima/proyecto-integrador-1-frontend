@@ -1,0 +1,112 @@
+<!-- RUTA src\app\features\admin\pages\pagos\pagos-list\pagos-list.component.ts -->
+
+<div class="mantenimiento-header">
+  <div>
+    <h2 class="mantenimiento-title">Pagos</h2>
+    <p class="mantenimiento-subtitle">Consulta los pagos de las reservas y anula los que correspondan.</p>
+  </div>
+</div>
+
+<div class="filtros-wrapper">
+  <input
+    type="text"
+    class="filtro-input"
+    placeholder="Buscar por N° operación, cliente, espacio o N° reserva..."
+    [value]="filtro()"
+    (input)="filtro.set($any($event.target).value)"
+  />
+
+  <select class="filtro-select" [value]="filtroMetodo()" (change)="filtroMetodo.set($any($event.target).value)">
+    <option value="">Todos los métodos</option>
+    @for (metodo of metodos(); track metodo) {
+      <option [value]="metodo">{{ metodo }}</option>
+    }
+  </select>
+
+  <select class="filtro-select" [value]="filtroEstado()" (change)="filtroEstado.set($any($event.target).value)">
+    <option value="">Todos los estados</option>
+    @for (estado of estados(); track estado) {
+      <option [value]="estado">{{ etiquetaEstado(estado) }}</option>
+    }
+  </select>
+</div>
+
+@if (errorMessage()) {
+  <div class="alert-error">{{ errorMessage() }}</div>
+}
+
+@if (isLoading()) {
+  <p class="estado-carga">Cargando pagos...</p>
+} @else {
+  <div class="tabla-wrapper">
+    <table class="tabla-mantenimiento tabla-pagos">
+      <thead>
+        <tr>
+          <th>N° Operación</th>
+          <th>Reserva</th>
+          <th>Cliente</th>
+          <th>Método</th>
+          <th>Monto</th>
+          <th>Fecha de pago</th>
+          <th>Estado</th>
+          <th class="col-acciones">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (pago of pagosFiltrados(); track pago.idPago) {
+          <tr>
+            <td>{{ pago.nroOperacion || '—' }}</td>
+            <td>
+              #{{ pago.reserva.idReserva }}
+              <small class="texto-secundario">
+                {{ pago.reserva.espacio.nombre }} · {{ pago.reserva.fechaReserva | date: 'dd/MM/yyyy' }}
+              </small>
+            </td>
+            <td>{{ pago.reserva.usuario?.nombres }} {{ pago.reserva.usuario?.apellidos }}</td>
+            <td>{{ pago.metodoPago.nombre }}</td>
+            <td>S/ {{ pago.monto | number: '1.2-2' }}</td>
+            <td>{{ pago.fechaPago | date: 'dd/MM/yyyy HH:mm' }}</td>
+            <td>
+              <span class="badge-estado" [class]="claseEstado(pago.estado)">
+                {{ etiquetaEstado(pago.estado) }}
+              </span>
+            </td>
+            <td class="col-acciones">
+              @if (!estaAnulado(pago)) {
+                <button type="button" class="btn-icono btn-eliminar" (click)="pedirConfirmacionAnular(pago)" title="Anular pago">
+                  🚫
+                </button>
+              }
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="8" class="sin-resultados">No se encontraron pagos.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}
+
+<!-- Modal de confirmación de anulación -->
+@if (pagoAAnular(); as pago) {
+  <div class="modal-overlay" (click)="cancelarAnular()">
+    <div class="modal-confirm" (click)="$event.stopPropagation()">
+      <h3>¿Anular pago?</h3>
+      <p>
+        Se anulará el pago de <strong>S/ {{ pago.monto | number: '1.2-2' }}</strong>
+        de la reserva <strong>#{{ pago.reserva.idReserva }}</strong>.
+        El registro se conserva con estado anulado.
+      </p>
+      <div class="modal-actions">
+        <button type="button" class="btn-secundario" (click)="cancelarAnular()" [disabled]="anulando()">
+          Cancelar
+        </button>
+        <button type="button" class="btn-peligro" (click)="confirmarAnular()" [disabled]="anulando()">
+          {{ anulando() ? 'Anulando...' : 'Sí, anular' }}
+        </button>
+      </div>
+    </div>
+  </div>
+}

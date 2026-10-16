@@ -1,8 +1,12 @@
+import { EspacioDeportivo } from "./espacio-deportivo.model";
+import { EstadoReserva } from "./estado-reserva.model";
+import { Usuario } from "./usuario.model";
+
 export interface Reserva {
   idReserva?: number;
-  idUsuario?: number;
-  idEspacio: number;
-  idEstadoReserva: number;
+  usuario?: Usuario;
+  espacio: EspacioDeportivo;
+  estadoReserva: EstadoReserva;
   fechaReserva?: Date;
   horaInicio: string;
   horaFin: string;

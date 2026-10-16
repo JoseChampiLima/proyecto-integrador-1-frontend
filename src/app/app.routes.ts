@@ -143,6 +143,8 @@ export const routes: Routes = [
       { path: 'mantenimientos', loadComponent: () => import('./features/admin/pages/mantenimientos/mantenimientos-list/mantenimientos-list.component').then(m => m.MantenimientosListComponent) },
       { path: 'mantenimientos/nuevo', loadComponent: () => import('./features/admin/pages/mantenimientos/mantenimiento-form/mantenimiento-form.component').then(m => m.MantenimientoFormComponent) },
       { path: 'mantenimientos/:id/editar', loadComponent: () => import('./features/admin/pages/mantenimientos/mantenimiento-form/mantenimiento-form.component').then(m => m.MantenimientoFormComponent) },
+
+      { path: 'pagos', loadComponent: () => import('./features/admin/pages/pagos/pagos-list/pagos-list.component').then(m => m.PagosListComponent) },
     ]
   },
 
