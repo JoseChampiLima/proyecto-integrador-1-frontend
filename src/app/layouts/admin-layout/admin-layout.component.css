@@ -109,8 +109,12 @@
   border: none;
   width: 100%;
   text-align: left;
-  font: inherit;
+  line-height: inherit;
   color: #cfe3d8;
+}
+
+.admin-submenu.submenu-open {
+  max-height: 400px;
 }
 
 .admin-nav-toggle:hover {
@@ -119,6 +123,7 @@
 }
 
 .toggle-icon {
+  margin-left: auto;
   font-size: 0.7rem;
   transition: transform 0.2s ease;
 }
