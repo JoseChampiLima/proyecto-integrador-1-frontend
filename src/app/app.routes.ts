@@ -145,6 +145,8 @@ export const routes: Routes = [
       { path: 'mantenimientos/:id/editar', loadComponent: () => import('./features/admin/pages/mantenimientos/mantenimiento-form/mantenimiento-form.component').then(m => m.MantenimientoFormComponent) },
 
       { path: 'pagos', loadComponent: () => import('./features/admin/pages/pagos/pagos-list/pagos-list.component').then(m => m.PagosListComponent) },
+
+      { path: 'reservas', loadComponent: () => import('./features/admin/pages/reservas/reservas-list/reservas-list.component').then(m => m.ReservasListComponent) },
     ]
   },
 

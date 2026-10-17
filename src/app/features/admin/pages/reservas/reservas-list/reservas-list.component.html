@@ -1,0 +1,212 @@
+<!-- RUTA src\app\features\admin\pages\reservas\reservas-list\reservas-list.component.ts -->
+
+<div class="mantenimiento-header">
+  <div>
+    <h2 class="mantenimiento-title">Reservas</h2>
+    <p class="mantenimiento-subtitle">Consulta las reservas de los clientes y cancela las que correspondan.</p>
+  </div>
+</div>
+
+<div class="filtros-wrapper">
+  <input
+    type="text"
+    class="filtro-input"
+    placeholder="Buscar por cliente, DNI, espacio o N° reserva..."
+    [value]="filtro()"
+    (input)="filtro.set($any($event.target).value)"
+  />
+
+  <select class="filtro-select" [value]="filtroEstado()" (change)="filtroEstado.set($any($event.target).value)">
+    <option value="">Todos los estados</option>
+    @for (estado of estados(); track estado) {
+      <option [value]="estado">{{ etiquetaEstado(estado) }}</option>
+    }
+  </select>
+
+  <input
+    type="date"
+    class="filtro-select"
+    title="Filtrar por fecha de reserva"
+    [value]="filtroFecha()"
+    (change)="filtroFecha.set($any($event.target).value)"
+  />
+</div>
+
+@if (errorMessage()) {
+  <div class="alert-error">{{ errorMessage() }}</div>
+}
+
+@if (isLoading()) {
+  <p class="estado-carga">Cargando reservas...</p>
+} @else {
+  <div class="tabla-wrapper">
+    <table class="tabla-mantenimiento tabla-reservas">
+      <thead>
+        <tr>
+          <th>N°</th>
+          <th>Cliente</th>
+          <th>Espacio</th>
+          <th>Fecha</th>
+          <th>Horario</th>
+          <th>Total</th>
+          <th>Estado</th>
+          <th class="col-acciones">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (r of reservasFiltradas(); track r.idReserva) {
+          <tr>
+            <td>#{{ r.idReserva }}</td>
+            <td>
+              {{ r.usuario?.nombres }} {{ r.usuario?.apellidos }}
+              <small class="texto-secundario">DNI {{ r.usuario?.dni }}</small>
+            </td>
+            <td>
+              {{ r.espacio.nombre }}
+              <small class="texto-secundario">{{ r.espacio.sede.nombre }}</small>
+            </td>
+            <td>{{ r.fechaReserva | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ hora(r.horaInicio) }} – {{ hora(r.horaFin) }}</td>
+            <td>S/ {{ r.precioTotal | number: '1.2-2' }}</td>
+            <td>
+              <span class="badge-estado" [class]="claseEstado(r.estadoReserva.nombre)">
+                {{ etiquetaEstado(r.estadoReserva.nombre) }}
+              </span>
+            </td>
+            <td class="col-acciones">
+              <button type="button" class="btn-icono" (click)="verDetalle(r)" title="Ver detalle">
+                👁️
+              </button>
+              @if (esCancelable(r)) {
+                <button type="button" class="btn-icono btn-eliminar" (click)="pedirConfirmacionCancelar(r)" title="Cancelar reserva">
+                  🚫
+                </button>
+              }
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="8" class="sin-resultados">No se encontraron reservas.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}
+
+<!-- Modal de detalle -->
+@if (reservaDetalle(); as r) {
+  <div class="modal-overlay" (click)="cerrarDetalle()">
+    <div class="modal-detalle" (click)="$event.stopPropagation()">
+      <div class="detalle-header">
+        <h3>Reserva #{{ r.idReserva }}</h3>
+        <span class="badge-estado" [class]="claseEstado(r.estadoReserva.nombre)">
+          {{ etiquetaEstado(r.estadoReserva.nombre) }}
+        </span>
+      </div>
+
+      <div class="detalle-grid">
+        <div>
+          <span class="detalle-label">Cliente</span>
+          <span class="detalle-valor">{{ r.usuario?.nombres }} {{ r.usuario?.apellidos }}</span>
+        </div>
+        <div>
+          <span class="detalle-label">DNI</span>
+          <span class="detalle-valor">{{ r.usuario?.dni }}</span>
+        </div>
+        <div>
+          <span class="detalle-label">Correo</span>
+          <span class="detalle-valor">{{ r.usuario?.correo }}</span>
+        </div>
+        <div>
+          <span class="detalle-label">Teléfono</span>
+          <span class="detalle-valor">{{ r.usuario?.telefono }}</span>
+        </div>
+        <div>
+          <span class="detalle-label">Espacio</span>
+          <span class="detalle-valor">{{ r.espacio.nombre }}{{ r.espacio.sede ? ' · ' + r.espacio.sede.nombre : '' }}</span>
+        </div>
+        <div>
+          <span class="detalle-label">Fecha y horario</span>
+          <span class="detalle-valor">
+            {{ r.fechaReserva | date: 'dd/MM/yyyy' }}, {{ hora(r.horaInicio) }} – {{ hora(r.horaFin) }}
+          </span>
+        </div>
+        <div>
+          <span class="detalle-label">Total</span>
+          <span class="detalle-valor">S/ {{ r.precioTotal | number: '1.2-2' }}</span>
+        </div>
+        <div>
+          <span class="detalle-label">Registrada</span>
+          <span class="detalle-valor">{{ r.fechaRegistro | date: 'dd/MM/yyyy HH:mm' }}</span>
+        </div>
+        @if (r.observacion) {
+          <div class="detalle-wide">
+            <span class="detalle-label">Observación</span>
+            <span class="detalle-valor">{{ r.observacion }}</span>
+          </div>
+        }
+      </div>
+
+      <h4 class="detalle-subtitulo">Pagos</h4>
+      @if (cargandoPagos()) {
+        <p class="detalle-vacio">Cargando pagos...</p>
+      } @else if (errorPagos()) {
+        <p class="hint-error">No se pudieron cargar los pagos de esta reserva.</p>
+      } @else if (pagosDetalle().length === 0) {
+        <p class="detalle-vacio">Esta reserva no tiene pagos registrados.</p>
+      } @else {
+        @for (pago of pagosDetalle(); track pago.idPago) {
+          <div class="pago-item">
+            <div>
+              <strong>S/ {{ pago.monto | number: '1.2-2' }}</strong>
+              <small class="texto-secundario">
+                {{ pago.metodoPago.nombre }} · {{ pago.fechaPago | date: 'dd/MM/yyyy HH:mm' }}
+                @if (pago.nroOperacion) { · Op. {{ pago.nroOperacion }} }
+              </small>
+            </div>
+            <span class="badge-estado" [class]="claseEstadoPago(pago.estado)">
+              {{ etiquetaEstado(pago.estado) }}
+            </span>
+          </div>
+        }
+        <p class="pagos-resumen">
+          Pagado: <strong>S/ {{ totalPagado() | number: '1.2-2' }}</strong>
+          de S/ {{ r.precioTotal | number: '1.2-2' }}
+        </p>
+      }
+
+      <div class="modal-actions">
+        <button type="button" class="btn-secundario" (click)="cerrarDetalle()">Cerrar</button>
+        <!-- @if (esCancelable(r)) {
+          <button type="button" class="btn-peligro" (click)="pedirConfirmacionCancelar(r)">
+            Cancelar reserva
+          </button>
+        } -->
+      </div>
+    </div>
+  </div>
+}
+
+<!-- Modal de confirmación de cancelación -->
+@if (reservaACancelar(); as r) {
+  <div class="modal-overlay" (click)="descartarCancelacion()">
+    <div class="modal-confirm" (click)="$event.stopPropagation()">
+      <h3>¿Cancelar reserva?</h3>
+      <p>
+        Se cancelará la reserva <strong>#{{ r.idReserva }}</strong> de
+        <strong>{{ r.usuario?.nombres }} {{ r.usuario?.apellidos }}</strong>
+        ({{ r.espacio.nombre }}, {{ r.fechaReserva | date: 'dd/MM/yyyy' }}).
+        El espacio quedará libre en ese horario.
+      </p>
+      <div class="modal-actions">
+        <button type="button" class="btn-secundario" (click)="descartarCancelacion()" [disabled]="cancelando()">
+          Volver
+        </button>
+        <button type="button" class="btn-peligro" (click)="confirmarCancelacion()" [disabled]="cancelando()">
+          {{ cancelando() ? 'Cancelando...' : 'Sí, cancelar' }}
+        </button>
+      </div>
+    </div>
+  </div>
+}
