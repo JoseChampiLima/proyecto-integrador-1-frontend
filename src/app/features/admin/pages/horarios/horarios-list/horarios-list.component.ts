@@ -11,7 +11,7 @@ import { EspacioDeportivoService } from '../../../../../core/services/espacio-de
   templateUrl: './horarios-list.component.html',
   styleUrl: './horarios-list.component.css',
 })
-export class HorariosListComponent {
+export class HorariosListComponent implements OnInit {
    horarios = signal<Horario[]>([]);
   espacios = signal<EspacioDeportivo[]>([]);
 
@@ -20,6 +20,10 @@ export class HorariosListComponent {
 
   isLoading = signal(true);
   errorMessage = signal<string | null>(null);
+
+  // Horario seleccionado para el modal de confirmación de borrado (null = modal cerrado)
+  horarioAEliminar = signal<Horario | null>(null);
+  eliminando = signal(false);
 
   constructor(
     private horarioService: HorarioService,
@@ -43,8 +47,6 @@ export class HorariosListComponent {
 
       next: (horarios) => {
 
-        console.log('HORARIOS BACKEND:', horarios);
-
         this.horarios.set(horarios);
 
       },
@@ -59,6 +61,8 @@ export class HorariosListComponent {
         this.errorMessage.set(
           'No se pudo cargar la lista de horarios.'
         );
+
+        this.isLoading.set(false);
 
       },
 
@@ -226,46 +230,35 @@ editarHorario(horario: Horario): void {
 
 
 // ==========================================
-// ELIMINAR HORARIO
+// ELIMINAR HORARIO (con modal de confirmación)
 // ==========================================
 
-eliminarHorario(horario: Horario): void {
+pedirConfirmacionEliminar(horario: Horario): void {
+  this.horarioAEliminar.set(horario);
+}
 
-  if (!horario.idHorario) {
-    return;
-  }
+cancelarEliminar(): void {
+  this.horarioAEliminar.set(null);
+}
 
-  const confirmar = confirm(
-    '¿Está seguro de eliminar este horario?'
-  );
+confirmarEliminar(): void {
+  const horario = this.horarioAEliminar();
+  if (!horario?.idHorario) return;
 
-  if (!confirmar) {
-    return;
-  }
+  this.eliminando.set(true);
 
-  this.horarioService
-    .eliminar(horario.idHorario)
-    .subscribe({
-
-      next: () => {
-
-        console.log(
-          'Horario eliminado correctamente'
-        );
-
-        // Recargar listado
-        this.cargarHorarios();
-      },
-
-      error: (error) => {
-
-        console.error(
-          'Error al eliminar horario:',
-          error
-        );
-
-      }
-
-    });
+  this.horarioService.eliminar(horario.idHorario).subscribe({
+    next: () => {
+      this.horarios.update(lista => lista.filter(h => h.idHorario !== horario.idHorario));
+      this.horarioAEliminar.set(null);
+    },
+    error: (err) => {
+      console.error('Error al eliminar horario:', err);
+      this.errorMessage.set('No se pudo eliminar el horario.');
+      this.horarioAEliminar.set(null);
+      this.eliminando.set(false);
+    },
+    complete: () => this.eliminando.set(false)
+  });
 }
 }

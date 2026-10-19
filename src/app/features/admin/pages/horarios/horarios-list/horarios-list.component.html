@@ -130,8 +130,8 @@
                   type="button"
                   class="btn-accion eliminar"
                   title="Eliminar horario"
-                  (click)="eliminarHorario(horario)">
-                  
+                  (click)="pedirConfirmacionEliminar(horario)">
+                  🗑️
                 </button>
 
               </td>
@@ -157,3 +157,26 @@
   </div>
 
 </div>
+
+<!-- MODAL DE CONFIRMACIÓN DE BORRADO -->
+@if (horarioAEliminar(); as horario) {
+  <div class="modal-overlay" (click)="cancelarEliminar()">
+    <div class="modal-confirm" (click)="$event.stopPropagation()">
+      <h3>¿Eliminar horario?</h3>
+      <p>
+        Se eliminará el horario de <strong>{{ nombreEspacio(horario.idEspacio) }}</strong>
+        del <strong>{{ formatearDia(horario.diaSemana) }}</strong>
+        de {{ formatearHora(horario.horaInicio) }} a {{ formatearHora(horario.horaFin) }}.
+        No se puede deshacer.
+      </p>
+      <div class="modal-actions">
+        <button type="button" class="btn-secundario" (click)="cancelarEliminar()" [disabled]="eliminando()">
+          Cancelar
+        </button>
+        <button type="button" class="btn-peligro" (click)="confirmarEliminar()" [disabled]="eliminando()">
+          {{ eliminando() ? 'Eliminando...' : 'Sí, eliminar' }}
+        </button>
+      </div>
+    </div>
+  </div>
+}

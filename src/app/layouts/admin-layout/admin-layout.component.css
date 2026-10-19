@@ -141,10 +141,6 @@
   gap: 2px;
 }
 
-.admin-submenu.submenu-open {
-  max-height: 200px;
-}
-
 .admin-submenu-link {
   padding-left: 42px;
   font-size: 0.85rem;

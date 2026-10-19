@@ -308,6 +308,72 @@ tbody tr:hover {
   font-size: 12px;
 }
 
+/* Modal de confirmación */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 44, 26, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 50;
+}
+
+.modal-confirm {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  max-width: 420px;
+  width: 100%;
+}
+
+.modal-confirm h3 {
+  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+  font-weight: 800;
+  color: #0d2e1e;
+  margin: 0 0 10px;
+}
+
+.modal-confirm p {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.9rem;
+  color: #4a5d53;
+  margin: 0 0 20px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.btn-secundario,
+.btn-peligro {
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 700;
+  font-size: 0.87rem;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-secundario {
+  background: #f0f2f1;
+  color: #4a5d53;
+}
+
+.btn-peligro {
+  background: #c53030;
+  color: #ffffff;
+}
+
+.btn-secundario:disabled,
+.btn-peligro:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
 
 /* ========================================
    RESPONSIVE
