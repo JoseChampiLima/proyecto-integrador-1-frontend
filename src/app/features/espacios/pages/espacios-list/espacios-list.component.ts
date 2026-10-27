@@ -73,8 +73,27 @@ export class EspaciosListComponent implements OnInit {
    * (fuera del prefijo /api). Si tu urlBackend ya NO incluye "/api", quita el .replace().
    */
   getFotoUrl(foto: string | null | undefined): string {
-    if (!foto) return 'assets/images/espacio-placeholder.jpg';
-    const baseUrl = environment.urlBackend.replace(/\/api\/?$/, '');
-    return `${baseUrl}${foto}`;
+
+  if (!foto || !foto.trim()) {
+    return 'assets/images/espacio-placeholder.jpg';
   }
+
+  if (/^https?:\/\//i.test(foto)) {
+    return foto;
+  }
+
+  const baseUrl = environment.urlBackend
+    .replace(/\/api\/?$/, '')
+    .replace(/\/$/, '');
+
+  let rutaFoto = foto.trim();
+
+  // Si en la BD solo está el nombre del archivo,
+  // agregar la carpeta donde se almacenan las fotografías.
+  if (!rutaFoto.startsWith('/uploads/')) {
+    rutaFoto = `/uploads/espacios/${rutaFoto.replace(/^\/+/, '')}`;
+  }
+
+  return `${baseUrl}${rutaFoto}`;
+}
 }
