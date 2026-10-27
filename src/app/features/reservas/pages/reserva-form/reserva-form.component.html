@@ -1,0 +1,199 @@
+
+
+<div class="reserva-page">
+  <div class="reserva-container">
+
+    <div class="page-header">
+      <span class="eyebrow">LAW TENNIS · RESERVAS</span>
+      <h1>Reservar espacio deportivo</h1>
+      <p>Selecciona una fecha y un horario para disfrutar de tu cancha.</p>
+    </div>
+
+    @if (cargando()) {
+      <p style="color: white; text-align: center;">
+        Cargando información de la cancha...
+      </p>
+    } @else if (espacio(); as cancha) {
+
+      <div class="reserva-grid">
+
+        <section class="reserva-card">
+
+          <div class="card-heading">
+            <span class="step-number">01</span>
+            <div>
+              <h2>Datos de la reserva</h2>
+              <p>Completa la información de tu reserva.</p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="fecha">Fecha de reserva</label>
+            <input
+              id="fecha"
+              type="date"
+              [min]="fechaMinima"
+              [(ngModel)]="fecha"
+              (ngModelChange)="actualizarFormulario()"
+            />
+          </div>
+
+          @if (fecha) {
+            <div class="info-message" style="margin-bottom: 20px;">
+              <span class="info-icon">i</span>
+              <p>
+                Consulta los horarios configurados para la fecha elegida
+                antes de seleccionar tus horas.
+              </p>
+            </div>
+          }
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="horaInicio">Hora de inicio</label>
+              <input
+                id="horaInicio"
+                type="time"
+                [(ngModel)]="horaInicio"
+                (ngModelChange)="actualizarFormulario()"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="horaFin">Hora de fin</label>
+              <input
+                id="horaFin"
+                type="time"
+                [(ngModel)]="horaFin"
+                (ngModelChange)="actualizarFormulario()"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="observacion">
+              Observaciones
+              <span class="optional">(opcional)</span>
+            </label>
+
+            <textarea
+              id="observacion"
+              rows="4"
+              maxlength="250"
+              [(ngModel)]="observacion"
+              placeholder="¿Tienes alguna indicación especial?">
+            </textarea>
+          </div>
+
+          <div class="info-message">
+            <span class="info-icon">i</span>
+            <p>
+              El sistema verificará que la cancha no esté reservada
+              ni en mantenimiento antes de confirmar.
+            </p>
+          </div>
+
+          @if (mensajeError()) {
+            <p style="color: #b42318; margin-top: 16px;">
+              {{ mensajeError() }}
+            </p>
+          }
+
+          @if (mensajeExito()) {
+            <div class="mensaje-reserva-exitosa">
+                <div class="mensaje-icono">✓</div>
+
+                <h3>¡Reserva confirmada!</h3>
+
+                <p>{{ mensajeExito() }}</p>
+
+                <span>Redirigiendo a Espacios Deportivos...</span>
+            </div>
+            }
+
+        </section>
+
+        <aside class="resumen-card">
+
+          <div class="resumen-header">
+            <h2>Resumen de reserva</h2>
+            <span class="status">Por confirmar</span>
+          </div>
+
+          <div class="cancha-preview">
+            <div class="cancha-icon">LT</div>
+            <div>
+              <h3>{{ cancha.nombre }}</h3>
+              <p>{{ cancha.sede.nombre }}</p>
+              <span class="tipo">
+                {{ cancha.tipoEspacio.nombre }}
+              </span>
+            </div>
+          </div>
+
+          <div class="resumen-details">
+
+            <div class="detail-row">
+              <span>Precio por hora</span>
+              <strong>S/ {{ cancha.precioHora | number:'1.2-2' }}</strong>
+            </div>
+
+            <div class="detail-row">
+              <span>Duración</span>
+              <strong>{{ duracionCalculada | number:'1.1-2' }} horas</strong>
+            </div>
+
+            <div class="detail-row">
+              <span>Fecha</span>
+              <strong>{{ fecha || 'Por seleccionar' }}</strong>
+            </div>
+
+            <div class="detail-row">
+              <span>Horario</span>
+              <strong>
+                {{ horaInicio && horaFin
+                  ? horaInicio + ' - ' + horaFin
+                  : 'Por seleccionar' }}
+              </strong>
+            </div>
+
+          </div>
+
+          <div class="total-box">
+            <span>Total estimado</span>
+            <strong>
+              S/ {{ totalCalculado | number:'1.2-2' }}
+            </strong>
+          </div>
+
+          <button
+            class="btn-confirmar"
+            type="button"
+            [disabled]="procesando() || !horarioValido() || !!mensajeExito()"
+            (click)="confirmarReserva()">
+            {{ procesando() ? 'Registrando...' : 'Confirmar reserva' }}
+          </button>
+
+          <button
+            class="btn-cancelar"
+            type="button"
+            (click)="volver()">
+            Volver a espacios
+          </button>
+
+          <p class="resumen-note">
+            El precio definitivo será calculado por el servidor.
+          </p>
+
+        </aside>
+
+      </div>
+
+    } @else {
+      <p style="color: white; text-align: center;">
+        {{ mensajeError() || 'No se encontró el espacio deportivo.' }}
+      </p>
+    }
+
+  </div>
+</div>

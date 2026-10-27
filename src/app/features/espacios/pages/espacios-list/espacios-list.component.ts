@@ -1,5 +1,6 @@
 // RUTA src\app\features\espacios\pages\espacios-list\espacios-list.component.ts
-
+import { Router } from '@angular/router';
+import { AuthService } from '../../../../core/auth/auth.service';
 import { Component, OnInit, signal } from '@angular/core';
 import { SedeService } from '../../../../core/services/sede.service';
 import { EspacioDeportivoService } from '../../../../core/services/espacio-deportivo.service';
@@ -24,7 +25,9 @@ export class EspaciosListComponent implements OnInit {
 
   constructor(
     private sedeService: SedeService,
-    private espacioService: EspacioDeportivoService
+    private espacioService: EspacioDeportivoService,
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -95,5 +98,29 @@ export class EspaciosListComponent implements OnInit {
   }
 
   return `${baseUrl}${rutaFoto}`;
+}
+reservar(espacio: EspacioDeportivo): void {
+
+  if (!espacio.idEspacio || !this.esDisponible(espacio.estado)) {
+    return;
+  }
+
+  if (!this.authService.isAuthenticated()) {
+    this.router.navigate(['/login'], {
+      queryParams: {
+        returnUrl: `/reservar/${espacio.idEspacio}`
+      }
+    });
+    return;
+  }
+
+  if (!this.authService.isCliente()) {
+    this.errorMessage.set(
+      'Solo los clientes pueden realizar reservas.'
+    );
+    return;
+  }
+
+  this.router.navigate(['/inicio/reservar', espacio.idEspacio]);
 }
 }
