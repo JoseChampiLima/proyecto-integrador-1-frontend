@@ -47,7 +47,19 @@ export const routes: Routes = [
           loadComponent: () =>
             import('./features/reservas/pages/reserva-form/reserva-form.component')
               .then(m => m.ReservaFormComponent)
-        }
+        },
+        {
+          path: 'espacios',
+          loadComponent: () =>
+            import('./features/espacios/pages/espacios-list/espacios-list.component')
+              .then(m => m.EspaciosListComponent)
+        },
+        {
+          path: 'mis-reservas',
+          loadComponent: () =>
+            import('./features/reservas/pages/mis-reservas/mis-reservas.component')
+              .then(m => m.MisReservasComponent)
+        },
       ]
     },
 
