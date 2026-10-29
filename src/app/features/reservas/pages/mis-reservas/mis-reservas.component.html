@@ -38,6 +38,13 @@
 
     <button
       type="button"
+      [class.activo]="filtro() === 'FINALIZADA'"
+      (click)="cambiarFiltro('FINALIZADA')">
+      Finalizadas
+    </button>
+
+    <button
+      type="button"
       [class.activo]="filtro() === 'CANCELADA'"
       (click)="cambiarFiltro('CANCELADA')">
       Canceladas

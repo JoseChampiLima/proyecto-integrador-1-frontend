@@ -67,7 +67,7 @@ export class EspaciosListComponent implements OnInit {
   }
 
   esDisponible(estado: string): boolean {
-    return estado === 'DISPONIBLE';
+    return estado === 'ACTIVO';
   }
 
   /**

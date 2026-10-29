@@ -398,3 +398,51 @@
     transform: translateY(0);
   }
 }
+
+/* Agregar al FINAL de reserva-form.component.css */
+
+.horarios-dia {
+  margin-bottom: 22px;
+  padding: 14px 16px;
+  background: #edf7f1;
+  border-radius: 10px;
+}
+
+.horarios-label {
+  display: block;
+  margin-bottom: 10px;
+  color: #35614c;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.horarios-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.chip-horario {
+  border: 1.5px solid #a9dfbc;
+  background: #ffffff;
+  color: #075e3b;
+  padding: 7px 14px;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.chip-horario:hover {
+  background: #075e3b;
+  border-color: #075e3b;
+  color: #ffffff;
+}
+
+.horarios-dia small {
+  color: #6b9279;
+  font-size: 11px;
+}

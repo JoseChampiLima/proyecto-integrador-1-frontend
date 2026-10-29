@@ -1,6 +1,6 @@
+// RUTA src\app\features\reservas\pages\reserva-form\reserva-form.component.ts
 
-
-import { Component, OnInit, computed, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -45,33 +45,6 @@ export class ReservaFormComponent implements OnInit {
     'JUEVES', 'VIERNES', 'SABADO'
   ];
 
-  horariosDelDia = computed(() => {
-    const fecha = this.fecha;
-    if (!fecha) return [];
-
-    const [anio, mes, dia] = fecha.split('-').map(Number);
-    const fechaLocal = new Date(anio, mes - 1, dia);
-    const nombreDia = this.dias[fechaLocal.getDay()];
-
-    return this.horarios().filter(h =>
-      h.diaSemana.toUpperCase() === nombreDia &&
-      h.estado === true
-    );
-  });
-
-  duracionHoras = computed(() => {
-    if (!this.horaInicio || !this.horaFin) return 0;
-
-    const [hi, mi] = this.horaInicio.split(':').map(Number);
-    const [hf, mf] = this.horaFin.split(':').map(Number);
-
-    return Math.max(0, ((hf * 60 + mf) - (hi * 60 + mi)) / 60);
-  });
-
-  precioTotal = computed(() =>
-    (this.espacio()?.precioHora ?? 0) * this.duracionHoras()
-  );
-
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -111,10 +84,47 @@ export class ReservaFormComponent implements OnInit {
     });
   }
 
+  // --- Getters (se reevalúan en cada render; fecha/horas son campos normales,
+  // por eso aquí no sirve computed(): no detectaría los cambios) ---
+
+  /** Horarios de atención activos para el día de la semana de la fecha elegida */
+  get horariosDelDia(): Horario[] {
+    if (!this.fecha) return [];
+
+    return this.horarios()
+      .filter(h =>
+        h.estado === true &&
+        h.diaSemana.toUpperCase() === this.nombreDia(this.fecha)
+      )
+      .sort((a, b) => a.horaInicio.localeCompare(b.horaInicio));
+  }
+
+  get duracionCalculada(): number {
+    if (!this.horaInicio || !this.horaFin) return 0;
+
+    const [hi, mi] = this.horaInicio.split(':').map(Number);
+    const [hf, mf] = this.horaFin.split(':').map(Number);
+
+    return Math.max(0, ((hf * 60 + mf) - (hi * 60 + mi)) / 60);
+  }
+
+  get totalCalculado(): number {
+    return (this.espacio()?.precioHora ?? 0) * this.duracionCalculada;
+  }
+
+  // --- Acciones ---
+
   // Se ejecuta al cambiar la fecha o las horas.
   actualizarFormulario(): void {
     this.mensajeError.set('');
     this.mensajeExito.set('');
+  }
+
+  /** Rellena las horas con un bloque de atención (atajo para el usuario) */
+  usarHorario(horario: Horario): void {
+    this.horaInicio = horario.horaInicio.substring(0, 5);
+    this.horaFin = horario.horaFin.substring(0, 5);
+    this.actualizarFormulario();
   }
 
   // Validar que el horario esté dentro del horario de atención.
@@ -131,14 +141,7 @@ export class ReservaFormComponent implements OnInit {
       return false;
     }
 
-    const [anio, mes, dia] = this.fecha.split('-').map(Number);
-    const nombreDia = this.dias[
-      new Date(anio, mes - 1, dia).getDay()
-    ];
-
-    return this.horarios().some(h =>
-      h.estado === true &&
-      h.diaSemana.toUpperCase() === nombreDia &&
+    return this.horariosDelDia.some(h =>
       this.horaInicio >= h.horaInicio.substring(0, 5) &&
       this.horaFin <= h.horaFin.substring(0, 5)
     );
@@ -187,21 +190,14 @@ export class ReservaFormComponent implements OnInit {
       },
       error: (error) => {
         console.error(error);
-        this.mensajeError.set(
-          'No se pudo verificar la disponibilidad.'
-        );
+        this.mensajeError.set('No se pudo verificar la disponibilidad.');
         this.procesando.set(false);
       }
     });
   }
 
-  private guardarReserva(
-    espacio: EspacioDeportivo,
-    idUsuario: number
-  ): void {
-
-    // El backend resuelve el usuario, el estado y el precio
-    // a partir de los identificadores y datos recibidos.
+  private guardarReserva(espacio: EspacioDeportivo, idUsuario: number): void {
+    // El backend resuelve el estado y el precio a partir de los datos recibidos.
     const nuevaReserva = {
       usuario: { idUsuario },
       espacio: { idEspacio: espacio.idEspacio },
@@ -212,19 +208,13 @@ export class ReservaFormComponent implements OnInit {
     } as unknown as Reserva;
 
     this.reservaService.guardar(nuevaReserva).subscribe({
-      next: (reservaGuardada) => {
-  this.procesando.set(false);
+      next: () => {
+        this.procesando.set(false);
+        this.mensajeExito.set('¡Reserva realizada exitosamente! Te llevamos a Mis Reservas.');
 
-  this.mensajeExito.set(
-    '¡Reserva realizada exitosamente! Serás redirigido a Espacios Deportivos.'
-  );
-
-  console.log('Reserva guardada:', reservaGuardada);
-
-  setTimeout(() => {
-    this.router.navigate(['/espacios']);
-  }, 2000);
-},
+        // Tras reservar, lo natural es ver la reserva recién creada
+        setTimeout(() => this.router.navigate(['/inicio/mis-reservas']), 2000);
+      },
       error: (error) => {
         console.error('Error al registrar reserva:', error);
 
@@ -232,28 +222,19 @@ export class ReservaFormComponent implements OnInit {
           || error.error?.mensaje
           || (typeof error.error === 'string' ? error.error : null);
 
-        this.mensajeError.set(
-          mensajeBackend || 'No se pudo registrar la reserva.'
-        );
+        this.mensajeError.set(mensajeBackend || 'No se pudo registrar la reserva.');
         this.procesando.set(false);
       }
     });
   }
 
   volver(): void {
-    this.router.navigate(['/espacios']);
+    // Dentro de la zona cliente, no a la pública
+    this.router.navigate(['/inicio/espacios']);
   }
-  get duracionCalculada(): number {
-  if (!this.horaInicio || !this.horaFin) return 0;
 
-  const [hi, mi] = this.horaInicio.split(':').map(Number);
-  const [hf, mf] = this.horaFin.split(':').map(Number);
-
-  return Math.max(0, ((hf * 60 + mf) - (hi * 60 + mi)) / 60);
+  private nombreDia(fechaIso: string): string {
+    const [anio, mes, dia] = fechaIso.split('-').map(Number);
+    return this.dias[new Date(anio, mes - 1, dia).getDay()];
+  }
 }
-
-get totalCalculado(): number {
-  return (this.espacio()?.precioHora ?? 0) * this.duracionCalculada;
-}
-}
-
