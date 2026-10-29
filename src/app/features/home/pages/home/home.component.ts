@@ -5,18 +5,20 @@ import { EspacioDeportivoService } from '../../../../core/services/espacio-depor
 import { Sede } from '../../../../core/models/sede.model';
 import { EspacioDeportivo } from '../../../../core/models/espacio-deportivo.model';
 import { FormsModule } from '@angular/forms';
+import { TipoEspacioService } from '../../../../core/services/tipo-espacio.service';
+import { TipoEspacio } from '../../../../core/models/tipo-espacio.model';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [RouterModule, FormsModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit {
   sedes = signal<Sede[]>([]);
-  featuredEspacios = signal<EspacioDeportivo[]>([]);
-  espacios = signal<EspacioDeportivo[]>([]);
+  featuredEspacios = signal<TipoEspacio[]>([]);
+  tiposEspacios = signal<TipoEspacio[]>([]);
   // Search parameters (signals)
   selectedSedeId = signal<string>('');
   selectedTipo = signal<string>('');
@@ -24,33 +26,29 @@ export class HomeComponent implements OnInit {
   constructor(
     private sedeService: SedeService,
     private espacioService: EspacioDeportivoService,
-    private router: Router
+    private tipoEspacioService: TipoEspacioService,
+    private router: Router,
   ) {}
 
   ngOnInit() {
     // Load active venues
     this.sedeService.listarActivas().subscribe({
       next: (data) => this.sedes.set(data),
-      error: (err) => console.error('Error loading sedes', err)
+      error: (err) => console.error('Error loading sedes', err),
     });
 
     // Load available spaces and show the top 3 featured ones
-    this.espacioService.listar().subscribe({
-  next: (data) => {
+    this.tipoEspacioService.listarActivos().subscribe({
+      next: (data) => {
+        // Guardar los espacios que vienen del API
+        this.tiposEspacios.set(data);
 
-    // Guardar los espacios que vienen del API
-    this.espacios.set(data);
+        const available = data.filter((e) => e.estado === 'DISPONIBLE').slice(0, 3);
 
-    const available = data
-      .filter(e => e.estado === 'DISPONIBLE')
-      .slice(0, 3);
-
-    this.featuredEspacios.set(
-      available.length > 0 ? available : data.slice(0, 3)
-    );
-  },
-  error: (err) => console.error('Error loading spaces', err)
-});
+        this.featuredEspacios.set(available.length > 0 ? available : data.slice(0, 3));
+      },
+      error: (err) => console.error('Error loading spaces', err),
+    });
   }
 
   onSearch() {

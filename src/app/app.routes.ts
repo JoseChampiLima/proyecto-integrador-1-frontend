@@ -23,6 +23,9 @@ export const routes: Routes = [
     path: 'espacios',
     loadComponent: () => import('./features/espacios/pages/espacios-list/espacios-list.component').then(m => m.EspaciosListComponent)
   },
+  { path: 'nosotros',
+    loadComponent: () => import('./features/nosotros/pages/nosotros/nosotros.component').then(m => m.NosotrosComponent)
+  },
 
   // --- Zona CLIENTE ---
   {

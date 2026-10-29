@@ -1,0 +1,373 @@
+/* RUTA src\app\features\public\pages\nosotros\nosotros.component.ts */
+/* Autocontenido: no depende de Bootstrap ni de clases globales. */
+
+.nos-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ===== Encabezado ===== */
+.nos-hero {
+  background: linear-gradient(135deg, #0d2e1e 0%, #0d5c3a 100%);
+  color: #ffffff;
+  padding: 72px 0;
+  text-align: center;
+}
+
+.nos-badge {
+  display: inline-block;
+  background: rgba(212, 175, 55, 0.18);
+  color: #d4af37;
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 999px;
+  margin-bottom: 18px;
+}
+
+.nos-hero-title {
+  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+  font-weight: 800;
+  font-size: 2.6rem;
+  line-height: 1.15;
+  margin: 0 0 12px;
+}
+
+.nos-hero-sub {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1.1rem;
+  color: #cfe3d8;
+  margin: 0;
+}
+
+/* ===== Secciones ===== */
+.nos-section {
+  padding: 64px 0;
+  background: #ffffff;
+}
+
+.nos-section-alt {
+  background: #f4f7f5;
+}
+
+.nos-title {
+  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+  font-weight: 800;
+  font-size: 1.8rem;
+  color: #0d2e1e;
+  margin: 0 0 20px;
+}
+
+.nos-title-center {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.nos-title-spaced {
+  margin-top: 56px;
+}
+
+.nos-section p {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #3d4f46;
+  margin: 0 0 14px;
+}
+
+/* ===== Historia + línea de tiempo ===== */
+.nos-historia {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.nos-timeline {
+  list-style: none;
+  margin: 0;
+  padding: 4px 0 4px 24px;
+  border-left: 3px solid #d4af37;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.nos-timeline li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nos-timeline li::before {
+  content: '';
+  position: absolute;
+  left: -33px;
+  top: 6px;
+  width: 15px;
+  height: 15px;
+  background: #0d5c3a;
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px #d4af37;
+}
+
+.nos-timeline-year {
+  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+  font-weight: 800;
+  font-size: 1.3rem;
+  color: #0d5c3a;
+}
+
+.nos-timeline-text {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: #3d4f46;
+}
+
+/* ===== Misión y visión ===== */
+.nos-mv {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.nos-card {
+  background: #ffffff;
+  border: 1px solid #e5ebe7;
+  border-radius: 16px;
+  padding: 32px;
+}
+
+.nos-card-dark {
+  background: #0d2e1e;
+  border-color: #0d2e1e;
+}
+
+.nos-card-title {
+  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+  font-weight: 800;
+  font-size: 1.4rem;
+  color: #0d5c3a;
+  margin: 0 0 12px;
+}
+
+.nos-card p {
+  margin: 0;
+}
+
+.nos-card-dark .nos-card-title {
+  color: #d4af37;
+}
+
+.nos-section .nos-card-dark p {
+  color: #cfe3d8;
+}
+
+/* ===== Valores ===== */
+.nos-valores {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.nos-valor {
+  background: #f4f7f5;
+  border-top: 4px solid #d4af37;
+  border-radius: 12px;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nos-valor-num {
+  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+  font-weight: 800;
+  font-size: 1.6rem;
+  color: #d4af37;
+}
+
+.nos-valor-nombre {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #0d2e1e;
+}
+
+/* ===== Sedes y tipos ===== */
+.nos-sedes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.nos-sede {
+  background: #ffffff;
+  border: 1px solid #e5ebe7;
+  border-radius: 14px;
+  padding: 24px;
+}
+
+.nos-sede h3 {
+  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: #0d2e1e;
+  margin: 0 0 8px;
+}
+
+.nos-sede p {
+  font-size: 0.9rem;
+  margin: 0 0 4px;
+}
+
+.nos-sede .nos-sede-tel {
+  color: #0d5c3a;
+  font-weight: 600;
+}
+
+.nos-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.nos-chip {
+  background: #e3f0e9;
+  color: #0d5c3a;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 8px 18px;
+  border-radius: 999px;
+}
+
+/* ===== Contacto ===== */
+.nos-contacto {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.nos-contacto-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: #f4f7f5;
+  border-radius: 14px;
+  padding: 22px;
+}
+
+.nos-contacto-icon {
+  font-size: 1.4rem;
+}
+
+.nos-contacto-item div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.92rem;
+  color: #3d4f46;
+  overflow-wrap: anywhere;
+}
+
+.nos-contacto-item strong {
+  color: #0d2e1e;
+}
+
+.nos-contacto-item a {
+  color: #0d5c3a;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.nos-contacto-item a:hover {
+  text-decoration: underline;
+}
+
+/* ===== Llamado a la acción ===== */
+.nos-cta {
+  background: #0d2e1e;
+  color: #ffffff;
+  text-align: center;
+  padding: 56px 0;
+}
+
+.nos-cta h2 {
+  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+  font-weight: 800;
+  font-size: 1.8rem;
+  margin: 0 0 8px;
+}
+
+.nos-cta p {
+  font-family: 'Inter', -apple-system, sans-serif;
+  color: #cfe3d8;
+  margin: 0 0 24px;
+}
+
+.nos-cta-btn {
+  display: inline-block;
+  background: #d4af37;
+  color: #041a0f;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 12px 28px;
+  border-radius: 10px;
+  transition: background 0.2s ease;
+}
+
+.nos-cta-btn:hover {
+  background: #e0be4f;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 991.98px) {
+  .nos-historia {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .nos-valores {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .nos-contacto {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .nos-hero {
+    padding: 48px 0;
+  }
+
+  .nos-hero-title {
+    font-size: 1.9rem;
+  }
+
+  .nos-section {
+    padding: 44px 0;
+  }
+
+  .nos-mv,
+  .nos-valores {
+    grid-template-columns: 1fr;
+  }
+
+  .nos-card {
+    padding: 24px;
+  }
+}

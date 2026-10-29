@@ -1,0 +1,164 @@
+<!-- RUTA src\app\features\public\pages\nosotros\nosotros.component.ts -->
+
+<!-- ENCABEZADO -->
+<header class="nos-hero">
+  <div class="nos-container">
+    <span class="nos-badge">Desde 1884</span>
+    <h1 class="nos-hero-title">Club Lawn Tennis de la Exposición</h1>
+    <p class="nos-hero-sub">{{ anios }} años de tradición deportiva en el Perú.</p>
+  </div>
+</header>
+
+<!-- HISTORIA -->
+<section class="nos-section">
+  <div class="nos-container nos-historia">
+    <div>
+      <h2 class="nos-title">Nuestra historia</h2>
+      <p>
+        Fundado el 27 de junio de 1884, el Club nació como una iniciativa de inmigrantes ingleses
+        apasionados por el tenis. El primer Consejo Directivo estuvo integrado por siete miembros,
+        siendo su primer presidente Juan P. Gallagher.
+      </p>
+      <p>
+        Inicialmente el Club estuvo localizado en parte del área que hoy corresponde al Parque de la
+        Exposición, en el distrito de Cercado de Lima. En 1914 se trasladó a su actual ubicación en
+        Jesús María, con 42,500 metros cuadrados de extensión.
+      </p>
+      <p>
+        Esto se logró gracias a las gestiones de sus asociados, entre ellos los ex presidentes de la
+        República del Perú Augusto B. Leguía y Manuel Prado Ugarteche, quien a su vez presidió el
+        Club de 1917 a 1922.
+      </p>
+      <p>
+        A través de los años el Club ha acumulado grandes logros deportivos, destacando
+        notablemente en el tenis, con deportistas competitivos para la Selección Peruana de Copa
+        Davis y FED Cup. Asimismo, sobresalió en natación, esgrima y fútbol.
+      </p>
+    </div>
+
+    <ol class="nos-timeline">
+      <li>
+        <span class="nos-timeline-year">1884</span>
+        <span class="nos-timeline-text">Fundación del Club, el 27 de junio. Primer presidente: Juan P. Gallagher.</span>
+      </li>
+      <li>
+        <span class="nos-timeline-year">1914</span>
+        <span class="nos-timeline-text">Traslado a la actual ubicación en Jesús María, con 42,500 m².</span>
+      </li>
+      <li>
+        <span class="nos-timeline-year">1917–1922</span>
+        <span class="nos-timeline-text">Manuel Prado Ugarteche preside el Club.</span>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- MISIÓN Y VISIÓN -->
+<section class="nos-section nos-section-alt">
+  <div class="nos-container">
+    <div class="nos-mv">
+      <article class="nos-card nos-card-dark">
+        <h2 class="nos-card-title">Misión</h2>
+        <p>
+          Fomentar y organizar prácticas deportivas, culturales y sociales que propicien la
+          integración y recreación de sus asociados, y la formación de tenistas de primer nivel en
+          un ambiente de responsabilidad y fraternidad.
+        </p>
+      </article>
+
+      <article class="nos-card">
+        <h2 class="nos-card-title">Visión</h2>
+        <p>
+          El Club Lawn Tennis de la Exposición será reconocido como la más destacada institución
+          deportiva del Perú para la práctica del tenis, con instalaciones modernas que faciliten la
+          práctica de deportes de sus asociados.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- VALORES -->
+<section class="nos-section">
+  <div class="nos-container">
+    <h2 class="nos-title nos-title-center">Valores institucionales</h2>
+    <div class="nos-valores">
+      @for (valor of valores; track valor; let i = $index) {
+        <div class="nos-valor">
+          <span class="nos-valor-num">0{{ i + 1 }}</span>
+          <span class="nos-valor-nombre">{{ valor }}</span>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- SEDES Y ESPACIOS (datos reales desde el backend) -->
+@if (sedes().length > 0 || tipos().length > 0) {
+  <section class="nos-section nos-section-alt">
+    <div class="nos-container">
+      @if (sedes().length > 0) {
+        <h2 class="nos-title nos-title-center">Nuestras sedes</h2>
+        <div class="nos-sedes">
+          @for (sede of sedes(); track sede.idSede) {
+            <article class="nos-sede">
+              <h3>{{ sede.nombre }}</h3>
+              <p>{{ sede.direccion }}{{ sede.distrito ? ', ' + sede.distrito : '' }}</p>
+              @if (sede.telefono) {
+                <p class="nos-sede-tel">{{ sede.telefono }}</p>
+              }
+            </article>
+          }
+        </div>
+      }
+
+      @if (tipos().length > 0) {
+        <h2 class="nos-title nos-title-center nos-title-spaced">Qué ofrecemos</h2>
+        <div class="nos-chips">
+          @for (tipo of tipos(); track tipo.idTipoEspacio) {
+            <span class="nos-chip">{{ tipo.nombre }}</span>
+          }
+        </div>
+      }
+    </div>
+  </section>
+}
+
+<!-- CONTACTO -->
+<section class="nos-section">
+  <div class="nos-container">
+    <h2 class="nos-title nos-title-center">Contacto</h2>
+    <div class="nos-contacto">
+      <div class="nos-contacto-item">
+        <span class="nos-contacto-icon">📍</span>
+        <div>
+          <strong>Dirección</strong>
+          <span>Av. General Salaverry 399, Jesús María, Lima - Perú</span>
+        </div>
+      </div>
+      <div class="nos-contacto-item">
+        <span class="nos-contacto-icon">📞</span>
+        <div>
+          <strong>Teléfono</strong>
+          <a href="tel:+5114801393">01 480 1393</a>
+        </div>
+      </div>
+      <div class="nos-contacto-item">
+        <span class="nos-contacto-icon">✉️</span>
+        <div>
+          <strong>Correo</strong>
+          <a href="mailto:comunicaciones@clublawntennis.pe">comunicaciones&#64;clublawntennis.pe</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LLAMADO A LA ACCIÓN -->
+<section class="nos-cta">
+  <div class="nos-container">
+    <h2>Reserva tu espacio deportivo</h2>
+    <p>Conoce nuestras canchas y espacios, y reserva en línea.</p>
+    <a routerLink="/espacios" class="nos-cta-btn">Ver espacios</a>
+  </div>
+</section>

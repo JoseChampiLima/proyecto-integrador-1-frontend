@@ -15,13 +15,13 @@
         </p>
         <div class="hero-stats-row">
           <div class="stat-item">
-            <span class="stat-number">3</span>
+            <span class="stat-number">{{ sedes().length }}</span>
             <span class="stat-label">Sedes en Lima</span>
           </div>
           <div class="stat-item-divider"></div>
           <div class="stat-item">
-            <span class="stat-number">15+</span>
-            <span class="stat-label">Espacios Deportivos</span>
+            <span class="stat-number">{{ tiposEspacios().length }}</span>
+            <span class="stat-label">Tipos de Espacios</span>
           </div>
           <div class="stat-item-divider"></div>
           <div class="stat-item">
@@ -69,11 +69,8 @@
                   class="search-select"
                 >
                   <option value="">Todos los deportes</option>
-
-                  @for (espacio of espacios(); track espacio.idEspacio) {
-                    <option [value]="espacio.nombre">
-                      {{ espacio.nombre }}
-                    </option>
+                  @for (tipo of tiposEspacios(); track tipo.idTipoEspacio) {
+                    <option [value]="tipo.idTipoEspacio">{{ tipo.nombre }}</option>
                   }
                 </select>
               </div>
@@ -81,7 +78,7 @@
 
             <!-- Submit Button -->
             <button type="submit" class="btn-search-sports">
-              <span>Buscar Disponibilidad</span>
+              <span>Ver espacios</span>
               <svg
                 class="search-arrow"
                 viewBox="0 0 24 24"
@@ -103,177 +100,6 @@
     </div>
   </div>
 </header>
-
-<!-- How It Works Section -->
-<!-- <section class="section-how-works py-5">
-  <div class="container py-4 text-center">
-    <span class="section-badge">Proceso Simple</span>
-    <h2 class="section-title">¿Cómo reservar?</h2>
-    <div class="section-divider"></div>
-    
-    <div class="row mt-5">
-      <div class="col-md-4 mb-4 mb-md-0">
-        <div class="step-card">
-          <div class="step-icon-wrapper">
-            <span class="step-number">01</span>
-            <div class="step-icon-circle">
-              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="8"/>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-              </svg>
-            </div>
-          </div>
-          <h4 class="step-title">1. Elige Sede y Espacio</h4>
-          <p class="step-desc">Explora nuestras canchas, piscinas y campos según la sede y tarifa que más te acomoden.</p>
-        </div>
-      </div>
-      
-      <div class="col-md-4 mb-4 mb-md-0">
-        <div class="step-card">
-          <div class="step-icon-wrapper">
-            <span class="step-number">02</span>
-            <div class="step-icon-circle">
-              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                <line x1="16" y1="2" x2="16" y2="6"/>
-                <line x1="8" y1="2" x2="8" y2="6"/>
-                <line x1="3" y1="10" x2="21" y2="10"/>
-              </svg>
-            </div>
-          </div>
-          <h4 class="step-title">2. Selecciona Horario</h4>
-          <p class="step-desc">Verifica la disponibilidad en tiempo real para la fecha de tu preferencia y escoge el horario libre.</p>
-        </div>
-      </div>
-      
-      <div class="col-md-4">
-        <div class="step-card">
-          <div class="step-icon-wrapper">
-            <span class="step-number">03</span>
-            <div class="step-icon-circle">
-              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
-                <line x1="1" y1="10" x2="23" y2="10"/>
-              </svg>
-            </div>
-          </div>
-          <h4 class="step-title">3. Paga y Asegura</h4>
-          <p class="step-desc">Registra tu método de pago de manera segura. Recibirás una confirmación inmediata por correo.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section> -->
-
-<!-- Featured Spaces Grid -->
-<!-- <section class="section-featured py-5 bg-light-green">
-  <div class="container py-4">
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-5 text-center text-md-start">
-      <div>
-        <span class="section-badge">Instalaciones Top</span>
-        <h2 class="section-title mb-0">Espacios Recomendados</h2>
-      </div>
-      <a routerLink="/espacios" class="btn-view-all mt-3 mt-md-0">
-        <span>Ver Todos los Espacios</span>
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="arrow-small">
-          <line x1="5" y1="12" x2="19" y2="12"/>
-          <polyline points="12,5 19,12 12,19"/>
-        </svg>
-      </a>
-    </div>
-    
-    <div class="row">
-      @for (espacio of featuredEspacios(); track espacio.idEspacio) {
-        <div class="col-lg-4 col-md-6 mb-4">
-          <div class="space-card">
-            <div class="space-card-graphic" [ngClass]="{
-              'tennis-clay-graphic': espacio.foto === 'tennis-clay' || espacio.foto === 'tennis-clay-night',
-              'tennis-hard-graphic': espacio.foto === 'tennis-hard',
-              'soccer-graphic': espacio.foto === 'soccer-7' || espacio.foto === 'soccer-11',
-              'swimming-graphic': espacio.foto === 'swimming',
-              'fronton-graphic': espacio.foto === 'fronton'
-            }">
-              <div class="graphic-court-lines"></div>
-            </div>
-            
-            <div class="space-card-body">
-              <h3 class="space-title">{{ espacio.nombre }}</h3>
-              <p class="space-desc">{{ espacio.descripcion }}</p>
-              
-              <div class="space-details">
-                <div class="detail-item">
-                  <span class="detail-icon">👥</span>
-                  <span class="detail-text">Cap. {{ espacio.capacidad }} personas</span>
-                </div>
-                <div class="detail-item">
-                  <span class="detail-icon">🏷️</span>
-                  <span class="detail-text">S/ {{ espacio.precioHora | number:'1.2-2' }} / hora</span>
-                </div>
-              </div>
-              
-              <div class="space-card-footer mt-4">
-                <a [routerLink]="['/espacios', espacio.idEspacio]" class="btn-book-now">Reservar Ahora</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      }
-    </div>
-  </div>
-</section> -->
-
-<!-- Testimonials Section -->
-<!-- <section class="section-testimonials py-5">
-  <div class="container py-4 text-center">
-    <span class="section-badge">Opiniones de Socios</span>
-    <h2 class="section-title">Testimonios</h2>
-    <div class="section-divider"></div>
-    
-    <div class="row mt-5">
-      <div class="col-md-4 mb-4 mb-md-0">
-        <div class="testimonial-card">
-          <div class="quote-mark">“</div>
-          <p class="testimonial-text">Las canchas de arcilla de la sede Jesús María siempre están en impecables condiciones. Reservar por esta plataforma me toma menos de un minuto.</p>
-          <div class="testimonial-user">
-            <div class="user-avatar text-white bg-gold">AR</div>
-            <div class="user-info text-start">
-              <h5 class="user-name">Alejandro Ruiz</h5>
-              <span class="user-role">Socio Categoría A</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="col-md-4 mb-4 mb-md-0">
-        <div class="testimonial-card">
-          <div class="quote-mark">“</div>
-          <p class="testimonial-text">La piscina de Chorrillos está a la temperatura perfecta para mis entrenamientos matutinos. Me encanta ver la disponibilidad en tiempo real por días.</p>
-          <div class="testimonial-user">
-            <div class="user-avatar text-white bg-green">MC</div>
-            <div class="user-info text-start">
-              <h5 class="user-name">María Contreras</h5>
-              <span class="user-role">Deportista Libre</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="col-md-4">
-        <div class="testimonial-card">
-          <div class="quote-mark">“</div>
-          <p class="testimonial-text">El campo de fútbol 7 en Jesús María tiene un grass de excelente calidad. Los chicos del trabajo siempre reservamos los jueves por la noche.</p>
-          <div class="testimonial-user">
-            <div class="user-avatar text-white bg-navy">JS</div>
-            <div class="user-info text-start">
-              <h5 class="user-name">Juan Silva</h5>
-              <span class="user-role">Delegado Corporativo</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section> -->
 
 <!-- Footer Section -->
 <footer class="sports-footer text-white">
@@ -303,7 +129,7 @@
         <ul class="footer-links-list list-unstyled mt-3">
           <li><a routerLink="/">Inicio</a></li>
           <li><a routerLink="/sedes">Nuestras Sedes</a></li>
-          <li><a routerLink="/espacios">Canchas y Campos</a></li>
+          <li><a routerLink="/espacios">Nuestros Espacios</a></li>
           <li><a routerLink="/nosotros">Quiénes Somos</a></li>
           <li><a routerLink="/login">Ingreso Socios</a></li>
         </ul>
