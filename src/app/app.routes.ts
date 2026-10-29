@@ -28,18 +28,44 @@ export const routes: Routes = [
   },
 
   // --- Zona CLIENTE ---
-  {
-    path: 'inicio',
-    loadComponent: () => import('./layouts/cliente-layout/cliente-layout.component').then(m => m.ClienteLayoutComponent),
-    canActivate: [authGuard, roleGuard(['CLIENTE'])],
-    children: [
-      {
-        path: '',
-        loadComponent: () => import('./features/home/pages/home/home.component').then(m => m.HomeComponent)
-      }
-      // TODO: 'mis-reservas', 'espacios/:id', etc.
-    ]
-  },
+  
+// --- Zona CLIENTE ---
+    {
+      path: 'inicio',
+      loadComponent: () =>
+        import('./layouts/cliente-layout/cliente-layout.component')
+          .then(m => m.ClienteLayoutComponent),
+
+      canActivate: [authGuard, roleGuard(['CLIENTE'])],
+
+      children: [
+        {
+          path: '',
+          loadComponent: () =>
+            import('./features/home/pages/home/home.component')
+              .then(m => m.HomeComponent)
+        },
+        {
+          path: 'reservar/:id',
+          loadComponent: () =>
+            import('./features/reservas/pages/reserva-form/reserva-form.component')
+              .then(m => m.ReservaFormComponent)
+        },
+        {
+          path: 'espacios',
+          loadComponent: () =>
+            import('./features/espacios/pages/espacios-list/espacios-list.component')
+              .then(m => m.EspaciosListComponent)
+        },
+        {
+          path: 'mis-reservas',
+          loadComponent: () =>
+            import('./features/reservas/pages/mis-reservas/mis-reservas.component')
+              .then(m => m.MisReservasComponent)
+        },
+      ]
+    },
+
 
   // --- Zona ADMIN ---
   {

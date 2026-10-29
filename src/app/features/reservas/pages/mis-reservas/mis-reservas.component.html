@@ -1,0 +1,290 @@
+
+<div class="mis-reservas-container">
+
+  <!-- ENCABEZADO -->
+  <div class="titulo-seccion">
+    <span class="titulo-etiqueta">LAWN TENNIS</span>
+
+    <h1>Mis Reservas</h1>
+
+    <p>
+      Consulta y gestiona tus reservas de espacios deportivos.
+    </p>
+  </div>
+
+  <!-- FILTROS -->
+  <div class="filtros">
+
+    <button
+      type="button"
+      [class.activo]="filtro() === 'TODAS'"
+      (click)="cambiarFiltro('TODAS')">
+      Todas
+    </button>
+
+    <button
+      type="button"
+      [class.activo]="filtro() === 'PENDIENTE'"
+      (click)="cambiarFiltro('PENDIENTE')">
+      Pendientes
+    </button>
+
+    <button
+      type="button"
+      [class.activo]="filtro() === 'CONFIRMADA'"
+      (click)="cambiarFiltro('CONFIRMADA')">
+      Confirmadas
+    </button>
+
+    <button
+      type="button"
+      [class.activo]="filtro() === 'CANCELADA'"
+      (click)="cambiarFiltro('CANCELADA')">
+      Canceladas
+    </button>
+
+  </div>
+
+  <!-- CARGANDO -->
+  @if (cargando()) {
+
+    <div class="sin-reservas">
+      <h3>Cargando reservas...</h3>
+      <p>Espera un momento.</p>
+    </div>
+
+  } @else if (error()) {
+
+    <div class="mensaje-error">
+      {{ error() }}
+    </div>
+
+  } @else if (reservasFiltradas().length === 0) {
+
+    <div class="sin-reservas">
+      <h3>No tienes reservas registradas</h3>
+      <p>
+        Tus reservas aparecerán aquí cuando las realices.
+      </p>
+    </div>
+
+  } @else {
+
+    <!-- LISTADO DE RESERVAS -->
+    <div class="reservas-grid">
+
+      @for (reserva of reservasFiltradas(); track reserva.idReserva) {
+
+        <div class="reserva-card">
+
+          <!-- CABECERA -->
+          <div class="reserva-header">
+
+            <div>
+              <h3>{{ reserva.espacio.nombre }}</h3>
+              <span class="numero-reserva">
+                Reserva #{{ reserva.idReserva }}
+              </span>
+            </div>
+
+            <span
+              class="estado"
+              [class]="obtenerClaseEstado(reserva.estadoReserva.nombre)">
+              {{ reserva.estadoReserva.nombre }}
+            </span>
+
+          </div>
+
+          <!-- INFORMACIÓN -->
+          <div class="reserva-body">
+
+            <p>
+              <strong>Fecha:</strong>
+              <span>
+                {{ reserva.fechaReserva | date:'dd/MM/yyyy':'UTC' }}
+              </span>
+            </p>
+
+            <p>
+              <strong>Horario:</strong>
+              <span>
+                {{ reserva.horaInicio }} -
+                {{ reserva.horaFin }}
+              </span>
+            </p>
+
+            <p>
+              <strong>Precio total:</strong>
+              <span>
+                S/ {{ reserva.precioTotal | number:'1.2-2' }}
+              </span>
+            </p>
+
+          </div>
+
+          <!-- BOTÓN VER DETALLE -->
+          <div class="reserva-acciones">
+
+            <button
+              type="button"
+              class="btn-ver-detalle"
+              (click)="verDetalle(reserva)">
+
+              <span>Ver detalle de reserva</span>
+              <span>→</span>
+
+            </button>
+
+          </div>
+
+        </div>
+
+      }
+
+    </div>
+
+  }
+
+</div>
+
+
+<!-- MODAL DETALLE DE RESERVA -->
+@if (reservaSeleccionada(); as reserva) {
+
+  <div
+    class="modal-overlay"
+    (click)="cerrarDetalle()">
+
+    <div
+      class="modal-reserva"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="titulo-modal-reserva"
+      (click)="$event.stopPropagation()">
+
+      <!-- CABECERA DEL MODAL -->
+      <div class="modal-header">
+
+        <div>
+          <span class="modal-subtitulo">
+            LAWN TENNIS
+          </span>
+
+          <h2 id="titulo-modal-reserva">
+            Detalle de Reserva #{{ reserva.idReserva }}
+          </h2>
+        </div>
+
+        <button
+          type="button"
+          class="btn-cerrar"
+          aria-label="Cerrar detalle"
+          (click)="cerrarDetalle()">
+          ×
+        </button>
+
+      </div>
+
+      <!-- CUERPO DEL MODAL -->
+      <div class="modal-body">
+
+        <div class="detalle-espacio">
+
+          <div>
+            <span class="detalle-label">
+              ESPACIO DEPORTIVO
+            </span>
+
+            <h3>{{ reserva.espacio.nombre }}</h3>
+          </div>
+
+          <span
+            class="estado"
+            [class]="obtenerClaseEstado(reserva.estadoReserva.nombre)">
+            {{ reserva.estadoReserva.nombre }}
+          </span>
+
+        </div>
+
+        <div class="detalle-grid">
+
+          <div class="detalle-item">
+            <span>Número de reserva</span>
+            <strong>#{{ reserva.idReserva }}</strong>
+          </div>
+
+          <div class="detalle-item">
+            <span>Fecha de reserva</span>
+            <strong>
+              {{ reserva.fechaReserva | date:'dd/MM/yyyy':'UTC' }}
+            </strong>
+          </div>
+
+          <div class="detalle-item">
+            <span>Hora de inicio</span>
+            <strong>{{ reserva.horaInicio }}</strong>
+          </div>
+
+          <div class="detalle-item">
+            <span>Hora de fin</span>
+            <strong>{{ reserva.horaFin }}</strong>
+          </div>
+
+          <div class="detalle-item">
+            <span>Estado de reserva</span>
+            <strong>
+              {{ reserva.estadoReserva.nombre }}
+            </strong>
+          </div>
+
+          <div class="detalle-item">
+            <span>Sede deportiva</span>
+            <strong>
+              {{ reserva.espacio.sede.nombre }}
+            </strong>
+          </div>
+
+        </div>
+
+        <!-- OBSERVACIÓN -->
+        @if (reserva.observacion) {
+
+          <div class="detalle-observacion">
+            <strong>Observaciones</strong>
+            <p>{{ reserva.observacion }}</p>
+          </div>
+
+        }
+
+        <!-- TOTAL -->
+        <div class="detalle-total">
+
+          <span>Importe total</span>
+
+          <strong>
+            S/ {{ reserva.precioTotal | number:'1.2-2' }}
+          </strong>
+
+        </div>
+
+      </div>
+
+      <!-- PIE DEL MODAL -->
+      <div class="modal-footer">
+
+        <button
+          type="button"
+          class="btn-volver"
+          (click)="cerrarDetalle()">
+
+          Cerrar
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+}

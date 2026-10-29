@@ -1,0 +1,400 @@
+
+:host {
+  display: block;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.reserva-page {
+  min-height: calc(100vh - 70px);
+  background: #062b1c;
+  padding: 45px 20px 80px;
+}
+
+.reserva-container {
+  max-width: 1050px;
+  margin: 0 auto;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.eyebrow {
+  color: #d6b344;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.page-header h1 {
+  color: #ffffff;
+  font-size: 30px;
+  font-weight: 800;
+  margin: 12px 0;
+}
+
+.page-header p {
+  color: #9cb4a8;
+  font-size: 14px;
+}
+
+.reserva-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.reserva-card,
+.resumen-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+}
+
+.card-heading {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding-bottom: 22px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #e8eee9;
+}
+
+.step-number {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: #e5f3eb;
+  color: #075e3b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+}
+
+.card-heading h2,
+.resumen-header h2 {
+  margin: 0;
+  font-size: 18px;
+  color: #092e20;
+}
+
+.card-heading p {
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: #7b8c82;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-bottom: 22px;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #173d2d;
+}
+
+.optional {
+  font-weight: 400;
+  color: #9aa7a0;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid #dbe5de;
+  border-radius: 9px;
+  background: #fafcfb;
+  color: #173d2d;
+  font: inherit;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #08794a;
+  background: #ffffff;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.info-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: #edf7f1;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.info-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 21px;
+  height: 21px;
+  border-radius: 50%;
+  background: #0a7548;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.info-message p {
+  margin: 0;
+  color: #35614c;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* Resumen */
+
+.resumen-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 25px;
+}
+
+.status {
+  background: #fff5d7;
+  color: #98720c;
+  padding: 6px 9px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.cancha-preview {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 16px;
+  background: #f5f8f6;
+  border-radius: 12px;
+  margin-bottom: 25px;
+}
+
+.cancha-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  background: #08613c;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.cancha-preview h3 {
+  font-size: 14px;
+  color: #102e20;
+  margin: 0 0 5px;
+}
+
+.cancha-preview p {
+  font-size: 11px;
+  color: #84968b;
+  margin: 0 0 7px;
+}
+
+.tipo {
+  font-size: 10px;
+  color: #c39317;
+  font-weight: 800;
+}
+
+.resumen-details {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e5ebe7;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12px;
+}
+
+.detail-row span {
+  color: #87978c;
+}
+
+.detail-row strong {
+  color: #183a2b;
+  text-align: right;
+}
+
+.total-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 0;
+}
+
+.total-box span {
+  color: #435c4c;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.total-box strong {
+  color: #07613c;
+  font-size: 26px;
+  font-weight: 800;
+}
+
+.btn-confirmar,
+.btn-cancelar {
+  width: 100%;
+  border: none;
+  border-radius: 9px;
+  padding: 14px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-confirmar {
+  background: #d6b13d;
+  color: #142c1e;
+}
+
+.btn-confirmar:hover {
+  background: #e8c553;
+}
+
+.btn-cancelar {
+  background: transparent;
+  color: #537061;
+  margin-top: 10px;
+}
+
+.btn-cancelar:hover {
+  background: #f1f5f2;
+}
+
+.resumen-note {
+  margin: 18px 0 0;
+  text-align: center;
+  color: #9aa99e;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  .reserva-page {
+    padding: 30px 15px 60px;
+  }
+
+  .reserva-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-header h1 {
+    font-size: 24px;
+  }
+
+  .reserva-card,
+  .resumen-card {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 420px) {
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .resumen-header {
+    flex-wrap: wrap;
+  }
+}
+.mensaje-reserva-exitosa {
+  margin-top: 20px;
+  padding: 24px;
+  background: #e8f7ee;
+  border: 1px solid #a9dfbc;
+  border-radius: 12px;
+  text-align: center;
+  animation: aparecer 0.3s ease-in-out;
+}
+
+.mensaje-icono {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 12px;
+  border-radius: 50%;
+  background: #08794a;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.mensaje-reserva-exitosa h3 {
+  color: #075e3b;
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.mensaje-reserva-exitosa p {
+  color: #35614c;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.mensaje-reserva-exitosa span {
+  color: #6b9279;
+  font-size: 11px;
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

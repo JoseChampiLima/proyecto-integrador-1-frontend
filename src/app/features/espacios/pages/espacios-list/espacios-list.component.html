@@ -43,7 +43,11 @@
 
             <div class="espacio-footer">
               <span class="espacio-precio">S/ {{ espacio.precioHora }} <small>/ hora</small></span>
-              <button type="button" class="btn-reservar" [disabled]="!esDisponible(espacio.estado)">
+              <button
+                type="button"
+                class="btn-reservar"
+                [disabled]="!esDisponible(espacio.estado)"
+                (click)="reservar(espacio)">
                 Reservar
               </button>
             </div>
