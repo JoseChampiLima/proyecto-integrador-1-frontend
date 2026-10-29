@@ -1,0 +1,126 @@
+<!-- RUTA src\app\features\cliente\pages\inicio-cliente\inicio-cliente.component.ts -->
+
+<div class="inicio-container">
+
+  <!-- Saludo + acción principal -->
+  <section class="hero">
+    <span class="hero-etiqueta">LAWN TENNIS · MI ESPACIO</span>
+    <h1>{{ saludo() }}@if (nombre()) {, {{ nombre() }}}</h1>
+    <p>Reserva tu cancha en pocos pasos y revisa tus reservas desde aquí.</p>
+    <a routerLink="/inicio/espacios" class="btn-hero">Reservar ahora</a>
+  </section>
+
+  @if (error()) {
+    <div class="alerta-error">{{ error() }}</div>
+  }
+
+  @if (cargando()) {
+    <p class="estado-carga">Cargando tu resumen...</p>
+  } @else if (!error()) {
+
+    <!-- Resumen -->
+    <section class="stats-grid">
+      <article class="stat-card">
+        <span class="stat-valor">{{ reservasVigentes().length }}</span>
+        <span class="stat-label">Próximas reservas</span>
+      </article>
+      <article class="stat-card">
+        <span class="stat-valor">{{ pendientes() }}</span>
+        <span class="stat-label">Pendientes de confirmar</span>
+      </article>
+      <article class="stat-card">
+        <span class="stat-valor">{{ realizadas() }}</span>
+        <span class="stat-label">Reservas realizadas</span>
+      </article>
+    </section>
+
+    <div class="principal-grid">
+
+      <!-- Próxima reserva -->
+      <section class="card">
+        <h2 class="card-titulo">Tu próxima reserva</h2>
+
+        @if (proxima(); as p) {
+          <div class="proxima">
+            <div class="proxima-cabecera">
+              <span class="proxima-cuando">{{ p.etiqueta }}</span>
+              <span class="estado" [class]="obtenerClaseEstado(p.reserva.estadoReserva.nombre)">
+                {{ p.reserva.estadoReserva.nombre }}
+              </span>
+            </div>
+
+            <h3 class="proxima-espacio">{{ p.reserva.espacio.nombre }}</h3>
+            <p class="proxima-sede">📍 {{ p.reserva.espacio.sede.nombre }}</p>
+
+            <div class="proxima-datos">
+              <div>
+                <span>Fecha</span>
+                <strong>{{ p.reserva.fechaReserva | date:'dd/MM/yyyy':'UTC' }}</strong>
+              </div>
+              <div>
+                <span>Horario</span>
+                <strong>{{ p.reserva.horaInicio.substring(0, 5) }} - {{ p.reserva.horaFin.substring(0, 5) }}</strong>
+              </div>
+              <div>
+                <span>Total</span>
+                <strong>S/ {{ p.reserva.precioTotal | number:'1.2-2' }}</strong>
+              </div>
+            </div>
+
+            <a routerLink="/inicio/mis-reservas" class="link-secundario">Ver todas mis reservas →</a>
+          </div>
+        } @else {
+          <div class="vacio">
+            <p>Aún no tienes reservas próximas.</p>
+            <a routerLink="/inicio/espacios" class="btn-secundario">Elegir un espacio</a>
+          </div>
+        }
+      </section>
+
+      <!-- Accesos rápidos -->
+      <section class="card">
+        <h2 class="card-titulo">Accesos rápidos</h2>
+
+        <nav class="accesos">
+          <a routerLink="/inicio/espacios" class="acceso">
+            <span class="acceso-icono">🎾</span>
+            <span class="acceso-texto"><strong>Reservar</strong><small>Elige sede, cancha y horario</small></span>
+          </a>
+          <a routerLink="/inicio/mis-reservas" class="acceso">
+            <span class="acceso-icono">📅</span>
+            <span class="acceso-texto"><strong>Mis reservas</strong><small>Consulta y revisa el detalle</small></span>
+          </a>
+          <a routerLink="/inicio/mis-pagos" class="acceso">
+            <span class="acceso-icono">💳</span>
+            <span class="acceso-texto"><strong>Mis pagos</strong><small>Historial de tus pagos</small></span>
+          </a>
+        </nav>
+      </section>
+    </div>
+
+    <!-- Reserva rápida -->
+    @if (espacios().length) {
+      <section class="rapida">
+        <div class="rapida-cabecera">
+          <h2 class="card-titulo">Disponibles para reservar</h2>
+          <a routerLink="/inicio/espacios" class="link-secundario">Ver todos →</a>
+        </div>
+
+        <div class="rapida-grid">
+          @for (espacio of espacios(); track espacio.idEspacio) {
+            <article class="espacio-mini">
+              <span class="espacio-tipo">{{ espacio.tipoEspacio.nombre }}</span>
+              <h3>{{ espacio.nombre }}</h3>
+              <p>📍 {{ espacio.sede.nombre }}</p>
+
+              <div class="espacio-mini-pie">
+                <span class="espacio-precio">S/ {{ espacio.precioHora | number:'1.2-2' }}<small> / hora</small></span>
+                <a [routerLink]="['/inicio/reservar', espacio.idEspacio]" class="btn-reservar">Reservar</a>
+              </div>
+            </article>
+          }
+        </div>
+      </section>
+    }
+  }
+</div>

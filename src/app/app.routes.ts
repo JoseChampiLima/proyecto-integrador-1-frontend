@@ -42,8 +42,8 @@ export const routes: Routes = [
         {
           path: '',
           loadComponent: () =>
-            import('./features/home/pages/home/home.component')
-              .then(m => m.HomeComponent)
+            import('./features/cliente/pages/inicio/inicio.component')
+              .then(m => m.InicioComponent)
         },
         {
           path: 'reservar/:id',
