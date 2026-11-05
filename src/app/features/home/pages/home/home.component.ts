@@ -17,7 +17,6 @@ import { TipoEspacio } from '../../../../core/models/tipo-espacio.model';
 })
 export class HomeComponent implements OnInit {
   sedes = signal<Sede[]>([]);
-  featuredEspacios = signal<TipoEspacio[]>([]);
   tiposEspacios = signal<TipoEspacio[]>([]);
   // Search parameters (signals)
   selectedSedeId = signal<string>('');
@@ -42,10 +41,6 @@ export class HomeComponent implements OnInit {
       next: (data) => {
         // Guardar los espacios que vienen del API
         this.tiposEspacios.set(data);
-
-        const available = data.filter((e) => e.estado === 'DISPONIBLE').slice(0, 3);
-
-        this.featuredEspacios.set(available.length > 0 ? available : data.slice(0, 3));
       },
       error: (err) => console.error('Error loading spaces', err),
     });

@@ -156,7 +156,7 @@ export class ReservaFormComponent implements OnInit {
       return;
     }
 
-    if (espacio.estado !== 'DISPONIBLE') {
+    if (espacio.estado !== 'ACTIVO') {
       this.mensajeError.set('Este espacio no está disponible.');
       return;
     }

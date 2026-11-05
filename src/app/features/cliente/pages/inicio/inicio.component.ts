@@ -105,7 +105,7 @@ export class InicioComponent implements OnInit {
   private cargarEspacios(): void {
     this.espacioService.listar().subscribe({
       next: (lista) => this.espacios.set(
-        lista.filter(e => e.estado === 'DISPONIBLE').slice(0, 3)
+        lista.filter(e => e.estado === 'ACTIVO').slice(0, 3)
       ),
       error: (err) => console.error('Error al cargar espacios:', err)
     });
