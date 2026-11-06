@@ -1,0 +1,289 @@
+.pr-page {
+  min-height: calc(100vh - 70px);
+  background: #062b1c;
+  padding: 45px 20px 80px;
+}
+
+.pr-container {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.pr-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.pr-eyebrow {
+  color: #d6b344;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.pr-header h1 {
+  color: #ffffff;
+  font-size: 30px;
+  font-weight: 800;
+  margin: 12px 0;
+}
+
+.pr-header p {
+  color: #9cb4a8;
+  font-size: 14px;
+  margin: 0;
+}
+
+.pr-estado {
+  color: #cfe3d8;
+  text-align: center;
+  padding: 30px 0;
+}
+
+/* Avisos (error / éxito / bloqueo) */
+.pr-aviso {
+  max-width: 520px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 32px 28px;
+  text-align: center;
+}
+
+.pr-aviso p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #35614c;
+  margin: 0 0 20px;
+}
+
+.pr-aviso h3 {
+  font-size: 20px;
+  color: #075e3b;
+  margin: 0 0 10px;
+}
+
+.pr-aviso-error p {
+  color: #b42318;
+}
+
+.pr-check {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+  background: #08794a;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.pr-acciones-fila {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Contenido principal */
+.pr-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.pr-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+}
+
+.pr-card h2 {
+  font-size: 18px;
+  color: #092e20;
+  margin: 0 0 22px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e8eee9;
+}
+
+.pr-group {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-bottom: 20px;
+}
+
+.pr-group label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #173d2d;
+}
+
+.pr-group input,
+.pr-group select {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid #dbe5de;
+  border-radius: 9px;
+  background: #fafcfb;
+  color: #173d2d;
+  font: inherit;
+  font-size: 13px;
+  outline: none;
+}
+
+.pr-group input:focus,
+.pr-group select:focus {
+  border-color: #08794a;
+  background: #ffffff;
+}
+
+.pr-group .invalido {
+  border-color: #c53030;
+}
+
+.pr-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: #edf7f1;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.pr-info-icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 21px;
+  height: 21px;
+  border-radius: 50%;
+  background: #0a7548;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.pr-info p {
+  margin: 0;
+  color: #35614c;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.pr-error {
+  color: #b42318;
+  font-size: 13px;
+  margin: 0 0 16px;
+}
+
+/* Botones */
+.pr-btn {
+  display: inline-block;
+  border: none;
+  background: #d6b13d;
+  color: #142c1e;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  padding: 14px 24px;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.pr-btn:hover {
+  background: #e8c553;
+}
+
+.pr-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.pr-btn-link {
+  display: inline-block;
+  color: #537061;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  padding: 12px;
+  border-radius: 9px;
+}
+
+.pr-btn-link:hover {
+  background: #f1f5f2;
+}
+
+.pr-btn-full {
+  width: 100%;
+  display: block;
+}
+
+/* Resumen */
+.pr-resumen {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid #e5ebe7;
+}
+
+.pr-resumen div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12px;
+}
+
+.pr-resumen span {
+  color: #87978c;
+}
+
+.pr-resumen strong {
+  color: #183a2b;
+  text-align: right;
+}
+
+.pr-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 22px;
+}
+
+.pr-total span {
+  color: #435c4c;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.pr-total strong {
+  color: #07613c;
+  font-size: 26px;
+  font-weight: 800;
+}
+
+@media (max-width: 768px) {
+  .pr-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pr-header h1 {
+    font-size: 24px;
+  }
+
+  .pr-card {
+    padding: 22px;
+  }
+}

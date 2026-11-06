@@ -39,4 +39,12 @@ export class PagoService {
   listarPorUsuario(idUsuario: number): Observable<Pago[]> {
     return this.http.get<Pago[]>(`${this.apiUrl}/usuario/${idUsuario}`);
   }
+
+  confirmar(id: number): Observable<Pago> {
+    return this.http.put<Pago>(`${this.apiUrl}/${id}/confirmar`, {});
+  }
+
+  anular(id: number): Observable<Pago> {
+    return this.http.put<Pago>(`${this.apiUrl}/${id}/anular`, {});
+  }
 }

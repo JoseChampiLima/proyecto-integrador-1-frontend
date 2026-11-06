@@ -202,11 +202,16 @@
 /* BOTÓN VER DETALLE */
 
 .reserva-acciones {
-  margin-top: 22px;
+  display: flex;
+  flex-direction: row;
+  gap: 12px; /* Espacio entre los botones (ajústalo a tu gusto) */
+  width: 100%;
 }
 
+
 .btn-ver-detalle {
-  width: 100%;
+  flex: 1;       /* Hace que ambos botones compartan el espacio disponible equitativamente (50/50) */
+  width: auto; 
   display: flex;
   align-items: center;
   justify-content: space-between;

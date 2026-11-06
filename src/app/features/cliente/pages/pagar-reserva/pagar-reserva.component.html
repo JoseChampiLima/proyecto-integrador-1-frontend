@@ -1,0 +1,111 @@
+<!-- RUTA src\app\features\pagos\pages\pagar-reserva\pagar-reserva.component.ts -->
+
+<div class="pr-page">
+  <div class="pr-container">
+
+    <div class="pr-header">
+      <span class="pr-eyebrow">LAWN TENNIS · PAGOS</span>
+      <h1>Registrar pago</h1>
+      <p>Paga tu reserva y registra el número de operación para que podamos confirmarla.</p>
+    </div>
+
+    @if (cargando()) {
+      <p class="pr-estado">Cargando reserva...</p>
+
+    } @else if (errorCarga()) {
+      <div class="pr-aviso pr-aviso-error">
+        <p>{{ errorCarga() }}</p>
+        <a class="pr-btn-link" routerLink="/inicio/mis-reservas">Ir a mis reservas</a>
+      </div>
+
+    } @else if (pagoRegistrado()) {
+      <div class="pr-aviso pr-aviso-ok">
+        <div class="pr-check">✓</div>
+        <h3>¡Pago registrado!</h3>
+        <p>
+          Recibimos el número de operación de tu pago. Un administrador lo validará y, una vez
+          confirmado, tu reserva quedará confirmada.
+        </p>
+        <div class="pr-acciones-fila">
+          <a class="pr-btn" routerLink="/inicio/mis-pagos">Ver mis pagos</a>
+          <a class="pr-btn-link" routerLink="/inicio/mis-reservas">Mis reservas</a>
+        </div>
+      </div>
+
+    } @else if (bloqueo()) {
+      <div class="pr-aviso">
+        <p>{{ bloqueo() }}</p>
+        <div class="pr-acciones-fila">
+          <a class="pr-btn" routerLink="/inicio/mis-reservas">Mis reservas</a>
+          <a class="pr-btn-link" routerLink="/inicio/mis-pagos">Mis pagos</a>
+        </div>
+      </div>
+
+    } @else if (reserva(); as r) {
+      <div class="pr-grid">
+
+        <!-- FORMULARIO -->
+        <section class="pr-card">
+          <h2>Datos del pago</h2>
+
+          <form [formGroup]="pagoForm" (ngSubmit)="onSubmit()">
+            <div class="pr-group">
+              <label for="idMetodoPago">Método de pago</label>
+              <select id="idMetodoPago" formControlName="idMetodoPago"
+                [class.invalido]="pagoForm.get('idMetodoPago')?.touched && pagoForm.get('idMetodoPago')?.invalid">
+                <option [ngValue]="null" disabled>Selecciona un método</option>
+                @for (metodo of metodos(); track metodo.idMetodoPago) {
+                  <option [ngValue]="metodo.idMetodoPago">{{ metodo.nombre }}</option>
+                }
+              </select>
+            </div>
+
+            <div class="pr-group">
+              <label for="nroOperacion">N° de operación</label>
+              <input id="nroOperacion" type="text" formControlName="nroOperacion" maxlength="100"
+                placeholder="Lo encuentras en el comprobante de tu pago"
+                [class.invalido]="pagoForm.get('nroOperacion')?.touched && pagoForm.get('nroOperacion')?.invalid" />
+            </div>
+
+            <div class="pr-info">
+              <span class="pr-info-icono">i</span>
+              <p>
+                Realiza primero el pago por el método elegido y luego registra aquí el número de
+                operación. El monto debe coincidir con el total de la reserva.
+              </p>
+            </div>
+
+            @if (errorEnvio()) {
+              <p class="pr-error">{{ errorEnvio() }}</p>
+            }
+
+            <button type="submit" class="pr-btn pr-btn-full" [disabled]="pagoForm.invalid || procesando()">
+              {{ procesando() ? 'Registrando...' : 'Registrar pago' }}
+            </button>
+            <a class="pr-btn-link pr-btn-full" routerLink="/inicio/mis-reservas">Pagar después</a>
+          </form>
+        </section>
+
+        <!-- RESUMEN -->
+        <aside class="pr-card">
+          <h2>Resumen de la reserva</h2>
+
+          <div class="pr-resumen">
+            <div><span>Reserva</span><strong>#{{ r.idReserva }}</strong></div>
+            <div><span>Espacio</span><strong>{{ r.espacio.nombre }}</strong></div>
+            <div><span>Sede</span><strong>{{ r.espacio.sede.nombre }}</strong></div>
+            <div><span>Fecha</span><strong>{{ r.fechaReserva | date: 'dd/MM/yyyy' }}</strong></div>
+            <div><span>Horario</span><strong>{{ hora(r.horaInicio) }} – {{ hora(r.horaFin) }}</strong></div>
+          </div>
+
+          <div class="pr-total">
+            <span>Total a pagar</span>
+            <strong>S/ {{ r.precioTotal | number: '1.2-2' }}</strong>
+          </div>
+        </aside>
+
+      </div>
+    }
+
+  </div>
+</div>

@@ -65,7 +65,7 @@
             <div class="mp-detalle">
               <div>
                 <span>Método</span>
-                <strong>{{ pago.metodoPago?.nombre ?? '—' }}</strong>
+                <strong>{{ pago.metodoPago.nombre }}</strong>
               </div>
               <div>
                 <span>N° de operación</span>
@@ -73,15 +73,15 @@
               </div>
               <div>
                 <span>Reserva</span>
-                <strong>#{{ pago.reserva?.idReserva }}</strong>
+                <strong>#{{ pago.reserva.idReserva }}</strong>
               </div>
               <div>
                 <span>Espacio</span>
-                <strong>{{ pago.reserva?.espacio?.nombre ?? '—' }}</strong>
+                <strong>{{ pago.reserva.espacio.nombre }}</strong>
               </div>
               <div>
                 <span>Fecha de la reserva</span>
-                <strong>{{ pago.reserva?.fechaReserva | date: 'dd/MM/yyyy' }}</strong>
+                <strong>{{ pago.reserva.fechaReserva | date: 'dd/MM/yyyy' }}</strong>
               </div>
             </div>
 

@@ -1,8 +1,5 @@
-
-
 <div class="reserva-page">
   <div class="reserva-container">
-
     <div class="page-header">
       <span class="eyebrow">LAW TENNIS · RESERVAS</span>
       <h1>Reservar espacio deportivo</h1>
@@ -10,15 +7,10 @@
     </div>
 
     @if (cargando()) {
-      <p style="color: white; text-align: center;">
-        Cargando información de la cancha...
-      </p>
+      <p style="color: white; text-align: center">Cargando información de la cancha...</p>
     } @else if (espacio(); as cancha) {
-
       <div class="reserva-grid">
-
         <section class="reserva-card">
-
           <div class="card-heading">
             <span class="step-number">01</span>
             <div>
@@ -39,11 +31,11 @@
           </div>
 
           @if (fecha) {
-            <div class="info-message" style="margin-bottom: 20px;">
+            <div class="info-message" style="margin-bottom: 20px">
               <span class="info-icon">i</span>
               <p>
-                Consulta los horarios configurados para la fecha elegida
-                antes de seleccionar tus horas.
+                Consulta los horarios configurados para la fecha elegida antes de seleccionar tus
+                horas.
               </p>
             </div>
           }
@@ -81,40 +73,46 @@
               rows="4"
               maxlength="250"
               [(ngModel)]="observacion"
-              placeholder="¿Tienes alguna indicación especial?">
+              placeholder="¿Tienes alguna indicación especial?"
+            >
             </textarea>
           </div>
 
           <div class="info-message">
             <span class="info-icon">i</span>
             <p>
-              El sistema verificará que la cancha no esté reservada
-              ni en mantenimiento antes de confirmar.
+              El sistema verificará que la cancha no esté reservada ni en mantenimiento antes de
+              confirmar.
             </p>
           </div>
 
           @if (mensajeError()) {
-            <p style="color: #b42318; margin-top: 16px;">
+            <p style="color: #b42318; margin-top: 16px">
               {{ mensajeError() }}
             </p>
           }
 
           @if (mensajeExito()) {
             <div class="mensaje-reserva-exitosa">
-                <div class="mensaje-icono">✓</div>
+              <div class="mensaje-icono">✓</div>
 
-                <h3>¡Reserva confirmada!</h3>
+              <h3>¡Reserva registrada!</h3>
 
-                <p>{{ mensajeExito() }}</p>
+              <p>{{ mensajeExito() }}</p>
 
-                <span>Redirigiendo a Espacios Deportivos...</span>
+              <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px">
+                <button type="button" class="btn-confirmar" (click)="irAPagar()">
+                  Pagar ahora
+                </button>
+                <button type="button" class="btn-cancelar" (click)="irAMisReservas()">
+                  Pagar después
+                </button>
+              </div>
             </div>
-            }
-
+          }
         </section>
 
         <aside class="resumen-card">
-
           <div class="resumen-header">
             <h2>Resumen de reserva</h2>
             <span class="status">Por confirmar</span>
@@ -132,15 +130,14 @@
           </div>
 
           <div class="resumen-details">
-
             <div class="detail-row">
               <span>Precio por hora</span>
-              <strong>S/ {{ cancha.precioHora | number:'1.2-2' }}</strong>
+              <strong>S/ {{ cancha.precioHora | number: '1.2-2' }}</strong>
             </div>
 
             <div class="detail-row">
               <span>Duración</span>
-              <strong>{{ duracionCalculada | number:'1.1-2' }} horas</strong>
+              <strong>{{ duracionCalculada | number: '1.1-2' }} horas</strong>
             </div>
 
             <div class="detail-row">
@@ -151,49 +148,34 @@
             <div class="detail-row">
               <span>Horario</span>
               <strong>
-                {{ horaInicio && horaFin
-                  ? horaInicio + ' - ' + horaFin
-                  : 'Por seleccionar' }}
+                {{ horaInicio && horaFin ? horaInicio + ' - ' + horaFin : 'Por seleccionar' }}
               </strong>
             </div>
-
           </div>
 
           <div class="total-box">
             <span>Total estimado</span>
-            <strong>
-              S/ {{ totalCalculado | number:'1.2-2' }}
-            </strong>
+            <strong> S/ {{ totalCalculado | number: '1.2-2' }} </strong>
           </div>
 
           <button
             class="btn-confirmar"
             type="button"
             [disabled]="procesando() || !horarioValido() || !!mensajeExito()"
-            (click)="confirmarReserva()">
+            (click)="confirmarReserva()"
+          >
             {{ procesando() ? 'Registrando...' : 'Confirmar reserva' }}
           </button>
 
-          <button
-            class="btn-cancelar"
-            type="button"
-            (click)="volver()">
-            Volver a espacios
-          </button>
+          <button class="btn-cancelar" type="button" (click)="volver()">Volver a espacios</button>
 
-          <p class="resumen-note">
-            El precio definitivo será calculado por el servidor.
-          </p>
-
+          <p class="resumen-note">El precio definitivo será calculado por el servidor.</p>
         </aside>
-
       </div>
-
     } @else {
-      <p style="color: white; text-align: center;">
+      <p style="color: white; text-align: center">
         {{ mensajeError() || 'No se encontró el espacio deportivo.' }}
       </p>
     }
-
   </div>
 </div>

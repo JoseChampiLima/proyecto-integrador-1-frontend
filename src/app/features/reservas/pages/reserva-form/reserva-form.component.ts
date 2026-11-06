@@ -20,9 +20,10 @@ import { Reserva } from '../../../../core/models/reserva.model';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './reserva-form.component.html',
-  styleUrl: './reserva-form.component.css'
+  styleUrl: './reserva-form.component.css',
 })
 export class ReservaFormComponent implements OnInit {
+  idReservaCreada = signal<number | null>(null);
 
   espacio = signal<EspacioDeportivo | null>(null);
   horarios = signal<Horario[]>([]);
@@ -40,10 +41,7 @@ export class ReservaFormComponent implements OnInit {
 
   fechaMinima = new Date().toLocaleDateString('en-CA');
 
-  private dias = [
-    'DOMINGO', 'LUNES', 'MARTES', 'MIERCOLES',
-    'JUEVES', 'VIERNES', 'SABADO'
-  ];
+  private dias = ['DOMINGO', 'LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES', 'SABADO'];
 
   constructor(
     private route: ActivatedRoute,
@@ -51,7 +49,7 @@ export class ReservaFormComponent implements OnInit {
     private espacioService: EspacioDeportivoService,
     private horarioService: HorarioService,
     private reservaService: ReservaService,
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
   ) {}
 
   ngOnInit(): void {
@@ -66,7 +64,7 @@ export class ReservaFormComponent implements OnInit {
     forkJoin({
       espacio: this.espacioService.buscarPorId(idEspacio),
       horarios: this.horarioService.listarPorEspacio(idEspacio),
-      perfil: this.usuarioService.obtenerMiPerfil()
+      perfil: this.usuarioService.obtenerMiPerfil(),
     }).subscribe({
       next: ({ espacio, horarios, perfil }) => {
         this.espacio.set(espacio);
@@ -76,11 +74,9 @@ export class ReservaFormComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error al cargar reserva:', error);
-        this.mensajeError.set(
-          'No se pudo cargar la información de la reserva.'
-        );
+        this.mensajeError.set('No se pudo cargar la información de la reserva.');
         this.cargando.set(false);
-      }
+      },
     });
   }
 
@@ -92,10 +88,7 @@ export class ReservaFormComponent implements OnInit {
     if (!this.fecha) return [];
 
     return this.horarios()
-      .filter(h =>
-        h.estado === true &&
-        h.diaSemana.toUpperCase() === this.nombreDia(this.fecha)
-      )
+      .filter((h) => h.estado === true && h.diaSemana.toUpperCase() === this.nombreDia(this.fecha))
       .sort((a, b) => a.horaInicio.localeCompare(b.horaInicio));
   }
 
@@ -105,7 +98,7 @@ export class ReservaFormComponent implements OnInit {
     const [hi, mi] = this.horaInicio.split(':').map(Number);
     const [hf, mf] = this.horaFin.split(':').map(Number);
 
-    return Math.max(0, ((hf * 60 + mf) - (hi * 60 + mi)) / 60);
+    return Math.max(0, (hf * 60 + mf - (hi * 60 + mi)) / 60);
   }
 
   get totalCalculado(): number {
@@ -141,9 +134,10 @@ export class ReservaFormComponent implements OnInit {
       return false;
     }
 
-    return this.horariosDelDia.some(h =>
-      this.horaInicio >= h.horaInicio.substring(0, 5) &&
-      this.horaFin <= h.horaFin.substring(0, 5)
+    return this.horariosDelDia.some(
+      (h) =>
+        this.horaInicio >= h.horaInicio.substring(0, 5) &&
+        this.horaFin <= h.horaFin.substring(0, 5),
     );
   }
 
@@ -162,38 +156,33 @@ export class ReservaFormComponent implements OnInit {
     }
 
     if (!this.horarioValido()) {
-      this.mensajeError.set(
-        'Selecciona una fecha y un horario válido para esta cancha.'
-      );
+      this.mensajeError.set('Selecciona una fecha y un horario válido para esta cancha.');
       return;
     }
 
     this.procesando.set(true);
     this.mensajeError.set('');
 
-    this.reservaService.verificarDisponibilidad(
-      espacio.idEspacio,
-      this.fecha,
-      this.horaInicio,
-      this.horaFin
-    ).subscribe({
-      next: (disponible) => {
-        if (!disponible) {
-          this.mensajeError.set(
-            'El horario seleccionado ya está reservado, está en mantenimiento o no está disponible.'
-          );
-          this.procesando.set(false);
-          return;
-        }
+    this.reservaService
+      .verificarDisponibilidad(espacio.idEspacio, this.fecha, this.horaInicio, this.horaFin)
+      .subscribe({
+        next: (disponible) => {
+          if (!disponible) {
+            this.mensajeError.set(
+              'El horario seleccionado ya está reservado, está en mantenimiento o no está disponible.',
+            );
+            this.procesando.set(false);
+            return;
+          }
 
-        this.guardarReserva(espacio, idUsuario);
-      },
-      error: (error) => {
-        console.error(error);
-        this.mensajeError.set('No se pudo verificar la disponibilidad.');
-        this.procesando.set(false);
-      }
-    });
+          this.guardarReserva(espacio, idUsuario);
+        },
+        error: (error) => {
+          console.error(error);
+          this.mensajeError.set('No se pudo verificar la disponibilidad.');
+          this.procesando.set(false);
+        },
+      });
   }
 
   private guardarReserva(espacio: EspacioDeportivo, idUsuario: number): void {
@@ -204,27 +193,26 @@ export class ReservaFormComponent implements OnInit {
       fechaReserva: this.fecha,
       horaInicio: this.horaInicio,
       horaFin: this.horaFin,
-      observacion: this.observacion.trim()
+      observacion: this.observacion.trim(),
     } as unknown as Reserva;
 
     this.reservaService.guardar(nuevaReserva).subscribe({
-      next: () => {
+      next: (reservaGuardada) => {
         this.procesando.set(false);
-        this.mensajeExito.set('¡Reserva realizada exitosamente! Te llevamos a Mis Reservas.');
-
-        // Tras reservar, lo natural es ver la reserva recién creada
-        setTimeout(() => this.router.navigate(['/inicio/mis-reservas']), 2000);
+        this.idReservaCreada.set(reservaGuardada.idReserva ?? null);
+        this.mensajeExito.set('Tu reserva fue registrada. Para confirmarla, registra tu pago.');
       },
       error: (error) => {
         console.error('Error al registrar reserva:', error);
 
-        const mensajeBackend = error.error?.message
-          || error.error?.mensaje
-          || (typeof error.error === 'string' ? error.error : null);
+        const mensajeBackend =
+          error.error?.message ||
+          error.error?.mensaje ||
+          (typeof error.error === 'string' ? error.error : null);
 
         this.mensajeError.set(mensajeBackend || 'No se pudo registrar la reserva.');
         this.procesando.set(false);
-      }
+      },
     });
   }
 
@@ -236,5 +224,13 @@ export class ReservaFormComponent implements OnInit {
   private nombreDia(fechaIso: string): string {
     const [anio, mes, dia] = fechaIso.split('-').map(Number);
     return this.dias[new Date(anio, mes - 1, dia).getDay()];
+  }
+
+  irAPagar(): void {
+    this.router.navigate(['/inicio/pagar', this.idReservaCreada()]);
+  }
+
+  irAMisReservas(): void {
+    this.router.navigate(['/inicio/mis-reservas']);
   }
 }

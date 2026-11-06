@@ -62,7 +62,7 @@
                 {{ pago.reserva.espacio.nombre }} · {{ pago.reserva.fechaReserva | date: 'dd/MM/yyyy' }}
               </small>
             </td>
-            <td>{{ pago.reserva.usuario?.nombres }} {{ pago.reserva.usuario?.apellidos }}</td>
+            <td>{{ pago.reserva?.usuario?.nombres ?? '—' }} {{ pago.reserva?.usuario?.apellidos }}</td>
             <td>{{ pago.metodoPago.nombre }}</td>
             <td>S/ {{ pago.monto | number: '1.2-2' }}</td>
             <td>{{ pago.fechaPago | date: 'dd/MM/yyyy HH:mm' }}</td>
@@ -72,7 +72,12 @@
               </span>
             </td>
             <td class="col-acciones">
-              @if (!estaAnulado(pago)) {
+              @if (esPendiente(pago)) {
+                <button type="button" class="btn-icono" (click)="pedirConfirmacionConfirmar(pago)" title="Confirmar pago">
+                  ✅
+                </button>
+              }
+              @if (esPendiente(pago)) {
                 <button type="button" class="btn-icono btn-eliminar" (click)="pedirConfirmacionAnular(pago)" title="Anular pago">
                   🚫
                 </button>
@@ -86,6 +91,28 @@
         }
       </tbody>
     </table>
+  </div>
+}
+
+<!-- Modal de confirmación de pago -->
+@if (pagoAConfirmar(); as pago) {
+  <div class="modal-overlay" (click)="cancelarConfirmar()">
+    <div class="modal-confirm" (click)="$event.stopPropagation()">
+      <h3>¿Confirmar pago?</h3>
+      <p>
+        Verifica que el pago de <strong>S/ {{ pago.monto | number: '1.2-2' }}</strong>
+        ({{ pago.metodoPago?.nombre }}, operación <strong>{{ pago.nroOperacion || '—' }}</strong>)
+        de la reserva <strong>#{{ pago.reserva?.idReserva }}</strong> ya se recibió.
+      </p>
+      <div class="modal-actions">
+        <button type="button" class="btn-secundario" (click)="cancelarConfirmar()" [disabled]="confirmando()">
+          Cancelar
+        </button>
+        <button type="button" class="btn-primary-custom" (click)="confirmarPago()" [disabled]="confirmando()">
+          {{ confirmando() ? 'Confirmando...' : 'Sí, confirmar' }}
+        </button>
+      </div>
+    </div>
   </div>
 }
 

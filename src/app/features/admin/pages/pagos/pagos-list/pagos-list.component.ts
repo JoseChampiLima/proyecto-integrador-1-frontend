@@ -3,7 +3,7 @@
 import { Component, OnInit, signal, computed } from '@angular/core';
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { PagoService } from '../../../../../core/services/pago.service';
-import { Pago, ESTADO_PAGO_ANULADO } from '../../../../../core/models/pago.model';
+import { Pago, ESTADO_PAGO_ANULADO, ESTADO_PAGO_PENDIENTE, ESTADO_PAGO_APROBADO } from '../../../../../core/models/pago.model';
 
 @Component({
   selector: 'app-pagos-list',
@@ -24,6 +24,9 @@ export class PagosListComponent implements OnInit {
 
   pagoAAnular = signal<Pago | null>(null);
   anulando = signal(false);
+
+  pagoAConfirmar = signal<Pago | null>(null);
+  confirmando = signal(false);
 
   // Opciones de los filtros: salen de los propios pagos cargados
   metodos = computed(() => this.valoresUnicos(this.pagos().map(p => p.metodoPago?.nombre)));
@@ -94,6 +97,40 @@ export class PagosListComponent implements OnInit {
     }
   }
 
+  esPendiente(pago: Pago): boolean {
+    return pago.estado === ESTADO_PAGO_PENDIENTE;
+  }
+
+  pedirConfirmacionConfirmar(pago: Pago): void {
+    this.pagoAConfirmar.set(pago);
+  }
+
+  cancelarConfirmar(): void {
+    this.pagoAConfirmar.set(null);
+  }
+
+  confirmarPago(): void {
+    const pago = this.pagoAConfirmar();
+    if (!pago?.idPago) return;
+
+    this.confirmando.set(true);
+
+    // Idealmente el backend pasa también la reserva a CONFIRMADA en esta misma operación
+    this.pagoService.confirmar(pago.idPago).subscribe({
+      next: (actualizado) => {
+        this.pagos.update(lista => lista.map(p => (p.idPago === actualizado.idPago ? actualizado : p)));
+        this.pagoAConfirmar.set(null);
+      },
+      error: (err) => {
+        console.error('Error al confirmar pago:', err);
+        this.errorMessage.set('No se pudo confirmar el pago.');
+        this.pagoAConfirmar.set(null);
+        this.confirmando.set(false);
+      },
+      complete: () => this.confirmando.set(false)
+    });
+  }
+
   pedirConfirmacionAnular(pago: Pago): void {
     this.pagoAAnular.set(pago);
   }
@@ -109,7 +146,7 @@ export class PagosListComponent implements OnInit {
     this.anulando.set(true);
 
     // Se reenvía el pago completo con el estado cambiado (el backend solo expone PUT genérico)
-    this.pagoService.actualizar(pago.idPago, { ...pago, estado: ESTADO_PAGO_ANULADO }).subscribe({
+    this.pagoService.anular(pago.idPago).subscribe({
       next: (actualizado) => {
         this.pagos.update(lista => lista.map(p => (p.idPago === actualizado.idPago ? actualizado : p)));
         this.pagoAAnular.set(null);

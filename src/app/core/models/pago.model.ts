@@ -11,4 +11,6 @@ export interface Pago {
   estado: string;
 }
 
-export const ESTADO_PAGO_ANULADO = 'ANULADO';
+export const ESTADO_PAGO_PENDIENTE = 'PENDIENTE'; // registrado por el cliente, falta que el admin lo valide
+export const ESTADO_PAGO_APROBADO= 'APROBADO';       // validado por el admin
+export const ESTADO_PAGO_ANULADO = 'ANULADO';     // anulado por el admin

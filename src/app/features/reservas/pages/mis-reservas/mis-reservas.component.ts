@@ -6,11 +6,12 @@ import { DatePipe, DecimalPipe } from '@angular/common';
 import { ReservaService } from '../../../../core/services/reserva.service';
 import { UsuarioService } from '../../../../core/services/usuario.service';
 import { Reserva } from '../../../../core/models/reserva.model';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-mis-reservas',
   standalone: true,
-  imports: [DatePipe, DecimalPipe],
+  imports: [DatePipe, DecimalPipe, RouterLink],
   templateUrl: './mis-reservas.component.html',
   styleUrl: './mis-reservas.component.css'
 })
