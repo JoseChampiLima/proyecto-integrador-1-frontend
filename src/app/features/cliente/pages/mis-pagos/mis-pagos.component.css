@@ -1,0 +1,244 @@
+.mp-page {
+  min-height: calc(100vh - 70px);
+  background: #062b1c;
+  padding: 45px 20px 80px;
+}
+
+.mp-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.mp-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.mp-eyebrow {
+  color: #d6b344;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.mp-header h1 {
+  color: #ffffff;
+  font-size: 30px;
+  font-weight: 800;
+  margin: 12px 0;
+}
+
+.mp-header p {
+  color: #9cb4a8;
+  font-size: 14px;
+  margin: 0;
+}
+
+.mp-estado {
+  color: #cfe3d8;
+  text-align: center;
+  padding: 30px 0;
+}
+
+.mp-error {
+  background: rgba(197, 48, 48, 0.12);
+  border: 1px solid rgba(197, 48, 48, 0.4);
+  color: #ffd3d3;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+/* Estado vacío */
+.mp-vacio {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 40px 24px;
+  text-align: center;
+}
+
+.mp-vacio h3 {
+  font-size: 18px;
+  color: #092e20;
+  margin: 0 0 8px;
+}
+
+.mp-vacio p {
+  font-size: 13px;
+  color: #6b7d74;
+  margin: 0 0 20px;
+}
+
+.mp-btn {
+  display: inline-block;
+  background: #d6b13d;
+  color: #142c1e;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 11px 22px;
+  border-radius: 9px;
+}
+
+.mp-btn:hover {
+  background: #e8c553;
+}
+
+/* Resumen */
+.mp-resumen {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.mp-resumen-item {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mp-resumen-item span {
+  font-size: 12px;
+  font-weight: 700;
+  color: #87978c;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.mp-resumen-item strong {
+  font-size: 26px;
+  font-weight: 800;
+  color: #07613c;
+}
+
+.mp-resumen-item small {
+  font-size: 11px;
+  color: #9aa99e;
+}
+
+/* Filtros */
+.mp-filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.mp-filtros button {
+  background: transparent;
+  border: 1px solid #2f5a45;
+  color: #cfe3d8;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.mp-filtros button:hover {
+  border-color: #d6b13d;
+}
+
+.mp-filtros button.activo {
+  background: #d6b13d;
+  border-color: #d6b13d;
+  color: #142c1e;
+}
+
+/* Lista de pagos */
+.mp-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mp-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 20px 22px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14);
+}
+
+.mp-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding-bottom: 14px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid #e8eee9;
+}
+
+.mp-monto {
+  display: block;
+  font-size: 22px;
+  font-weight: 800;
+  color: #07613c;
+}
+
+.mp-fecha {
+  display: block;
+  font-size: 12px;
+  color: #87978c;
+  margin-top: 2px;
+}
+
+.mp-badge {
+  background: #e5f3eb;
+  color: #075e3b;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.mp-badge.mp-badge-pendiente {
+  background: #fff5d7;
+  color: #98720c;
+}
+
+.mp-badge.mp-badge-anulado {
+  background: #f3e0e0;
+  color: #b23b3b;
+}
+
+.mp-detalle {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px 18px;
+}
+
+.mp-detalle div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.mp-detalle span {
+  font-size: 11px;
+  color: #87978c;
+}
+
+.mp-detalle strong {
+  font-size: 13px;
+  color: #183a2b;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 575.98px) {
+  .mp-header h1 {
+    font-size: 24px;
+  }
+
+  .mp-resumen {
+    grid-template-columns: 1fr;
+  }
+}

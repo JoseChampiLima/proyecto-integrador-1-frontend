@@ -35,4 +35,8 @@ export class PagoService {
   eliminar(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+  listarPorUsuario(idUsuario: number): Observable<Pago[]> {
+    return this.http.get<Pago[]>(`${this.apiUrl}/usuario/${idUsuario}`);
+  }
 }

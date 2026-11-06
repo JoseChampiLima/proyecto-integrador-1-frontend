@@ -1,0 +1,96 @@
+<div class="mp-page">
+  <div class="mp-container">
+
+    <div class="mp-header">
+      <span class="mp-eyebrow">LAWN TENNIS · PAGOS</span>
+      <h1>Mis pagos</h1>
+      <p>Consulta los pagos registrados en tus reservas.</p>
+    </div>
+
+    @if (cargando()) {
+      <p class="mp-estado">Cargando pagos...</p>
+    } @else if (error()) {
+      <div class="mp-error">{{ error() }}</div>
+    } @else if (pagos().length === 0) {
+      <div class="mp-vacio">
+        <h3>Aún no tienes pagos registrados</h3>
+        <p>Cuando pagues una reserva, el pago aparecerá aquí.</p>
+        <a class="mp-btn" routerLink="/inicio/reservar">Reservar un espacio</a>
+      </div>
+    } @else {
+
+      <!-- RESUMEN -->
+      <div class="mp-resumen">
+        <div class="mp-resumen-item">
+          <span>Total abonado</span>
+          <strong>S/ {{ totalAbonado() | number: '1.2-2' }}</strong>
+          <small>sin contar pagos anulados</small>
+        </div>
+        <div class="mp-resumen-item">
+          <span>Pagos registrados</span>
+          <strong>{{ pagos().length }}</strong>
+          <small>en total</small>
+        </div>
+      </div>
+
+      <!-- FILTRO POR ESTADO -->
+      @if (estados().length > 1) {
+        <div class="mp-filtros">
+          <button type="button" [class.activo]="filtroEstado() === ''" (click)="filtroEstado.set('')">
+            Todos
+          </button>
+          @for (estado of estados(); track estado) {
+            <button type="button" [class.activo]="filtroEstado() === estado" (click)="filtroEstado.set(estado)">
+              {{ etiquetaEstado(estado) }}
+            </button>
+          }
+        </div>
+      }
+
+      <!-- LISTADO -->
+      <div class="mp-lista">
+        @for (pago of pagosFiltrados(); track pago.idPago) {
+          <article class="mp-card">
+
+            <div class="mp-card-top">
+              <div>
+                <span class="mp-monto">S/ {{ pago.monto | number: '1.2-2' }}</span>
+                <span class="mp-fecha">{{ pago.fechaPago | date: 'dd/MM/yyyy HH:mm' }}</span>
+              </div>
+              <span class="mp-badge" [class]="claseEstado(pago.estado)">
+                {{ etiquetaEstado(pago.estado) }}
+              </span>
+            </div>
+
+            <div class="mp-detalle">
+              <div>
+                <span>Método</span>
+                <strong>{{ pago.metodoPago?.nombre ?? '—' }}</strong>
+              </div>
+              <div>
+                <span>N° de operación</span>
+                <strong>{{ pago.nroOperacion || '—' }}</strong>
+              </div>
+              <div>
+                <span>Reserva</span>
+                <strong>#{{ pago.reserva?.idReserva }}</strong>
+              </div>
+              <div>
+                <span>Espacio</span>
+                <strong>{{ pago.reserva?.espacio?.nombre ?? '—' }}</strong>
+              </div>
+              <div>
+                <span>Fecha de la reserva</span>
+                <strong>{{ pago.reserva?.fechaReserva | date: 'dd/MM/yyyy' }}</strong>
+              </div>
+            </div>
+
+          </article>
+        } @empty {
+          <p class="mp-estado">No hay pagos con ese estado.</p>
+        }
+      </div>
+    }
+
+  </div>
+</div>

@@ -63,6 +63,12 @@ export const routes: Routes = [
             import('./features/reservas/pages/mis-reservas/mis-reservas.component')
               .then(m => m.MisReservasComponent)
         },
+        {
+          path: 'mis-pagos',
+          loadComponent: () =>
+            import('./features/cliente/pages/mis-pagos/mis-pagos.component')
+              .then(m => m.MisPagosComponent)
+        },
       ]
     },
 
