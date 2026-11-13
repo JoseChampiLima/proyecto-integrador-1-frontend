@@ -9,6 +9,52 @@
     @if (cargando()) {
       <p style="color: white; text-align: center">Cargando información de la cancha...</p>
     } @else if (espacio(); as cancha) {
+      @if (mensajeExito()) {
+        <!-- RESERVA REGISTRADA: se oculta el formulario y solo se muestra el paso de pago -->
+        <div class="exito-pago">
+          <div class="mensaje-icono">✓</div>
+
+          <span class="exito-eyebrow">LAWN TENNIS · RESERVAS</span>
+          <h2>¡Reserva registrada!</h2>
+          <p class="exito-mensaje">{{ mensajeExito() }}</p>
+
+          <div class="exito-resumen">
+            <div>
+              <span>Espacio</span>
+              <strong>{{ cancha.nombre }}</strong>
+            </div>
+            <div>
+              <span>Sede</span>
+              <strong>{{ cancha.sede.nombre }}</strong>
+            </div>
+            <div>
+              <span>Fecha</span>
+              <strong>{{ fecha | date: 'dd/MM/yyyy' : 'UTC' }}</strong>
+            </div>
+            <div>
+              <span>Horario</span>
+              <strong>{{ horaInicio }} - {{ horaFin }}</strong>
+            </div>
+            <div class="exito-total">
+              <span>Total a pagar</span>
+              <strong>S/ {{ totalCalculado | number: '1.2-2' }}</strong>
+            </div>
+          </div>
+
+          <div class="exito-acciones">
+            <button type="button" class="btn-confirmar" (click)="irAPagar()">
+              Pagar ahora
+            </button>
+            <button type="button" class="btn-cancelar" (click)="irAMisReservas()">
+              Pagar después
+            </button>
+          </div>
+
+          <p class="exito-note">
+            Tu reserva queda como <strong>PENDIENTE</strong> hasta que registres el pago.
+          </p>
+        </div>
+      } @else {
       <div class="reserva-grid">
         <section class="reserva-card">
           <div class="card-heading">
@@ -91,25 +137,6 @@
               {{ mensajeError() }}
             </p>
           }
-
-          @if (mensajeExito()) {
-            <div class="mensaje-reserva-exitosa">
-              <div class="mensaje-icono">✓</div>
-
-              <h3>¡Reserva registrada!</h3>
-
-              <p>{{ mensajeExito() }}</p>
-
-              <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px">
-                <button type="button" class="btn-confirmar" (click)="irAPagar()">
-                  Pagar ahora
-                </button>
-                <button type="button" class="btn-cancelar" (click)="irAMisReservas()">
-                  Pagar después
-                </button>
-              </div>
-            </div>
-          }
         </section>
 
         <aside class="resumen-card">
@@ -172,6 +199,7 @@
           <p class="resumen-note">El precio definitivo será calculado por el servidor.</p>
         </aside>
       </div>
+      }
     } @else {
       <p style="color: white; text-align: center">
         {{ mensajeError() || 'No se encontró el espacio deportivo.' }}
