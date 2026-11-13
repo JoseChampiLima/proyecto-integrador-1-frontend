@@ -1,20 +1,24 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
 import { roleGuard } from './core/guards/role.guard';
+import { guestGuard } from './core/guards/guest.guard';
 
 export const routes: Routes = [
   {
     path: '',
+    canActivate: [guestGuard],
     loadComponent: () =>
       import('./features/home/pages/home/home.component').then((m) => m.HomeComponent),
   },
   {
     path: 'login',
+    canActivate: [guestGuard],
     loadComponent: () =>
       import('./features/auth/pages/login/login.component').then((m) => m.LoginComponent),
   },
   {
     path: 'crear-usuario',
+    canActivate: [guestGuard],
     loadComponent: () =>
       import('./features/usuarios/pages/crear-usuario/crear-usuario.component').then(
         (m) => m.CrearUsuarioComponent,
