@@ -131,7 +131,7 @@ export class ReservasListComponent implements OnInit {
     switch (estado) {
       case 'PENDIENTE': return 'badge-aviso';
       case 'CANCELADA': return 'badge-inactivo';
-      case 'FINALIZADA': return 'badge-neutro';
+      case 'FINALIZADA': return 'badge-finalizada';
       default: return ''; // CONFIRMADA
     }
   }

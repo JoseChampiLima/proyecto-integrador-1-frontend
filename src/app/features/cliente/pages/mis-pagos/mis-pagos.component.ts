@@ -84,8 +84,8 @@ export class MisPagosComponent implements OnInit {
 
   claseEstado(estado?: string): string {
     switch (estado) {
-      case ESTADO_PAGO_ANULADO: return 'mp-badge-anulado';
-      case 'PENDIENTE': return 'mp-badge-pendiente';
+      case ESTADO_PAGO_ANULADO: return 'badge-inactivo';
+      case 'PENDIENTE': return 'badge-aviso';
       default: return '';
     }
   }

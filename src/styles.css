@@ -1,4 +1,7 @@
-/* You can add global styles to this file, and also import other style files */
+/* =========================================================
+   ESTILOS GLOBALES
+   ========================================================= */
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
 
 html, body {
@@ -11,17 +14,70 @@ html, body {
   background-color: #072a18; /* Dark green fallback color */
 }
 
-/* FORMULARIO */
+/* =========================================================
+   1. COMPONENTES COMUNES (botones y mensajes)
+   ========================================================= */
 
-.mantenimiento-header {
-  margin-bottom: 20px;
+.btn-secundario,
+.btn-peligro,
+.btn-primary-custom {
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: none;
 }
 
-.mantenimiento-title {
-  font-weight: 800;
-  font-size: 1.5rem;
-  color: #0d2e1e;
-  margin: 0;
+.btn-secundario {
+  background: #f0f2f1;
+  color: #4a5d53;
+}
+
+.btn-peligro {
+  background: #c53030;
+  color: #ffffff;
+}
+
+.btn-primary-custom {
+  background: #0d5c3a;
+  color: #ffffff;
+  white-space: nowrap;
+  transition: background 0.2s ease;
+}
+
+.btn-primary-custom:hover {
+  background: #0a4a2e;
+}
+
+.btn-secundario:disabled,
+.btn-peligro:disabled,
+.btn-primary-custom:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-peligro-outline {
+  background: transparent;
+  color: #c53030;
+  border: 1.5px solid rgba(197, 48, 48, 0.4);
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.btn-peligro-outline:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-file {
+  display: inline-flex;
+  align-items: center;
 }
 
 .alert-error {
@@ -38,6 +94,55 @@ html, body {
 .estado-carga {
   font-family: 'Inter', -apple-system, sans-serif;
   color: #6b7d74;
+}
+
+.hint-error {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.8rem;
+  color: #c53030;
+  margin: 8px 0 12px;
+}
+
+.texto-secundario {
+  display: block;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.78rem;
+  color: #9aa8a1;
+}
+
+.sin-resultados {
+  text-align: center;
+  color: #9aa8a1;
+  font-family: 'Inter', -apple-system, sans-serif;
+  padding: 24px 0;
+}
+
+/* =========================================================
+   2. FORMULARIOS
+   ========================================================= */
+
+.mantenimiento-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.mantenimiento-title {
+  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: #0d2e1e;
+  margin: 0 0 4px;
+}
+
+.mantenimiento-subtitle {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.88rem;
+  color: #6b7d74;
+  margin: 0;
 }
 
 .form-card {
@@ -149,68 +254,6 @@ html, body {
   gap: 10px;
 }
 
-.btn-secundario,
-.btn-peligro,
-.btn-primary-custom {
-  padding: 10px 20px;
-  border-radius: 10px;
-  font-family: 'Inter', -apple-system, sans-serif;
-  font-weight: 700;
-  font-size: 0.9rem;
-  cursor: pointer;
-  border: none;
-}
-
-.btn-secundario {
-  background: #f0f2f1;
-  color: #4a5d53;
-}
-
-.btn-peligro {
-  background: #c53030;
-  color: #ffffff;
-}
-
-.btn-primary-custom {
-  background: #0d5c3a;
-  color: #ffffff;
-}
-
-.btn-primary-custom:hover {
-  background: #0a4a2e;
-}
-
-.btn-secundario:disabled,
-.btn-primary-custom:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-/* Responsive: grid a 1 columna, form ocupa todo el ancho, botones apilados */
-@media (max-width: 575.98px) {
-  .form-card {
-    padding: 18px;
-  }
-
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .form-group-wide {
-    grid-column: span 1;
-  }
-
-  .form-actions {
-    flex-direction: column-reverse;
-  }
-
-  .btn-secundario,
-  .btn-primary-custom {
-    width: 100%;
-    text-align: center;
-  }
-}
-
 /* Foto */
 .foto-wrapper {
   display: flex;
@@ -253,30 +296,1214 @@ html, body {
   flex-wrap: wrap;
 }
 
-.btn-file {
-  display: inline-flex;
-  align-items: center;
+.foto-subiendo {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.8rem;
+  color: #6b7d74;
 }
 
-.btn-peligro-outline {
-  background: transparent;
-  color: #c53030;
-  border: 1.5px solid rgba(197, 48, 48, 0.4);
-  padding: 10px 16px;
+/* =========================================================
+   3. LISTADOS — ADMINISTRACIÓN (tabla)
+   ========================================================= */
+
+/* Filtros */
+.filtro-wrapper {
+  margin-bottom: 16px;
+}
+
+.filtros-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.filtro-input,
+.filtro-select {
+  padding: 10px 14px;
+  border: 1.5px solid #d8e2dc;
+  border-radius: 10px;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.9rem;
+  background: #ffffff;
+  box-sizing: border-box;
+}
+
+.filtro-input {
+  flex: 1 1 260px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.filtro-select {
+  flex: 1 1 180px;
+  max-width: 220px;
+  cursor: pointer;
+}
+
+.filtro-input:focus,
+.filtro-select:focus {
+  outline: none;
+  border-color: #0d5c3a;
+}
+
+/* Tabla: la tabla nunca rompe el layout, hace scroll propio */
+.tabla-wrapper {
+  overflow-x: auto;
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #e5ebe7;
+}
+
+.tabla-mantenimiento {
+  width: 100%;
+  min-width: 720px; /* fuerza el scroll en mobile en vez de comprimir columnas */
+  border-collapse: collapse;
+  font-family: 'Inter', -apple-system, sans-serif;
+}
+
+.tabla-mantenimiento.tabla-espacios,
+.tabla-mantenimiento.tabla-mantenimientos,
+.tabla-mantenimiento.tabla-pagos {
+  min-width: 780px;
+}
+
+.tabla-mantenimiento.tabla-reservas {
+  min-width: 900px;
+}
+
+.tabla-mantenimiento thead {
+  background: #f4f7f5;
+}
+
+.tabla-mantenimiento th {
+  text-align: left;
+  padding: 14px 16px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #4a5d53;
+  white-space: nowrap;
+}
+
+.tabla-mantenimiento td {
+  padding: 12px 16px;
+  font-size: 0.88rem;
+  color: #1f2d26;
+  border-top: 1px solid #eef2f0;
+  vertical-align: middle;
+}
+
+.tabla-mantenimiento tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+.tabla-mantenimiento tbody tr:hover {
+  background-color: #fafcfb;
+}
+
+.tabla-mantenimiento .sin-resultados {
+  padding: 24px 0;
+}
+
+.col-acciones {
+  white-space: nowrap;
+  text-align: right;
+}
+
+.col-foto {
+  width: 64px;
+}
+
+.miniatura-foto {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #e5ebe7;
+  display: block;
+}
+
+.sin-foto {
+  font-size: 0.75rem;
+  color: #9aa8a1;
+}
+
+/* Badges de estado / rol */
+.badge-estado,
+.badge-rol {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: #e3f0e9;
+  color: #0d5c3a;
+  white-space: nowrap;
+}
+
+.badge-rol.badge-admin {
+  background: #f3e7c2;
+  color: #8a6d1f;
+}
+
+.badge-estado.badge-inactivo {
+  background: #f3e0e0;
+  color: #b23b3b;
+}
+
+.badge-estado.badge-aviso {
+  background: #fdf3d8;
+  color: #8a6d1f;
+}
+
+.badge-estado.badge-neutro {
+  background: #eef2f0;
+  color: #4a5d53;
+}
+
+.badge-estado.badge-finalizada {
+  background: #e0e7ff;
+  color: #3730a3;
+}
+
+/* Botones de acción de la tabla */
+.btn-icono {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  transition: background 0.15s ease;
+}
+
+.btn-icono:hover {
+  background: #eef2f0;
+}
+
+.btn-icono.btn-editar:hover {
+  background: #fff6dc;
+}
+
+.btn-icono.btn-eliminar:hover {
+  background: #fdeaea;
+}
+
+/* =========================================================
+   4. LISTADOS — VISTA PÚBLICA (cards)
+   ========================================================= */
+
+.listado-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 36px 20px 60px;
+}
+
+.listado-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.listado-title {
+  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+  font-weight: 800;
+  font-size: 2rem;
+  color: #fff;
+  margin: 0 0 8px;
+}
+
+.listado-subtitle {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.95rem;
+  color: #6b7d74;
+  margin: 0;
+}
+
+.listado-page .alert-error {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.listado-page .estado-carga,
+.listado-page .sin-resultados {
+  text-align: center;
+  padding: 40px 0;
+  grid-column: 1 / -1;
+}
+
+/* Filtro de sedes como chips */
+.filtro-sedes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 32px;
+}
+
+.chip-sede {
+  background: #ffffff;
+  border: 1.5px solid #d8e2dc;
+  color: #4a5d53;
+  padding: 9px 20px;
+  border-radius: 999px;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 600;
+  font-size: 0.87rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.chip-sede:hover {
+  border-color: #0d5c3a;
+  color: #0d5c3a;
+}
+
+.chip-sede.chip-activo {
+  background: #0d5c3a;
+  border-color: #0d5c3a;
+  color: #ffffff;
+}
+
+/* Grid de cards */
+.listado-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 24px;
+}
+
+.listado-card {
+  background: #ffffff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(13, 46, 30, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.listado-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 32px rgba(13, 46, 30, 0.14);
+}
+
+.listado-card-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: #e8efe9;
+}
+
+.listado-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.badge-disponibilidad {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #0d5c3a;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 5px 10px;
+  border-radius: 999px;
+}
+
+.badge-disponibilidad.badge-no-disponible {
+  background: #c53030;
+}
+
+.listado-card-body {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.listado-tipo {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #d4af37;
+}
+
+.listado-nombre {
+  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: #0d2e1e;
+  margin: 2px 0 4px;
+}
+
+.listado-texto {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.85rem;
+  color: #6b7d74;
+  margin: 0 0 6px;
+}
+
+.listado-footer {
+  margin-top: auto;
+  padding-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.listado-precio {
+  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: #0d5c3a;
+}
+
+.listado-precio small {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 500;
+  font-size: 0.72rem;
+  color: #9aa8a1;
+}
+
+.btn-reservar {
+  background: #d4af37;
+  color: #041a0f;
+  border: none;
+  padding: 9px 18px;
   border-radius: 10px;
   font-family: 'Inter', -apple-system, sans-serif;
   font-weight: 700;
   font-size: 0.85rem;
   cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s ease;
 }
 
-.btn-peligro-outline:disabled {
-  opacity: 0.6;
+.btn-reservar:hover:not(:disabled) {
+  background: #c29a2a;
+}
+
+.btn-reservar:disabled {
+  background: #e5e5e5;
+  color: #9aa8a1;
   cursor: not-allowed;
 }
 
-.foto-subiendo {
+/* =========================================================
+   5. LISTADOS — ÁREA DE CLIENTE
+   ========================================================= */
+
+/* Contenedor de página (mismo fondo oscuro que el resto del área cliente) */
+.cliente-page {
+  min-height: calc(100vh - 70px);
+  background: #062b1c;
+  padding: 45px 20px 80px;
+}
+
+.cliente-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Cabecera tipo hero */
+.cliente-hero {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(120deg, #052c1e, #10583b);
+  border-radius: 20px;
+  padding: 42px;
+  box-shadow: 0 12px 30px rgba(4, 45, 28, 0.35);
+  margin-bottom: 28px;
+}
+
+.cliente-hero::after {
+  content: "";
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  right: -70px;
+  top: -100px;
+  border: 1px solid rgba(214, 177, 58, 0.4);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.cliente-eyebrow {
+  display: block;
+  color: #d5b23d;
   font-family: 'Inter', -apple-system, sans-serif;
-  font-size: 0.8rem;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+.cliente-title {
+  color: #ffffff;
+  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+  font-size: 36px;
+  font-weight: 800;
+  margin: 0 0 10px;
+}
+
+.cliente-subtitle {
+  color: #d8e8df;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 15px;
+  margin: 0;
+}
+
+.cliente-estado {
+  color: #cfe3d8;
+  text-align: center;
+  padding: 30px 0;
+}
+
+.cliente-error {
+  background: rgba(197, 48, 48, 0.12);
+  border: 1px solid rgba(197, 48, 48, 0.4);
+  color: #ffd3d3;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 13px;
+}
+
+/* Filtros tipo chip */
+.chips-filtro {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.chip-filtro {
+  background: transparent;
+  border: 1px solid #2f5a45;
+  color: #cfe3d8;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chip-filtro:hover {
+  border-color: #d6b13d;
+}
+
+.chip-filtro.activo {
+  background: #d6b13d;
+  border-color: #d6b13d;
+  color: #142c1e;
+}
+
+/* Tarjetas de reserva / pago */
+.grid-cliente {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.lista-cliente {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card-cliente {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 24px;
+  border: 1px solid #e7ece8;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.16);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card-cliente:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.22);
+}
+
+.card-cliente-destacada {
+  border-top: 4px solid #d5b23d;
+}
+
+.card-cliente-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #e8eee9;
+}
+
+.card-cliente-titulo {
+  color: #073c28;
+  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+  font-size: 19px;
+  font-weight: 800;
+  margin: 0 0 6px;
+}
+
+.card-cliente-texto {
+  display: block;
+  color: #64748b;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 12px;
+}
+
+.card-cliente-monto {
+  display: block;
+  color: #07613c;
+  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.card-cliente-filas p {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  color: #334155;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 14px;
+  padding: 10px 0;
+  margin: 0;
+  border-bottom: 1px dashed #edf0ed;
+}
+
+.card-cliente-filas p:last-child {
+  border-bottom: none;
+}
+
+.card-cliente-filas strong {
+  color: #64748b;
+  font-weight: 500;
+}
+
+.card-cliente-acciones {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  margin-top: 16px;
+}
+
+/* Rejilla etiqueta / valor dentro de una card o modal */
+.detalle-cliente {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px 18px;
+}
+
+.detalle-cliente > div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.detalle-cliente span {
+  color: #87978c;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 11px;
+}
+
+.detalle-cliente strong {
+  color: #183a2b;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.detalle-cliente--2col {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.detalle-cliente--2col span {
+  font-size: 12px;
+}
+
+.detalle-cliente--2col strong {
+  font-size: 15px;
+}
+
+/* Resumen (mis pagos) */
+.resumen-cliente {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.resumen-cliente-item {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.resumen-cliente-item span {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: #87978c;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.resumen-cliente-item strong {
+  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  color: #07613c;
+}
+
+.resumen-cliente-item small {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 11px;
+  color: #9aa99e;
+}
+
+/* Etiquetas de estado del cliente */
+.badge-cliente {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 12px;
+  border-radius: 20px;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: #e5f3eb;
+  color: #075e3b;
+}
+
+.badge-cliente.badge-aviso {
+  background: #fff3d4;
+  color: #9a6700;
+}
+
+.badge-cliente.badge-inactivo {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.badge-cliente.badge-finalizada {
+  background: #e0e7ff;
+  color: #3730a3;
+}
+
+.badge-cliente.badge-neutro {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+/* Botones del cliente */
+.btn-cliente {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #d5b23d;
+  color: #073c28;
+  border: none;
+  border-radius: 9px;
+  padding: 12px 22px;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn-cliente:hover {
+  background: #e5c653;
+  transform: translateY(-2px);
+}
+
+.btn-cliente--bloque {
+  flex: 1;
+  width: 100%;
+  justify-content: space-between;
+  padding: 14px 18px;
+}
+
+.btn-cliente-oscuro {
+  background: #073c28;
+  color: #ffffff;
+  border: none;
+  border-radius: 9px;
+  padding: 12px 28px;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-cliente-oscuro:hover {
+  background: #10583b;
+}
+
+/* Estado vacío */
+.vacio-cliente {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 56px 24px;
+  text-align: center;
+}
+
+.vacio-cliente h3 {
+  color: #073c28;
+  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  margin: 0 0 8px;
+}
+
+.vacio-cliente p {
+  color: #64748b;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 14px;
+  margin: 0 0 20px;
+}
+
+/* Modal de detalle del cliente */
+.modal-cliente {
+  background: #ffffff;
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 20px;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25);
+}
+
+.modal-cliente-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 28px;
+  background: #073c28;
+  color: #ffffff;
+}
+
+.modal-cliente-subtitulo {
+  color: #d5b23d;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.modal-cliente-header h2 {
+  margin: 8px 0 0;
+  font-size: 23px;
+  color: #ffffff;
+  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+}
+
+.modal-cliente .btn-cerrar-cliente {
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 25px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.modal-cliente .btn-cerrar-cliente:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.modal-cliente-body {
+  padding: 28px;
+}
+
+.modal-cliente-footer {
+  padding: 20px 28px;
+  border-top: 1px solid #e5e7eb;
+  text-align: right;
+}
+
+.detalle-espacio-linea {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.detalle-espacio-linea h3 {
+  color: #073c28;
+  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+  font-size: 20px;
+  margin: 7px 0 0;
+}
+
+.detalle-etiqueta {
+  color: #9a812e;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.detalle-observacion {
+  margin-top: 25px;
+  padding: 16px;
+  background: #f8faf9;
+  border-radius: 10px;
+}
+
+.detalle-observacion strong {
+  color: #073c28;
+  font-family: 'Inter', -apple-system, sans-serif;
+}
+
+.detalle-observacion p {
+  color: #64748b;
+  font-family: 'Inter', -apple-system, sans-serif;
+  margin: 8px 0 0;
+}
+
+.detalle-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 28px;
+  padding: 20px;
+  background: #f3f8f4;
+  border-radius: 12px;
+}
+
+.detalle-total span {
+  color: #64748b;
+  font-family: 'Inter', -apple-system, sans-serif;
+}
+
+.detalle-total strong {
+  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+  font-size: 24px;
+  color: #073c28;
+}
+
+/* =========================================================
+   6. MODALES
+   ========================================================= */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 44, 26, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 50;
+}
+
+.modal-confirm {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  max-width: 420px;
+  width: 100%;
+}
+
+.modal-confirm h3 {
+  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+  font-weight: 800;
+  color: #0d2e1e;
+  margin: 0 0 10px;
+}
+
+.modal-confirm p {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.9rem;
+  color: #4a5d53;
+  margin: 0 0 20px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* Modal de detalle de reserva (listado de reservas) */
+.modal-detalle {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  max-width: 580px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-detalle .detalle-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.modal-detalle .detalle-header h3 {
+  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+  font-weight: 800;
+  font-size: 1.3rem;
+  color: #0d2e1e;
+  margin: 0;
+}
+
+.modal-detalle .detalle-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px 18px;
+  margin-bottom: 20px;
+}
+
+.modal-detalle .detalle-grid > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.modal-detalle .detalle-wide {
+  grid-column: span 2;
+}
+
+.modal-detalle .detalle-label {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
   color: #6b7d74;
+}
+
+.modal-detalle .detalle-valor {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.9rem;
+  color: #1f2d26;
+  overflow-wrap: anywhere;
+}
+
+.modal-detalle .detalle-subtitulo {
+  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  color: #0d2e1e;
+  margin: 0 0 8px;
+  padding-top: 14px;
+  border-top: 1px solid #eef2f0;
+}
+
+.modal-detalle .detalle-vacio {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.85rem;
+  color: #9aa8a1;
+  margin: 0 0 8px;
+}
+
+.modal-detalle .pago-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-top: 1px solid #eef2f0;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.88rem;
+  color: #1f2d26;
+}
+
+.modal-detalle .pagos-resumen {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.88rem;
+  color: #4a5d53;
+  margin: 8px 0 20px;
+}
+
+/* =========================================================
+   7. RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 768px) {
+  /* Listados de cliente */
+  .cliente-page {
+    padding: 22px 14px 50px;
+  }
+
+  .cliente-hero {
+    padding: 30px 24px;
+  }
+
+  .cliente-title {
+    font-size: 27px;
+  }
+
+  .grid-cliente {
+    grid-template-columns: 1fr;
+  }
+
+  .card-cliente {
+    padding: 20px;
+  }
+
+  .chip-filtro {
+    flex: 1;
+    text-align: center;
+    padding: 11px;
+    font-size: 12px;
+  }
+
+  .modal-cliente-header,
+  .modal-cliente-body {
+    padding: 20px;
+  }
+
+  .detalle-cliente--2col {
+    grid-template-columns: 1fr;
+  }
+
+  .detalle-total strong {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  /* Formularios */
+  .form-card {
+    padding: 18px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-group-wide {
+    grid-column: span 1;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .btn-secundario,
+  .btn-primary-custom {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Listados de administración */
+  .mantenimiento-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filtros-wrapper {
+    flex-direction: column;
+  }
+
+  .filtro-input,
+  .filtro-select {
+    max-width: 100%;
+  }
+
+  /* Listados públicos */
+  .listado-page {
+    padding: 24px 16px 40px;
+  }
+
+  .listado-title {
+    font-size: 1.5rem;
+  }
+
+  .filtro-sedes {
+    justify-content: flex-start;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 6px;
+    margin-left: -16px;
+    margin-right: -16px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .chip-sede {
+    flex-shrink: 0;
+  }
+
+  .listado-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .listado-nombre {
+    font-size: 0.95rem;
+  }
+
+  .listado-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-reservar {
+    width: 100%;
+  }
+
+  /* Modales */
+  .modal-actions {
+    flex-direction: column-reverse;
+  }
+
+  .btn-peligro {
+    width: 100%;
+    text-align: center;
+  }
+
+  .modal-detalle .detalle-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-detalle .detalle-wide {
+    grid-column: span 1;
+  }
+
+  /* Listados de cliente */
+  .cliente-title {
+    font-size: 24px;
+  }
+
+  .resumen-cliente {
+    grid-template-columns: 1fr;
+  }
 }

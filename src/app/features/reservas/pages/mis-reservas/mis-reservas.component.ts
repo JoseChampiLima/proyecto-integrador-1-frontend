@@ -117,19 +117,19 @@ export class MisReservasComponent implements OnInit {
     switch (estado?.toUpperCase()) {
 
       case 'PENDIENTE':
-        return 'estado-pendiente';
+        return 'badge-aviso';
 
       case 'CONFIRMADA':
-        return 'estado-confirmada';
+        return '';
 
       case 'CANCELADA':
-        return 'estado-cancelada';
+        return 'badge-inactivo';
 
       case 'FINALIZADA':
-        return 'estado-finalizada';
+        return 'badge-finalizada';
 
       default:
-        return 'estado-default';
+        return 'badge-neutro';
     }
   }
 

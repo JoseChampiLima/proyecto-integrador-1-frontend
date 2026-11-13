@@ -1,9 +1,9 @@
 <!-- RUTA src\app\features\espacios\pages\espacios-list\espacios-list.component.ts -->
 
-<section class="espacios-page">
-  <div class="espacios-header">
-    <h2 class="espacios-title">Espacios Deportivos</h2>
-    <p class="espacios-subtitle">Elige una sede y encuentra el espacio ideal para tu próxima reserva.</p>
+<section class="listado-page">
+  <div class="listado-header">
+    <h2 class="listado-title">Espacios Deportivos</h2>
+    <p class="listado-subtitle">Elige una sede y encuentra el espacio ideal para tu próxima reserva.</p>
   </div>
 
   <div class="filtro-sedes">
@@ -26,23 +26,23 @@
   @if (isLoading()) {
     <p class="estado-carga">Cargando espacios...</p>
   } @else {
-    <div class="espacios-grid">
+    <div class="listado-grid">
       @for (espacio of espacios(); track espacio.idEspacio) {
-        <article class="espacio-card">
-          <div class="espacio-card-imagen">
+        <article class="listado-card">
+          <div class="listado-card-media">
             <img [src]="getFotoUrl(espacio.foto)" [alt]="espacio.nombre" loading="lazy" />
             <span class="badge-disponibilidad" [class.badge-no-disponible]="!esDisponible(espacio.estado)">
               {{ espacio.estado }}
             </span>
           </div>
 
-          <div class="espacio-card-body">
-            <span class="espacio-tipo">{{ espacio.tipoEspacio.nombre }}</span>
-            <h3 class="espacio-nombre">{{ espacio.nombre }}</h3>
-            <p class="espacio-sede">📍 {{ espacio.sede.nombre }}</p>
+          <div class="listado-card-body">
+            <span class="listado-tipo">{{ espacio.tipoEspacio.nombre }}</span>
+            <h3 class="listado-nombre">{{ espacio.nombre }}</h3>
+            <p class="listado-texto">📍 {{ espacio.sede.nombre }}</p>
 
-            <div class="espacio-footer">
-              <span class="espacio-precio">S/ {{ espacio.precioHora }} <small>/ hora</small></span>
+            <div class="listado-footer">
+              <span class="listado-precio">S/ {{ espacio.precioHora }} <small>/ hora</small></span>
               <button
                 type="button"
                 class="btn-reservar"

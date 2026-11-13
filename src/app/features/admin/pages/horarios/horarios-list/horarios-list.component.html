@@ -1,160 +1,154 @@
-<div class="page-container">
-
-  <!-- ENCABEZADO -->
-  <div class="page-header">
-    <div>
-      <h2>Horarios</h2>
-      <p>Gestiona los horarios de los espacios deportivos.</p>
-    </div>
-
-    <button
-      type="button"
-      class="btn-nuevo"
-      (click)="nuevoHorario()">
-      + Nuevo Horario
-    </button>
+<div class="mantenimiento-header">
+  <div>
+    <h2 class="mantenimiento-title">Horarios</h2>
+    <p class="mantenimiento-subtitle">Gestiona los horarios de los espacios deportivos.</p>
   </div>
 
-  <!-- FILTROS -->
-  <div class="filtros">
+  <button
+    type="button"
+    class="btn-primary-custom"
+    (click)="nuevoHorario()">
+    + Nuevo Horario
+  </button>
+</div>
 
-    <input
-      type="text"
-      class="buscar"
-      placeholder="Buscar por espacio..."
-      [value]="filtro()"
-      (input)="actualizarFiltro($event)"
-    />
+<!-- FILTROS -->
+<div class="filtros-wrapper">
 
-    <select
-      class="select-dia"
-      [value]="filtroDia()"
-      (change)="actualizarFiltroDia($event)">
+  <input
+    type="text"
+    class="filtro-input"
+    placeholder="Buscar por espacio..."
+    [value]="filtro()"
+    (input)="actualizarFiltro($event)"
+  />
 
-      <option value="">Todos los días</option>
-      <option value="LUNES">Lunes</option>
-      <option value="MARTES">Martes</option>
-      <option value="MIERCOLES">Miércoles</option>
-      <option value="JUEVES">Jueves</option>
-      <option value="VIERNES">Viernes</option>
-      <option value="SABADO">Sábado</option>
-      <option value="DOMINGO">Domingo</option>
+  <select
+    class="filtro-select"
+    [value]="filtroDia()"
+    (change)="actualizarFiltroDia($event)">
 
-    </select>
+    <option value="">Todos los días</option>
+    <option value="LUNES">Lunes</option>
+    <option value="MARTES">Martes</option>
+    <option value="MIERCOLES">Miércoles</option>
+    <option value="JUEVES">Jueves</option>
+    <option value="VIERNES">Viernes</option>
+    <option value="SABADO">Sábado</option>
+    <option value="DOMINGO">Domingo</option>
 
+  </select>
+
+</div>
+
+<!-- MENSAJE DE ERROR -->
+@if (errorMessage()) {
+  <div class="alert-error">
+    {{ errorMessage() }}
   </div>
+}
 
-  <!-- MENSAJE DE ERROR -->
-  @if (errorMessage()) {
-    <div class="mensaje-error">
-      {{ errorMessage() }}
-    </div>
-  }
+<!-- TABLA -->
+<div class="tabla-wrapper">
 
-  <!-- TABLA -->
-  <div class="tabla-container">
+  <table class="tabla-mantenimiento">
 
-    <table>
+    <thead>
+      <tr>
+        <th>ESPACIO</th>
+        <th>DÍA</th>
+        <th>HORA INICIO</th>
+        <th>HORA FIN</th>
+        <th>ESTADO</th>
+        <th class="col-acciones">ACCIONES</th>
+      </tr>
+    </thead>
 
-      <thead>
+    <tbody>
+
+      @if (isLoading()) {
+
         <tr>
-          <th>ESPACIO</th>
-          <th>DÍA</th>
-          <th>HORA INICIO</th>
-          <th>HORA FIN</th>
-          <th>ESTADO</th>
-          <th class="columna-acciones">ACCIONES</th>
+          <td colspan="6" class="sin-resultados">
+            Cargando horarios...
+          </td>
         </tr>
-      </thead>
 
-      <tbody>
+      } @else {
 
-        @if (isLoading()) {
+        @for (horario of horariosFiltrados(); track horario.idHorario) {
 
           <tr>
-            <td colspan="6" class="mensaje-tabla">
-              Cargando horarios...
+
+            <!-- ESPACIO -->
+            <td>
+              {{ nombreEspacio(horario.idEspacio) }}
+            </td>
+
+            <!-- DÍA -->
+            <td>
+              {{ formatearDia(horario.diaSemana) }}
+            </td>
+
+            <!-- HORA INICIO -->
+            <td>
+              {{ formatearHora(horario.horaInicio) }}
+            </td>
+
+            <!-- HORA FIN -->
+            <td>
+              {{ formatearHora(horario.horaFin) }}
+            </td>
+
+            <!-- ESTADO -->
+            <td>
+              <span
+                class="badge-estado"
+                [class.badge-inactivo]="!horario.estado">
+
+                {{ horario.estado ? 'Activo' : 'Inactivo' }}
+
+              </span>
+            </td>
+
+            <!-- ACCIONES -->
+            <td class="col-acciones">
+
+              <button
+                  type="button"
+                  class="btn-icono btn-editar"
+                  title="Modificar horario"
+                  (click)="editarHorario(horario)">
+                  ✏️
+              </button>
+
+              <button
+                type="button"
+                class="btn-icono btn-eliminar"
+                title="Eliminar horario"
+                (click)="pedirConfirmacionEliminar(horario)">
+                🗑️
+              </button>
+
+            </td>
+
+          </tr>
+
+        } @empty {
+
+          <tr>
+            <td colspan="6" class="sin-resultados">
+              No se encontraron horarios.
             </td>
           </tr>
 
-        } @else {
-
-          @for (horario of horariosFiltrados(); track horario.idHorario) {
-
-            <tr>
-
-              <!-- ESPACIO -->
-              <td>
-                {{ nombreEspacio(horario.idEspacio) }}
-              </td>
-
-              <!-- DÍA -->
-              <td>
-                {{ formatearDia(horario.diaSemana) }}
-              </td>
-
-              <!-- HORA INICIO -->
-              <td>
-                {{ formatearHora(horario.horaInicio) }}
-              </td>
-
-              <!-- HORA FIN -->
-              <td>
-                {{ formatearHora(horario.horaFin) }}
-              </td>
-
-              <!-- ESTADO -->
-              <td>
-                <span
-                  class="estado"
-                  [class.activo]="horario.estado"
-                  [class.inactivo]="!horario.estado">
-
-                  {{ horario.estado ? 'Activo' : 'Inactivo' }}
-
-                </span>
-              </td>
-
-              <!-- ACCIONES -->
-              <td class="acciones">
-
-                <button
-                    type="button"
-                    class="btn-accion editar"
-                    title="Modificar horario"
-                    (click)="editarHorario(horario)">
-                    ✏️
-                </button>
-
-                <button
-                  type="button"
-                  class="btn-accion eliminar"
-                  title="Eliminar horario"
-                  (click)="pedirConfirmacionEliminar(horario)">
-                  🗑️
-                </button>
-
-              </td>
-
-            </tr>
-
-          } @empty {
-
-            <tr>
-              <td colspan="6" class="mensaje-tabla">
-                No se encontraron horarios.
-              </td>
-            </tr>
-
-          }
-
         }
 
-      </tbody>
+      }
 
-    </table>
+    </tbody>
 
-  </div>
+  </table>
 
 </div>
 
