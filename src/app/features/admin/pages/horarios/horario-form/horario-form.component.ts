@@ -280,12 +280,6 @@ export class HorarioFormComponent implements OnInit {
     };
 
 
-    console.log(
-      'Horario enviado:',
-      horarioRequest
-    );
-
-
     // ==========================================
     // DETERMINAR SI ES POST O PUT
     // ==========================================

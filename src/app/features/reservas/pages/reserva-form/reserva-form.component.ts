@@ -77,8 +77,6 @@ export class ReservaFormComponent implements OnInit {
       perfil: this.usuarioService.obtenerMiPerfil(),
     }).subscribe({
       next: ({ espacio, horarios, perfil }) => {
-         console.log('Espacio:', espacio);
-  console.log('Imagen de la cancha:', espacio.foto);
         this.espacio.set(espacio);
         this.horarios.set(horarios);
         this.idUsuario.set(perfil.idUsuario);

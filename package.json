@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build && node scripts/set-csp-nonce.mjs",
+    "serve:prod": "node scripts/serve-prod.mjs",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

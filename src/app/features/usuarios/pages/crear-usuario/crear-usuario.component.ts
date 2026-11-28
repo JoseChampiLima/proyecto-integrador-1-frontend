@@ -70,8 +70,7 @@ export class CrearUsuarioComponent {
     };
 
     this.usuarioService.guardar(nuevoUsuario).subscribe({
-      next: (usuarioCreado) => {
-        console.log('Usuario creado:', usuarioCreado);
+      next: () => {
         this.successMessage.set('Usuario registrado correctamente.');
         this.usuarioForm.reset();
         // Redirige al login tras un breve momento, o cambia por la ruta que prefieras

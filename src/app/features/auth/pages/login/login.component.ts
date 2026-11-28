@@ -78,35 +78,40 @@ export class LoginComponent {
     this.isLoading.set(true);
     this.errorMessage.set(null);
 
-    // Mock API call to authenticate
-    setTimeout(() => {
-      const { email, password } = this.loginForm.value;
+    const { email, password } = this.loginForm.value;
 
-      const loginRequest: LoginRequest = { correo: email, clave: password };
+    const loginRequest: LoginRequest = { correo: email, clave: password };
 
-      this.authService.login(loginRequest).subscribe({
-        next: (response) => {
-          // Redirige según rol, o a returnUrl si venía de un guard
-          const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
-          if (returnUrl) {
-            this.router.navigateByUrl(returnUrl);
-          } else if (this.authService.isAdmin()) {
-            this.router.navigate(['/admin']);
-          } else {
-            this.router.navigate(['/inicio']);
-          }
-        },
-        error: (error) => {
-          this.isLoading.set(false);
-          console.error('Login failed:', error);
-          this.errorMessage.set('Credenciales inválidas.');
-        },
-        complete: () => {
-          this.isLoading.set(false);
-        },
-      });
-    }, 1500);
+    this.authService.login(loginRequest).subscribe({
+      next: () => {
+        // Redirige según rol, o a returnUrl si venía de un guard.
+        // Solo se aceptan rutas internas ("/algo") para evitar redirecciones abiertas.
+        const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+
+        if (this.esRutaInternaSegura(returnUrl)) {
+          this.router.navigateByUrl(returnUrl);
+        } else if (this.authService.isAdmin()) {
+          this.router.navigate(['/admin']);
+        } else {
+          this.router.navigate(['/inicio']);
+        }
+      },
+      error: (error) => {
+        this.isLoading.set(false);
+        console.error('Login failed:', error);
+        this.errorMessage.set('Credenciales inválidas.');
+      },
+      complete: () => {
+        this.isLoading.set(false);
+      },
+    });
   }
+
+  /** Solo rutas internas absolutas: "/inicio" sí, "//otro-sitio.com" o "https://..." no. */
+  private esRutaInternaSegura(url: string | null): url is string {
+    return !!url && /^\/(?![/\\])/.test(url);
+  }
+
   enviarRecuperacion(): void {
     const correo = this.correoRecuperacion().trim();
 
@@ -140,8 +145,6 @@ export class LoginComponent {
         this.enviandoRecuperacion.set(false);
 
         this.mensajeRecuperacion.set(response.mensaje);
-
-        console.log('Recuperación enviada:', response);
       },
 
       error: (error) => {

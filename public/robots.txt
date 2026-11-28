@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /admin
+Disallow: /inicio
+Disallow: /login
+Disallow: /crear-usuario
+Allow: /
